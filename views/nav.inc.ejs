@@ -16,6 +16,15 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
       </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if (user) { %>
+          <li><p class="navbar-text"><%= user.displayName %></p></li>
+          <li><a href="/logout" title="Logout">Logout <i class="fa fa-sign-out"></i></a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+        <% } %>
+      </ul>
     </div>
   </div>
 </nav>

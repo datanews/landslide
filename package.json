@@ -21,6 +21,7 @@
     "express-session": "^1.14.1",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
-    "passport-slack": "0.0.6"
+    "passport-slack": "0.0.6",
+    "request": "^2.75.0"
   }
 }

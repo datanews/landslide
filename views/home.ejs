@@ -7,7 +7,33 @@
   <body>
     <%- include('nav.inc.ejs') %>
 
-    <div class="container">Hi</div>
+    <div class="container">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Report</th>
+              <th>Wait</th>
+              <th>City</th>
+              <th>Zip</th>
+              <th>Phone</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Broken machine</td>
+              <td>30 min</td>
+              <td>Hoboken</td>
+              <td>12345</td>
+              <td>555 555 5151</td>
+              <td>30 min ago</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <%- include('scripts.inc.ejs') %>
   </body>
