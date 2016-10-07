@@ -2,20 +2,27 @@
 <nav class="main-navbar navbar navbar-inverse">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/" title="Home">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-bar-collapsable" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="/" title="ElectionLand reporting home">
         <img alt="ElectionLand logo" src="/media/Electionland-logo-edit.svg">
       </a>
+
+      <p class="navbar-text">Election reporting</p>
     </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li><p class="navbar-text">Election reporting</p></li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
+    <div class="collapse navbar-collapse" id="nav-bar-collapsable">
+      <ul class="navbar-nav navbar-right">
         <% if (user) { %>
-          <li><p class="navbar-text"><%= user.displayName %></p></li>
-          <li><a href="/logout" title="Logout">Logout <i class="fa fa-sign-out"></i></a></li>
+          <li><p class="navbar-text">
+            <%= user.displayName %> &nbsp;
+            <a href="/logout" title="Logout">Logout <i class="fa fa-sign-out"></i></a>
+          </p></li>
         <% } else { %>
           <li><a href="/login">Login</a></li>
         <% } %>

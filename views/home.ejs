@@ -10,10 +10,6 @@
     <div id="home-template-container" class="container"></div>
 
     <script id="home-template" type="text/ractive">
-      <div class="loading {{#isLoading}}is-loading{{/isLoading}}">
-        <span><i class="fa fa-spinner fa-pulse"></i> Loading...</span>
-      </div>
-
       <form class="filter-form form-inline">
         <div class="form-group">
           <label for="filter-state">Filter by state</label>
@@ -26,11 +22,14 @@
           </select>
         </div>
 
-        {{#lastFetch}}
-          <div class="pull-right">
-            <p class="text-muted"><small>Data as of {{ lastFetch.fromNow() }}.</small></p>
-          </div>
-        {{/lastFetch}}
+        <div class="data-info">
+          <p>
+            {{#lastFetch}}
+              <small class="text-muted">Data as of {{ lastFetch.fromNow() }}.</small>
+            {{/lastFetch}}
+            <span class="loading {{#isLoading}}is-loading{{/isLoading}}"><i class="fa fa-spinner fa-pulse"></i></span>
+          </p>
+        </div>
       </form>
 
       <div class="table-responsive">

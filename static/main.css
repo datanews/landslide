@@ -45,19 +45,22 @@
 
 /* Loading */
 .loading {
-  text-align: center;
-  min-height: 2.5em;
-}
-.loading span {
   display: none;
 }
-.loading.is-loading span {
+.loading.is-loading {
   display: inline;
 }
 
 /* Main page */
 .filter-form {
   background-color: #F2F2F2;
-  padding: 1em;
+  padding: 1em 2em;
   margin-bottom: 1em;
+}
+
+@media (min-width: 768px) {
+  .data-info {
+    float: right;
+    line-height: 2.5em;
+  }
 }
