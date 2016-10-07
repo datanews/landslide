@@ -14,7 +14,7 @@ const xmlParse = require('xml2js').parseString;
 require('dotenv').config({ silent: true });
 
 // Mobile commons API sucks
-var TEST = true;
+var TEST = false;
 
 // Default timezone
 moment.tz.setDefault('America/New_York');
@@ -41,13 +41,6 @@ function getData(page, done) {
   // Make call
   request.get({
     url : url,
-    /*
-    auth: {
-      user: querystring.escape(process.env.MOBILE_COMMONS_USER),
-      pass: process.env.MOBILE_COMMONS_PASS,
-      sendImmediately: false
-    },
-    */
     headers : {
       Authorization: auth,
       Accept: 'application/xml'
@@ -69,6 +62,7 @@ function getData(page, done) {
 // Parse data
 function parseData(error, messages, done) {
   var parsed = [];
+  var lastFetch = moment().unix();
 
   messages.forEach(function(m) {
     var p = {};
@@ -77,6 +71,11 @@ function parseData(error, messages, done) {
     // are one per profile, though we can know when they last updated it
     p.phone = m.profile[1].phone_number[0];
     p.zip = m.profile[1].address[0].postal_code[0];
+    p.city = m.profile[1].address[0].city[0];
+    p.state = m.profile[1].address[0].state[0];
+    p.lastFetch = lastFetch;
+
+    // TODO: Determine opt-in path
 
     // Custom columns
     m.profile[1].custom_columns[0].custom_column.forEach(function(c) {
@@ -121,19 +120,34 @@ function parseData(error, messages, done) {
 function collectData(done) {
   var messages = [];
 
-  // TODO, handle multiple pages
-  getData(1, function(error, parsed) {
-    if (error || !parsed.response.messages) {
-      return done(error);
-    }
+  // For recursive handling of pages
+  function getPage(page) {
+    var p;
+    var pLimit;
 
-    // Page info
-    //parsed.response.messages[0].$.page
-    //parsed.response.messages[0].$.page_count
+    getData(page, function(error, parsed) {
+      if (error || !parsed.response.messages) {
+        return done(error);
+      }
 
-    messages = messages.concat(parsed.response.messages[0].message);
-    parseData(null, messages, done);
-  });
+      // Collect
+      messages = messages.concat(parsed.response.messages[0].message);
+
+      // Page info
+      p = parsed.response.messages[0].$.page;
+      pLimit = parsed.response.messages[0].$.page_count;
+
+      // If not last page, keep going
+      if (p < pLimit) {
+        getPage(page++);
+      }
+      else {
+        parseData(null, messages, done);
+      }
+    });
+  }
+
+  getPage(1);
 }
 
 // Go

@@ -3,6 +3,7 @@
  */
 
 // Dependencies
+const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const express = require('express');
@@ -61,20 +62,40 @@ app.get('/login', function(req, res, next) {
 app.get('/logout',
   slack.isLoggedIn,
   function(req, res) {
-  req.logout();
-  req.session.destroy();
-  res.redirect('/');
-});
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
+  });
 
 // Main page
 app.get('/',
   slack.isLoggedIn,
   function(req, res) {
-  res.render('home', {
-    title: 'Home',
-    user: req.session.user
+    res.render('home', {
+      title: 'Home',
+      user: req.session.user
+    });
   });
-});
+
+// "API"
+app.get('/api',
+  slack.isLoggedIn,
+  function(req, res) {
+    const set = req.query.set || 'all';
+    const setPath = path.join(__dirname, 'data', 'collected', set + '.json');
+
+    if (fs.existsSync(setPath)) {
+      res.json(JSON.parse(fs.readFileSync(setPath, "utf-8")));
+    }
+    else {
+      res.status(404);
+      res.json({
+        status: 'error',
+        statusCode: 404,
+        message: 'Unable to find set.'
+      });
+    }
+  });
 
 
 // General error handling

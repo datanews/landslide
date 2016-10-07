@@ -42,3 +42,22 @@
   width: 40em;
   max-width: 95%;
 }
+
+/* Loading */
+.loading {
+  text-align: center;
+  min-height: 2.5em;
+}
+.loading span {
+  display: none;
+}
+.loading.is-loading span {
+  display: inline;
+}
+
+/* Main page */
+.filter-form {
+  background-color: #F2F2F2;
+  padding: 1em;
+  margin-bottom: 1em;
+}
