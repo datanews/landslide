@@ -18,7 +18,7 @@
         <div class="form-group">
           <label for="filter-state">Filter by state</label>
 
-          <select class="form-control" value="{{ state }}" id="filter-state">
+          <select class="form-control" value="{{ filteredState }}" id="filter-state">
             <option selected disabled>Choose</option>
             {{#states:s}}
               <option value="{{ this }}">{{ this }}</option>
@@ -40,6 +40,7 @@
               <th>Report</th>
               <th>Wait</th>
               <th>City</th>
+              <th>State</th>
               <th>Zip</th>
               <th>Phone</th>
               <th>Updated</th>
@@ -48,11 +49,12 @@
 
           <tbody>
             {{#data}}
-              {{#(!../state || (../state && ../state === state))}}
+              {{#(!filteredState || (filteredState && filteredState === state))}}
                 <tr>
                   <td>{{ ElectionReport.value }}</td>
                   <td>{{ ElectionWait.value }}</td>
                   <td>{{ city }}</td>
+                  <td>{{ state }}</td>
                   <td>
                     {{#zip}}
                       <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ zip }}">{{ zip }}</a>

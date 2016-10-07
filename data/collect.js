@@ -70,9 +70,11 @@ function parseData(error, messages, done) {
     // We look at profile data, as this holds the custom columns, which there
     // are one per profile, though we can know when they last updated it
     p.phone = m.profile[1].phone_number[0];
-    p.zip = m.profile[1].address[0].postal_code[0];
-    p.city = m.profile[1].address[0].city[0];
-    p.state = m.profile[1].address[0].state[0];
+    p.zip = m.profile[1].location[0].postal_code[0];
+    p.city = m.profile[1].location[0].city[0];
+    p.state = m.profile[1].location[0].state[0];
+
+    // Mark when we last got this
     p.lastFetch = lastFetch;
 
     // TODO: Determine opt-in path

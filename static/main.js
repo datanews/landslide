@@ -12,27 +12,42 @@ $(document).ready(function() {
 function reporting() {
   var template = $('#home-template').html();
   var el = '#home-template-container';
-  var data = [];
+  var originalData = [];
   var ractive = new Ractive({
     el: el,
     template: template,
     data: {
       isLoading: true,
-      data: data
+      data: []
     }
   });
 
   // Set up routing
-  page('/', route)
-  page('/set/:set', route)
-  page('*', route)
-  page({
-    hashbang: true
+  var router = Router({
+    '/state/:filteredState': route,
+    '*': route
   });
+  router.init();
 
   // Do route
-  function route(context, next) {
-    updateData(context.params.set, function(error, data) {
+  function route(filteredState) {
+    ractive.set('filteredState', filteredState ? filteredState : undefined);
+  }
+
+  // Handle view updates
+  ractive.observe('filteredState', function(n, o) {
+    if (n && n !== o) {
+      router.setRoute('/state/' + n);
+    }
+  });
+
+  // Fetch
+  function fetch() {
+    ractive.set('isLoading', true);
+
+    updateData('all', function(error, data) {
+      originalData = _.cloneDeep(data);
+
       if (!error) {
         ractive.set('lastFetch', data[0] ? moment.unix(data[0].lastFetch) : undefined);
         ractive.set('isLoading', false);
@@ -44,6 +59,10 @@ function reporting() {
       }
     });
   }
+
+  // Poll
+  var repeat = window.setInterval(fetch, 30 * 1000);
+  fetch();
 }
 
 // Update data
@@ -61,10 +80,18 @@ function updateData(set, done) {
       // Newer date
       d.updatedM = d.ElectionReport && d.ElectionWait && d.ElectionReport.updatedM.isAfter(d.ElectionWait.updatedM) ?
         d.ElectionReport.updatedM :
-        d.ElectionWait && d.ElectionWait.updatedM ? d.ElectionWait.updatedM : undefined;
+        d.ElectionReport && d.ElectionWait && d.ElectionReport.updatedM.isBefore(d.ElectionWait.updatedM) ?
+        d.ElectionWait.updatedM :
+        d.ElectionReport && !d.ElectionWait ?
+        d.ElectionReport.updatedM  :
+        !d.ElectionReport && d.ElectionWait ?
+        d.ElectionWait.updatedM : undefined;
 
       return d;
     });
+    data = _.sortBy(data, function(d) {
+      return d.updatedM ? d.updatedM.unix() : 0;
+    }).reverse();
 
     done(null, data);
   })
