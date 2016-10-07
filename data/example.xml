@@ -1,0 +1,1116 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<response success="true">
+  <messages page="1" limit="100" page_count="1">
+    <message id="700303696" type="info_response" approved="false">
+      <phone_number>15035449030</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>203389045</profile>
+      <body>10024</body>
+      <message_template_id>33935440</message_template_id>
+      <keyword/>
+      <received_at>2016-10-05 17:12:22 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203389045">
+        <first_name/>
+        <last_name/>
+        <phone_number>15035449030</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 17:11:48 UTC</created_at>
+        <updated_at>2016-10-05 17:12:23 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700303324"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10024</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.786538</latitude>
+          <longitude>-73.978644</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10024</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700303324" type="opt_in" approved="false">
+      <phone_number>15035449030</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>203389045</profile>
+      <body>electionland</body>
+      <message_template_id>33935440</message_template_id>
+      <keyword id="377968">
+        <name>electionland</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-10-05 17:11:48 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203389045">
+        <first_name/>
+        <last_name/>
+        <phone_number>15035449030</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 17:11:48 UTC</created_at>
+        <updated_at>2016-10-05 17:12:23 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700303324"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10024</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.786538</latitude>
+          <longitude>-73.978644</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10024</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700294717" type="info_response" approved="false">
+      <phone_number>19173921009</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>203387761</profile>
+      <body>10001</body>
+      <message_template_id>33935440</message_template_id>
+      <keyword/>
+      <received_at>2016-10-05 16:57:40 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203387761">
+        <first_name/>
+        <last_name/>
+        <phone_number>19173921009</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 16:57:24 UTC</created_at>
+        <updated_at>2016-10-05 16:57:40 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700294549"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700294549" type="opt_in" approved="false">
+      <phone_number>19173921009</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>203387761</profile>
+      <body>Electionland</body>
+      <message_template_id>33935440</message_template_id>
+      <keyword id="377968">
+        <name>electionland</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-10-05 16:57:24 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203387761">
+        <first_name/>
+        <last_name/>
+        <phone_number>19173921009</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 16:57:24 UTC</created_at>
+        <updated_at>2016-10-05 16:57:40 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700294549"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700262566" type="info_response" approved="false">
+      <phone_number>19176224997</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>203383816</profile>
+      <body>11215</body>
+      <message_template_id>33935314</message_template_id>
+      <keyword/>
+      <received_at>2016-10-05 16:00:41 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203383816">
+        <first_name/>
+        <last_name/>
+        <phone_number>19176224997</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 15:59:26 UTC</created_at>
+        <updated_at>2016-10-05 16:00:42 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700261804"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>11215</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.6681669</latitude>
+          <longitude>-73.9800645</longitude>
+          <city>Brooklyn</city>
+          <state>NY</state>
+          <postal_code>11215</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700261804" type="opt_in" approved="false">
+      <phone_number>19176224997</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>203383816</profile>
+      <body>Electionland</body>
+      <message_template_id>33935314</message_template_id>
+      <keyword id="377968">
+        <name>electionland</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-10-05 15:59:26 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203383816">
+        <first_name/>
+        <last_name/>
+        <phone_number>19176224997</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 15:59:26 UTC</created_at>
+        <updated_at>2016-10-05 16:00:42 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700261804"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>11215</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.6681669</latitude>
+          <longitude>-73.9800645</longitude>
+          <city>Brooklyn</city>
+          <state>NY</state>
+          <postal_code>11215</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700261291" type="info_response" approved="false">
+      <phone_number>19176787766</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>188157159</profile>
+      <body>10013</body>
+      <message_template_id>33935314</message_template_id>
+      <keyword/>
+      <received_at>2016-10-05 15:58:30 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="188157159">
+        <first_name/>
+        <last_name/>
+        <phone_number>19176787766</phone_number>
+        <email>john@johnkeefe.net</email>
+        <status>Active Subscriber</status>
+        <created_at>2016-01-19 20:13:28 UTC</created_at>
+        <updated_at>2016-10-05 15:58:30 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="magical" id="342391" opt_in_path_id="199731" message_id="582242425"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10013</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.720024</latitude>
+          <longitude>-74.003648</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10013</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal" created_at="2016-01-26T23:35:17Z" updated_at="2016-01-26T23:35:17Z">
+self          </custom_column>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700259266" type="opt_in" approved="false">
+      <phone_number>19176787766</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>188157159</profile>
+      <body>Election land</body>
+      <message_template_id>33935314</message_template_id>
+      <keyword id="379531">
+        <name>election land</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-10-05 15:55:13 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="188157159">
+        <first_name/>
+        <last_name/>
+        <phone_number>19176787766</phone_number>
+        <email>john@johnkeefe.net</email>
+        <status>Active Subscriber</status>
+        <created_at>2016-01-19 20:13:28 UTC</created_at>
+        <updated_at>2016-10-05 15:58:30 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="magical" id="342391" opt_in_path_id="199731" message_id="582242425"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10013</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.720024</latitude>
+          <longitude>-74.003648</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10013</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal" created_at="2016-01-26T23:35:17Z" updated_at="2016-01-26T23:35:17Z">
+self          </custom_column>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700251817" type="info_response" approved="false">
+      <phone_number>17188668674</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>203382697</profile>
+      <body>11238</body>
+      <message_template_id>33935155</message_template_id>
+      <keyword/>
+      <received_at>2016-10-05 15:43:21 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203382697">
+        <first_name/>
+        <last_name/>
+        <phone_number>17188668674</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 15:43:10 UTC</created_at>
+        <updated_at>2016-10-05 15:43:21 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700251649"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.678989</latitude>
+          <longitude>-73.961819</longitude>
+          <city>Brooklyn</city>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="700251649" type="opt_in" approved="false">
+      <phone_number>17188668674</phone_number>
+      <carrier_name>AT&amp;T</carrier_name>
+      <profile>203382697</profile>
+      <body>Electionland</body>
+      <message_template_id>33935155</message_template_id>
+      <keyword id="377968">
+        <name>electionland</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-10-05 15:43:10 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="203382697">
+        <first_name/>
+        <last_name/>
+        <phone_number>17188668674</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-10-05 15:43:10 UTC</created_at>
+        <updated_at>2016-10-05 15:43:21 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="700251649"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.678989</latitude>
+          <longitude>-73.961819</longitude>
+          <city>Brooklyn</city>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697484203" type="info_response" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>Sí</body>
+      <message_template_id>33900280</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 20:58:26 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697484029" type="info_response" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>None.</body>
+      <message_template_id>33900277</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 20:58:16 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697483792" type="info_response" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>25</body>
+      <message_template_id>33900274</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 20:58:03 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697288864" type="info_response" approved="false">
+      <phone_number>12127290355</phone_number>
+      <carrier_name>Verizon Wireless</carrier_name>
+      <profile>202756663</profile>
+      <body>11238</body>
+      <message_template_id>33897682</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 18:11:38 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202756663">
+        <first_name/>
+        <last_name/>
+        <phone_number>12127290355</phone_number>
+        <email/>
+        <status>Undeliverable</status>
+        <created_at>2016-09-30 18:11:20 UTC</created_at>
+        <updated_at>2016-09-30 18:56:23 UTC</updated_at>
+        <opted_out_at>2016-09-30 18:56:23 UTC</opted_out_at>
+        <opted_out_source>Opt-out from inbox</opted_out_source>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697288624"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.678989</latitude>
+          <longitude>-73.961819</longitude>
+          <city>Brooklyn</city>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697288624" type="opt_in" approved="false">
+      <phone_number>12127290355</phone_number>
+      <carrier_name>Verizon Wireless</carrier_name>
+      <profile>202756663</profile>
+      <body>Electionland </body>
+      <message_template_id>33897682</message_template_id>
+      <keyword id="377968">
+        <name>electionland</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-09-30 18:11:20 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202756663">
+        <first_name/>
+        <last_name/>
+        <phone_number>12127290355</phone_number>
+        <email/>
+        <status>Undeliverable</status>
+        <created_at>2016-09-30 18:11:20 UTC</created_at>
+        <updated_at>2016-09-30 18:56:23 UTC</updated_at>
+        <opted_out_at>2016-09-30 18:56:23 UTC</opted_out_at>
+        <opted_out_source>Opt-out from inbox</opted_out_source>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697288624"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.678989</latitude>
+          <longitude>-73.961819</longitude>
+          <city>Brooklyn</city>
+          <state>NY</state>
+          <postal_code>11238</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport"/>
+          <custom_column name="ElectionWait"/>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact"/>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697288048" type="direct_response" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>?</body>
+      <message_template_id>33897823</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 18:10:35 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697283500" type="invalid_info_response" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>100001</body>
+      <message_template_id>33897682</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 18:04:49 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697283392" type="duplicate_opt_in" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>Wbez</body>
+      <message_template_id>33897682</message_template_id>
+      <keyword id="377962">
+        <name>wbez</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-09-30 18:04:41 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697281802" type="info_response" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>10001</body>
+      <message_template_id>33897682</message_template_id>
+      <keyword/>
+      <received_at>2016-09-30 18:02:45 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+    <message id="697281691" type="opt_in" approved="false">
+      <phone_number>15617566135</phone_number>
+      <carrier_name>T-Mobile</carrier_name>
+      <profile>202755097</profile>
+      <body>Electionland</body>
+      <message_template_id>33897682</message_template_id>
+      <keyword id="377968">
+        <name>electionland</name>
+        <opt_in_path_id>216244</opt_in_path_id>
+      </keyword>
+      <received_at>2016-09-30 18:02:36 UTC</received_at>
+      <campaign id="148969" active="true">
+        <name>Electionland</name>
+      </campaign>
+      <profile id="202755097">
+        <first_name/>
+        <last_name/>
+        <phone_number>15617566135</phone_number>
+        <email/>
+        <status>Active Subscriber</status>
+        <created_at>2016-09-30 18:02:36 UTC</created_at>
+        <updated_at>2016-09-30 20:58:26 UTC</updated_at>
+        <opted_out_at/>
+        <opted_out_source/>
+        <source type="Keyword" name="electionland" id="377968" opt_in_path_id="216244" message_id="697281691"/>
+        <address>
+          <street1/>
+          <street2/>
+          <city/>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </address>
+        <location>
+          <latitude>40.75205</latitude>
+          <longitude>-73.994517</longitude>
+          <city>New York</city>
+          <state>NY</state>
+          <postal_code>10001</postal_code>
+          <country>US</country>
+        </location>
+        <custom_columns>
+          <custom_column name="Answer1"/>
+          <custom_column name="ElectionReport" created_at="2016-09-30T20:58:16Z" updated_at="2016-09-30T20:58:16Z">
+None.          </custom_column>
+          <custom_column name="ElectionWait" created_at="2016-09-30T20:58:04Z" updated_at="2016-09-30T20:58:04Z">
+25          </custom_column>
+          <custom_column name="Favorite Band"/>
+          <custom_column name="Infomagical Goal"/>
+          <custom_column name="OKtoContact" created_at="2016-09-30T20:58:26Z" updated_at="2016-09-30T20:58:26Z">
+Yes          </custom_column>
+          <custom_column name="Twitter handle"/>
+        </custom_columns>
+        <integrations>
+        </integrations>
+        <clicks>
+        </clicks>
+      </profile>
+    </message>
+  </messages>
+</response>
