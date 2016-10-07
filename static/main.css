@@ -7,6 +7,10 @@
   }
 }
 
+.navbar-brand img {
+  max-height: 100%;
+}
+
 /* Layout stuff */
 .full-container {
   position: absolute;
@@ -27,6 +31,10 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.main-navbar {
+  z-index: 100;
 }
 
 /* Login page */

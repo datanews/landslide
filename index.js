@@ -51,8 +51,10 @@ app.get('/auth/slack/callback',
 
 // Login
 app.get('/login', function(req, res, next) {
-  console.log(req.session);
-  res.render('login', { user: req.user });
+  res.render('login', {
+    title: 'Login',
+    user: req.user
+  });
 });
 
 // Logout
@@ -68,7 +70,10 @@ app.get('/logout',
 app.get('/',
   slack.isLoggedIn,
   function(req, res) {
-  res.render('home', { user: req.session.user });
+  res.render('home', {
+    title: 'Home',
+    user: req.session.user
+  });
 });
 
 
@@ -84,7 +89,10 @@ app.use(function errorHandler(err, req, res, next) {
   }
   else {
     res.status(500);
-    res.render('error', { error: err });
+    res.render('error', {
+      title: 'Error',
+      error: err
+    });
   }
 });
 
