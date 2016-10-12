@@ -12,10 +12,10 @@
     <script id="home-template" type="text/ractive">
       <form class="filter-form form-inline">
         <div class="form-group">
-          <label for="filter-state">Filter by state</label>
+          <label for="filter-state"><%= __('filterByState') %></label>
 
           <select class="form-control" value="{{ filteredState }}" id="filter-state">
-            <option selected disabled>Choose</option>
+            <option selected disabled><%= __('choose') %></option>
             {{#states:s}}
               <option value="{{ this }}">{{ this }}</option>
             {{/states}}
@@ -25,7 +25,7 @@
         <div class="data-info">
           <p>
             {{#lastFetch}}
-              <small class="text-muted">Data as of {{ lastFetch.fromNow() }}.</small>
+              <small class="text-muted"><%= __('dataAsOf') %> {{ lastFetch.fromNow() }}.</small>
             {{/lastFetch}}
             <span class="loading {{#isLoading}}is-loading{{/isLoading}}"><i class="fa fa-spinner fa-pulse"></i></span>
           </p>
@@ -36,13 +36,13 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Report</th>
-              <th>Wait</th>
-              <th>City</th>
-              <th>State</th>
-              <th>Zip</th>
-              <th>Phone</th>
-              <th>Updated</th>
+              <th><%= __('report') %></th>
+              <th><%= __('wait') %></th>
+              <th><%= __('city') %></th>
+              <th><%= __('state') %></th>
+              <th><%= __('zip') %></th>
+              <th><%= __('phone') %></th>
+              <th><%= __('updated') %></th>
             </tr>
           </thead>
 

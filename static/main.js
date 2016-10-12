@@ -3,6 +3,10 @@
  */
 
 $(document).ready(function() {
+  // Some settings
+  moment.locale(window.template.locale || 'en');
+
+  // Reporting
   if ($('#home-template').length > 0) {
     reporting();
   }

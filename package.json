@@ -19,6 +19,7 @@
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "i18n": "^0.8.3",
     "lodash": "^4.16.4",
     "mkdirp": "^0.5.1",
     "moment-timezone": "^0.5.5",

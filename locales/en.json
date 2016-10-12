@@ -1,0 +1,16 @@
+{
+  "siteTitle": "ElectionLand reporting",
+  "login": "Login",
+  "logout": "Logout",
+  "loginNote": "Make sure to use your <strong>ElectionLand Slack</strong> login to make sure we know it's you.",
+  "filterByState": "Filter by state",
+  "choose": "Choose",
+  "dataAsOf": "Data as of",
+  "report": "Report",
+  "wait": "Wait",
+  "city": "City",
+  "state": "State",
+  "zip": "Zip",
+  "phone": "Phone",
+  "updated": "Updated"
+}

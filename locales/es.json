@@ -1,0 +1,16 @@
+{
+  "siteTitle": "ElectionLand informes",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "loginNote": "Asegúrese de utilizar el <strong>ElectionLand Slack</strong> de inicio de sesión para asegurarse de que sabemos que eres tú.",
+  "filterByState": "Filtro por estado",
+  "choose": "Escoger",
+  "dataAsOf": "Datos hasta la",
+  "report": "Noticia",
+  "wait": "Espera",
+  "city": "Ciudad",
+  "state": "Estado",
+  "zip": "Código de zip",
+  "phone": "Teléfono",
+  "updated": "Actualizada"
+}
