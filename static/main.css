@@ -11,6 +11,20 @@
   max-height: 100%;
 }
 
+/* Mobile only */
+.mobile-only,
+.mobile-only-inline {
+  display: none;
+}
+
+body.mobile .mobile-only {
+  display: block;
+}
+
+body.mobile .mobile-only-inline {
+  display: inline;
+}
+
 /* Layout stuff */
 .full-container {
   position: absolute;

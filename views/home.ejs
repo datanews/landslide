@@ -59,7 +59,14 @@
                       <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ zip }}">{{ zip }}</a>
                     {{/zip}}
                   </td>
-                  <td>{{#canContact}}{{ phone }}{{/canContact}}</td>
+                  <td>
+                    {{#canContact}}
+                      {{#phone}}
+                        {{ phone }}
+                        &nbsp;<a class="mobile-only-inline" href="tel:{{ phone.replace(/[^0-9]/g, '') }}" title="<%= __('callNumber') %>"><i class="fa fa-phone fa-lg"></i></a>
+                        &nbsp;<a class="mobile-only-inline" href="sms:{{ phone.replace(/[^0-9]/g, '') }}?body=<%= __('textBody') %>" title="<%= __('textNumber') %>"><i class="fa fa-mobile fa-lg"></i></a>
+                      {{/phone}}
+                    {{/canContact}}</td>
                   <td>
                     {{#updatedM}}
                       <span title="{{ ElectionReport.updated }}">{{ updatedM.fromNow() }}</span>

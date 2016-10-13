@@ -12,5 +12,8 @@
   "state": "Estado",
   "zip": "Código de zip",
   "phone": "Teléfono",
-  "updated": "Actualizada"
+  "updated": "Actualizada",
+  "callNumber": "Llama al número",
+  "textNumber": "Mensaje número",
+  "textBody": "Hola de ElectionLand"
 }
