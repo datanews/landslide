@@ -62,8 +62,8 @@ function reporting() {
       }
     }
   }
-  ractive.observe('filteredState', observeFilter('filteredState'));
-  ractive.observe('filteredOptIn', observeFilter('filteredOptIn'));
+  ractive.observe('filteredState', observeFilter('filteredState'), { init: false });
+  ractive.observe('filteredOptIn', observeFilter('filteredOptIn'), { init: false });
 
   // Fetch
   function fetch() {

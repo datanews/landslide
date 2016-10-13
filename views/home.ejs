@@ -47,11 +47,15 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th><%= __('optIn') %></th>
+              {{^filteredOptIn}}
+                <th><%= __('optIn') %></th>
+              {{/filteredOptIn}}
               <th><%= __('report') %></th>
               <th><%= __('wait') %></th>
               <th><%= __('city') %></th>
-              <th><%= __('state') %></th>
+              {{^filteredState}}
+                <th><%= __('state') %></th>
+              {{/filteredState}}
               <th><%= __('zip') %></th>
               <th><%= __('phone') %></th>
               <th><%= __('updated') %></th>
@@ -62,11 +66,15 @@
             {{#data}}
               {{#((!filteredState && !filteredOptIn) || (filteredState && filteredState === state) || (filteredOptIn && filteredOptIn === optIn))}}
                 <tr>
-                  <td>{{ optIn }}</td>
+                  {{^filteredOptIn}}
+                    <td>{{ optIn }}</td>
+                  {{/filteredOptIn}}
                   <td>{{ ElectionReport.value }}</td>
                   <td>{{ ElectionWait.value }}</td>
                   <td>{{ city }}</td>
-                  <td>{{ state }}</td>
+                  {{^filteredState}}
+                    <td>{{ state }}</td>
+                  {{/filteredState}}
                   <td>
                     {{#zip}}
                       <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ zip }}">{{ zip }}</a>
