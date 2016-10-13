@@ -5,6 +5,10 @@
   body .navbar {
     border-radius: 0;
   }
+
+  .form-inline .form-group {
+    margin-right: 1em;
+  }
 }
 
 .navbar-brand img {

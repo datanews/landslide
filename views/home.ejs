@@ -15,10 +15,21 @@
           <label for="filter-state"><%= __('filterByState') %></label>
 
           <select class="form-control" value="{{ filteredState }}" id="filter-state">
-            <option selected disabled><%= __('choose') %></option>
+            <option value="" selected><%= __('all') %></option>
             {{#states:s}}
               <option value="{{ this }}">{{ this }}</option>
             {{/states}}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filter-opt-in"><%= __('filterByOptIn') %></label>
+
+          <select class="form-control" value="{{ filteredOptIn }}" id="filter-opt-in">
+            <option value="" selected><%= __('all') %></option>
+            {{#optIns:s}}
+              <option value="{{ this }}">{{ this }}</option>
+            {{/optIns}}
           </select>
         </div>
 
@@ -36,6 +47,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th><%= __('optIn') %></th>
               <th><%= __('report') %></th>
               <th><%= __('wait') %></th>
               <th><%= __('city') %></th>
@@ -48,8 +60,9 @@
 
           <tbody>
             {{#data}}
-              {{#(!filteredState || (filteredState && filteredState === state))}}
+              {{#((!filteredState && !filteredOptIn) || (filteredState && filteredState === state) || (filteredOptIn && filteredOptIn === optIn))}}
                 <tr>
+                  <td>{{ optIn }}</td>
                   <td>{{ ElectionReport.value }}</td>
                   <td>{{ ElectionWait.value }}</td>
                   <td>{{ city }}</td>

@@ -14,6 +14,7 @@ var test = [];
 
 _.range(1000).forEach(function() {
   var t = {};
+  t.optIn = faker.random.arrayElement(['electionland', 'other', 'other1', 'some other']);
   t.phone = faker.phone.phoneNumber();
   t.canContact = faker.random.boolean();
   t.city = faker.address.city();
@@ -22,7 +23,7 @@ _.range(1000).forEach(function() {
 
   if (faker.random.boolean()) {
     t.ElectionWait = {
-      value: faker.random.arrayElement(["30 min", "2minutes", "an hour"]),
+      value: faker.random.arrayElement(['30 min', '2minutes', 'an hour']),
       updated: faker.date.recent()
     }
   }

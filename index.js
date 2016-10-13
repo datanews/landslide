@@ -103,7 +103,7 @@ app.get('/login', function(req, res, next) {
 
 // Logout
 app.get('/logout',
-  slack.isLoggedIn,
+  slack.isLoggedIn(),
   function(req, res) {
     req.logout();
     req.session.destroy();
@@ -112,7 +112,7 @@ app.get('/logout',
 
 // Main page
 app.get('/',
-  slack.isLoggedIn,
+  slack.isLoggedIn(),
   function(req, res) {
     res.render('home', {
       title: 'Home',
@@ -122,7 +122,7 @@ app.get('/',
 
 // "API"
 app.get('/api',
-  slack.isLoggedIn,
+  slack.isLoggedIn('/api-unauthorized'),
   function(req, res) {
     const set = req.query.set || 'all';
     const setPath = path.join(__dirname, 'data', 'collected', set + '.json');
@@ -140,6 +140,14 @@ app.get('/api',
     }
   });
 
+app.get('/api-unauthorized', function(req, res) {
+  res.status(401);
+  res.json({
+    status: 'error',
+    statusCode: 401,
+    message: 'Unauthorized'
+  });
+});
 
 // General error handling
 app.use(function errorHandler(err, req, res, next) {

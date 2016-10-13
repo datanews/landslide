@@ -25,6 +25,8 @@ function reporting() {
     template: template,
     data: {
       isLoading: true,
+      filteredState: "",
+      filteredOptIn: "",
       data: []
     }
   });
@@ -32,21 +34,36 @@ function reporting() {
   // Set up routing
   var router = Router({
     '/state/:filteredState': route,
+    '/opt-in/:filteredOptIn': route,
     '*': route
   });
   router.init();
 
   // Do route
-  function route(filteredState) {
-    ractive.set('filteredState', filteredState ? filteredState : undefined);
+  function route(filter) {
+    var path = this.explode();
+
+    if (path[0] === 'state') {
+      ractive.set('filteredState', filter);
+    }
+    else if (path[0] === 'opt-in') {
+      ractive.set('filteredOptIn', filter);
+    }
   }
 
   // Handle view updates
-  ractive.observe('filteredState', function(n, o) {
-    if (n && n !== o) {
-      router.setRoute('/state/' + n);
+  function observeFilter(name) {
+    var path = name === 'filteredState' ? '/state/' : '/opt-in/';
+
+    return function(n, o) {
+      if (n !== o) {
+        ractive.set(name === 'filteredState' ? 'filteredOptIn' : 'filteredState', "");
+        router.setRoute(n ? path + n : '/');
+      }
     }
-  });
+  }
+  ractive.observe('filteredState', observeFilter('filteredState'));
+  ractive.observe('filteredOptIn', observeFilter('filteredOptIn'));
 
   // Fetch
   function fetch() {
@@ -60,6 +77,11 @@ function reporting() {
         ractive.set('isLoading', false);
         ractive.set('data', data);
         ractive.set('states', _.sortBy(_.uniq(_.map(data, 'state'))));
+        ractive.set('optIns', _.sortBy(_.uniq(_.map(data, 'optIn'))));
+      }
+      else if (error && error.status === 401) {
+        // Reload page
+        document.location.reload();
       }
       else {
         console.log(error);
