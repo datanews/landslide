@@ -23,6 +23,7 @@
     "lodash": "^4.16.4",
     "mkdirp": "^0.5.1",
     "moment-timezone": "^0.5.5",
+    "mongoose": "^4.6.3",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-slack": "0.0.6",
