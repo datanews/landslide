@@ -23,13 +23,13 @@
         </div>
 
         <div class="form-group">
-          <label for="filter-opt-in"><%= __('filterByOptIn') %></label>
+          <label for="filter-source"><%= __('filterBySource') %></label>
 
-          <select class="form-control" value="{{ filteredOptIn }}" id="filter-opt-in">
+          <select class="form-control" value="{{ filteredSource }}" id="filter-source">
             <option value="" selected><%= __('all') %></option>
-            {{#optIns:s}}
+            {{#sources:s}}
               <option value="{{ this }}">{{ this }}</option>
-            {{/optIns}}
+            {{/sources}}
           </select>
         </div>
 
@@ -64,13 +64,13 @@
 
           <tbody>
             {{#data}}
-              {{#((!filteredState && !filteredOptIn) || (filteredState && filteredState === state) || (filteredOptIn && filteredOptIn === optIn))}}
+              {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === source))}}
                 <tr>
-                  {{^filteredOptIn}}
-                    <td>{{ optIn }}</td>
-                  {{/filteredOptIn}}
-                  <td>{{ ElectionReport.value }}</td>
-                  <td>{{ ElectionWait.value }}</td>
+                  {{^filteredSource}}
+                    <td>{{ source }}</td>
+                  {{/filteredSource}}
+                  <td>{{ report }}</td>
+                  <td>{{ wait }}</td>
                   <td>{{ city }}</td>
                   {{^filteredState}}
                     <td>{{ state }}</td>
@@ -81,16 +81,16 @@
                     {{/zip}}
                   </td>
                   <td>
-                    {{#canContact}}
+                    {{#contactable}}
                       {{#phone}}
                         {{ phone }}
                         &nbsp;<a class="mobile-only-inline" href="tel:{{ phone.replace(/[^0-9]/g, '') }}" title="<%= __('callNumber') %>"><i class="fa fa-phone fa-lg"></i></a>
                         &nbsp;<a class="mobile-only-inline" href="sms:{{ phone.replace(/[^0-9]/g, '') }}?body=<%= __('textBody') %>" title="<%= __('textNumber') %>"><i class="fa fa-mobile fa-lg"></i></a>
                       {{/phone}}
-                    {{/canContact}}</td>
+                    {{/contactable}}</td>
                   <td>
                     {{#updatedM}}
-                      <span title="{{ ElectionReport.updated }}">{{ updatedM.fromNow() }}</span>
+                      <span>{{ updatedM.fromNow() }}</span>
                     {{/updatedM}}
                   </td>
                 </tr>

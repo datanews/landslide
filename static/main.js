@@ -26,7 +26,7 @@ function reporting() {
     data: {
       isLoading: true,
       filteredState: "",
-      filteredOptIn: "",
+      filteredSource: "",
       data: []
     }
   });
@@ -34,7 +34,7 @@ function reporting() {
   // Set up routing
   var router = Router({
     '/state/:filteredState': route,
-    '/opt-in/:filteredOptIn': route,
+    '/source/:filteredSource': route,
     '*': route
   });
   router.init();
@@ -46,24 +46,24 @@ function reporting() {
     if (path[0] === 'state') {
       ractive.set('filteredState', filter);
     }
-    else if (path[0] === 'opt-in') {
-      ractive.set('filteredOptIn', filter);
+    else if (path[0] === 'source') {
+      ractive.set('filteredSource', filter);
     }
   }
 
   // Handle view updates
   function observeFilter(name) {
-    var path = name === 'filteredState' ? '/state/' : '/opt-in/';
+    var path = name === 'filteredState' ? '/state/' : '/source/';
 
     return function(n, o) {
       if (n !== o) {
-        ractive.set(name === 'filteredState' ? 'filteredOptIn' : 'filteredState', "");
+        ractive.set(name === 'filteredState' ? 'filteredSource' : 'filteredState', "");
         router.setRoute(n ? path + n : '/');
       }
     }
   }
   ractive.observe('filteredState', observeFilter('filteredState'), { init: false });
-  ractive.observe('filteredOptIn', observeFilter('filteredOptIn'), { init: false });
+  ractive.observe('filteredSource', observeFilter('filteredSource'), { init: false });
 
   // Fetch
   function fetch() {
@@ -77,7 +77,7 @@ function reporting() {
         ractive.set('isLoading', false);
         ractive.set('data', data);
         ractive.set('states', _.sortBy(_.uniq(_.map(data, 'state'))));
-        ractive.set('optIns', _.sortBy(_.uniq(_.map(data, 'optIn'))));
+        ractive.set('sources', _.sortBy(_.uniq(_.map(data, 'source'))));
       }
       else if (error && error.status === 401) {
         // Reload page
@@ -100,26 +100,11 @@ function updateData(set, done) {
   $.getJSON('/api?set=' + set, function(data) {
     // Some parsing
     data = data.map(function(d) {
-      ['ElectionReport', 'ElectionWait'].forEach(function(p) {
-        if (d[p]) {
-          d[p].updatedM = moment(d[p].updated);
-        }
-      });
-
-      // Newer date
-      d.updatedM = d.ElectionReport && d.ElectionWait && d.ElectionReport.updatedM.isAfter(d.ElectionWait.updatedM) ?
-        d.ElectionReport.updatedM :
-        d.ElectionReport && d.ElectionWait && d.ElectionReport.updatedM.isBefore(d.ElectionWait.updatedM) ?
-        d.ElectionWait.updatedM :
-        d.ElectionReport && !d.ElectionWait ?
-        d.ElectionReport.updatedM  :
-        !d.ElectionReport && d.ElectionWait ?
-        d.ElectionWait.updatedM : undefined;
-
+      d.updatedM = d.updated ? moment.unix(d.updated) : undefined;
       return d;
     });
     data = _.sortBy(data, function(d) {
-      return d.updatedM ? d.updatedM.unix() : 0;
+      return d.updated ? d.updated : 0;
     }).reverse();
 
     done(null, data);

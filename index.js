@@ -5,11 +5,14 @@
 // Dependencies
 const fs = require('fs');
 const path = require('path');
-const util = require('util');
+const cache = require('apicache').middleware;
 const express = require('express');
 const passport = require('passport');
 const i18n = require('i18n');
 const _ = require('lodash');
+
+const db = require('./lib/db.js')();
+const utils = require('./lib/utils.js');
 const slack = require('./lib/slack.js');
 require('dotenv').config({ silent: true });
 
@@ -123,21 +126,20 @@ app.get('/',
 // "API"
 app.get('/api',
   slack.isLoggedIn('/api-unauthorized'),
+  cache('29 seconds'),
   function(req, res) {
-    const set = req.query.set || 'all';
-    const setPath = path.join(__dirname, 'data', 'collected', set + '.json');
+    db.models.Report.find({}).sort({ updated: -1 }).exec(function(error, results) {
+      if (error) {
+        res.status(500);
+        return res.json({
+          status: 'error',
+          statusCode: 500,
+          message: 'Database error.'
+        });
+      }
 
-    if (fs.existsSync(setPath)) {
-      res.json(JSON.parse(fs.readFileSync(setPath, "utf-8")));
-    }
-    else {
-      res.status(404);
-      res.json({
-        status: 'error',
-        statusCode: 404,
-        message: 'Unable to find set.'
-      });
-    }
+      res.json(results);
+    });
   });
 
 app.get('/api-unauthorized', function(req, res) {
