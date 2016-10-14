@@ -1,5 +1,5 @@
 /**
- * Main data collection.
+ * Collect data from mobile commons.
  */
 
 // Dependencies
@@ -11,6 +11,7 @@ const mkdirp = require('mkdirp');
 const moment = require('moment-timezone');
 const querystring = require('querystring');
 const xmlParse = require('xml2js').parseString;
+const utils = require('../lib/utils.js');
 require('dotenv').config({ silent: true });
 
 // Mobile commons API sucks
@@ -35,7 +36,7 @@ function getData(page, done) {
 
   // Just send test back
   if (TEST) {
-    return xmlParse(fs.readFileSync(path.join(__dirname, "./example.xml"), "utf-8"), done);
+    return xmlParse(fs.readFileSync(path.join(__dirname, "../tests/mobile-commons-example.xml"), "utf-8"), done);
   }
 
   // Make call
@@ -63,59 +64,90 @@ function getData(page, done) {
 function parseData(error, messages, done) {
   var parsed = [];
   var lastFetch = moment().unix();
+  var messagesByPhone = {};
 
   messages.forEach(function(m) {
     var p = {};
+    var custom = {};
+    var max;
+
+    // Collect raw messages
+    messagesByPhone[m.phone_number[0]] = messagesByPhone[m.phone_number[0]] || [];
+    messagesByPhone[m.phone_number[0]].push({
+      id: m.$.id,
+      body: m.body[0],
+      timestamp: moment.utc(m.received_at[0]).unix()
+    });
+
+    // Make sure active
+    if (m.profile[1].status[0] !== 'Active Subscriber') {
+      return;
+    }
+
+    // Source and ID
+    p.id = 'mc-' + m.profile[1].$.id;
+    p.source = 'mobile-commons';
 
     // We look at profile data, as this holds the custom columns, which there
     // are one per profile, though we can know when they last updated it
     p.phone = m.profile[1].phone_number[0];
-    p.zip = m.profile[1].location[0].postal_code[0];
     p.city = m.profile[1].location[0].city[0];
     p.state = m.profile[1].location[0].state[0];
+    p.zip = m.profile[1].location[0].postal_code[0];
 
-    // Mark when we last got this
-    p.lastFetch = lastFetch;
-
-    // TODO: Determine opt-in path
+    // Opt-in TODO:
+    p.subSource = m.profile[1].source[0].$.name;
 
     // Custom columns
     m.profile[1].custom_columns[0].custom_column.forEach(function(c) {
-      if (c._) {
-        p[c.$.name] = {
+      if (c._ && c.$.updated_at) {
+        custom[c.$.name] = {
+          name: c.$.name,
           value: c._.trim(),
-          updated: c.$.updated_at
+          updated: moment.utc(c.$.updated_at)
         }
       }
     });
+    if (custom.OKtoContact && utils.parseBooleanFromString(custom.OKtoContact.value)) {
+      p.contactable = true;
+    }
+    if (custom.ElectionReport) {
+      p.report = custom.ElectionReport.value;
+    }
+    if (custom.ElectionWait) {
+      p.wait = custom.ElectionWait.value;
+    }
+
+    // Determine last update from custom fields
+    max = _.max(_.filter(custom, function(c) {
+      return ['ElectionReport', 'ElectionWait'].indexOf(c.name) !== -1;
+    }), 'updated');
+    if (max) {
+      p.updated = max.updated.unix();
+    }
+
+    // Mark when we last got this
+    p.lastFetch = lastFetch;
 
     parsed.push(p);
   });
 
   // Only one per phone number
-  parsed = _.uniqBy(parsed, 'phone');
+  parsed = _.uniqBy(parsed, 'id');
 
-  // Filter out data we are not concerned with
-  parsed = parsed.filter(function(p) {
-    return (p.ElectionReport && p.ElectionReport.updated) || (p.ElectionWait && p.ElectionWait.updated);
+  // Only pass data that has something in it
+  parsed = _.filter(parsed, function(p) {
+    return p.report || p.wait;
   });
 
-  // Opted in
-  parsed = parsed.map(function(p) {
-    const ok = (p.OKtoContact && p.OKtoContact.value) ? p.OKtoContact.value.toLowerCase() : '';
-    p.canContact = false;
-
-    if (ok === 'yes' || ok === 'y' || ok === 'si' || ok === 'sí') {
-      p.canContact = true;
-    }
-
+  // Add in raw messages for reference
+  parsed = _.map(parsed, function(p) {
+    p.messages = messagesByPhone[p.phone] ? messagesByPhone[p.phone] : [];
     return p;
   });
 
   // Save out.
-  // TODO: move to database
-  mkdirp.sync(path.join(__dirname, 'collected'));
-  fs.writeFileSync(path.join(__dirname, 'collected', 'all.json'), JSON.stringify(parsed));
+  done(null, parsed);
 }
 
 // Get data
@@ -127,21 +159,21 @@ function collectData(done) {
     var p;
     var pLimit;
 
-    getData(page, function(error, parsed) {
-      if (error || !parsed.response.messages) {
+    getData(page, function(error, data) {
+      if (error || !data.response.messages) {
         return done(error);
       }
 
       // Collect
-      messages = messages.concat(parsed.response.messages[0].message);
+      messages = messages.concat(data.response.messages[0].message);
 
       // Page info
-      p = parsed.response.messages[0].$.page;
-      pLimit = parsed.response.messages[0].$.page_count;
+      p = data.response.messages[0].$.page;
+      pLimit = data.response.messages[0].$.page_count;
 
       // If not last page, keep going
       if (p < pLimit) {
-        getPage(page++);
+        getPage(++page);
       }
       else {
         parseData(null, messages, done);
@@ -152,9 +184,5 @@ function collectData(done) {
   getPage(1);
 }
 
-// Go
-collectData(function(error) {
-  if (error) {
-    throw new Error(error);
-  }
-});
+// Export
+module.exports = collectData;
