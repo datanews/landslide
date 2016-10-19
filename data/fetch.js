@@ -10,12 +10,14 @@ const db = require('../lib/db.js')();
 
 const mc = require('./fetch-mobile-commons.js');
 const sd = require('./fetch-screendoor.js');
+const ep = require('./fetch-election-protection.js');
 const test = require('./fetch-test-generator.js');
 
 // Fetch all
 const q = queue();
 q.defer(mc);
 q.defer(sd);
+//q.defer(ep);
 q.defer(test);
 
 // Done
