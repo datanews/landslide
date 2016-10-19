@@ -28,7 +28,7 @@
           <select class="form-control" value="{{ filteredSource }}" id="filter-source">
             <option value="" selected><%= __('all') %></option>
             {{#sources:s}}
-              <option value="{{ this }}">{{ this }}</option>
+              <option value="{{ id }}">{{ name }}</option>
             {{/sources}}
           </select>
         </div>
@@ -47,9 +47,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              {{^filteredOptIn}}
-                <th><%= __('optIn') %></th>
-              {{/filteredOptIn}}
+              {{^filteredSource}}
+                <th><%= __('source') %></th>
+              {{/filteredSource}}
               <th><%= __('report') %></th>
               <th><%= __('wait') %></th>
               <th><%= __('city') %></th>
@@ -64,10 +64,10 @@
 
           <tbody>
             {{#data}}
-              {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === source))}}
+              {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === sourceID))}}
                 <tr>
                   {{^filteredSource}}
-                    <td>{{ source }}</td>
+                    <td>{{ sourceName }}</td>
                   {{/filteredSource}}
                   <td>{{ report }}</td>
                   <td>{{ wait }}</td>

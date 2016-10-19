@@ -15,7 +15,7 @@ const test = require('./fetch-test-generator.js');
 // Fetch all
 const q = queue();
 q.defer(mc);
-//q.defer(sd);
+q.defer(sd);
 q.defer(test);
 
 // Done
@@ -26,7 +26,8 @@ q.awaitAll(function(error, fetched) {
   const combined = [].concat(
     fetched[0] ? fetched[0] : [],
     fetched[1] ? fetched[1] : [],
-    fetched[2] ? fetched[2] : []
+    fetched[2] ? fetched[2] : [],
+    fetched[3] ? fetched[3] : []
   );
   save(combined, function(error, saved) {
     if (error) {

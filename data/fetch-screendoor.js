@@ -18,7 +18,7 @@ require('dotenv').config({ silent: true });
 moment.tz.setDefault('America/New_York');
 
 // URL template
-const urlTemplate = (a) => `https://screendoor.dobt.co/api/projects/${ a.SCREENDOOR_PROJECT }/responses?v=0&sort=responses_updated_at&direction=desc&per_page=100&api_key=${ a.SCREENDOOR_KEY }"`;
+const urlTemplate = (a) => `https://screendoor.dobt.co/api/projects/${ a.SCREENDOOR_PROJECT }/responses?v=0&sort=responses_updated_at&direction=desc&per_page=100&api_key=${ a.SCREENDOOR_KEY }`;
 
 // Make call
 function screendoorCall(url, done) {
@@ -34,7 +34,7 @@ function screendoorCall(url, done) {
       done(null, body, links);
     }
     else {
-      return done("Unknown data reponse.");
+      return done("Unknown data reponse: " + JSON.stringify(body));
     }
   });
 }
@@ -49,8 +49,8 @@ function getAll(done) {
         return done(error);
       }
 
-      collected.concat(data);
-      if (links.next) {
+      collected = collected.concat(data);
+      if (links && links.next) {
         getPage(links.next);
       }
       else {
@@ -64,6 +64,25 @@ function getAll(done) {
 
 // Parse results
 function parseResults(data) {
+  var fetched = moment().unix();
+
+  data = data.map(function(d) {
+    var parsed = {};
+    parsed.id = 'sd-' + d.id;
+    parsed.source = 'screendoor';
+    parsed.phone = d.responses['40758'];
+    parsed.city = d.responses['40763']
+    parsed.state = utils.statesNames[d.responses['40764']] ? utils.statesNames[d.responses['40764']] : d.responses['40764'];
+    parsed.lat = d.responses['40760'] ? parseFloat(d.responses['40760'].lat) : undefined;
+    parsed.lon = d.responses['40760'] ? parseFloat(d.responses['40760'].lng) : undefined;
+    parsed.contactable = !!d.responses['40758'];
+    parsed.report = d.responses['40761'];
+    parsed.updated = moment.utc(d.updated_at).unix();
+    parsed.fetched = fetched;
+
+    return parsed;
+  });
+
   return data;
 }
 
