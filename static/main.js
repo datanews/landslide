@@ -65,6 +65,22 @@ function reporting() {
   ractive.observe('filteredState', observeFilter('filteredState'), { init: false });
   ractive.observe('filteredSource', observeFilter('filteredSource'), { init: false });
 
+  // Events
+  ractive.on('toggleCheck', function(e, id) {
+    var reportIndex = _.findIndex(ractive.get('data'), function(d) {
+      return d.id === id;
+    });
+
+    if (window.confirm(window.template.strings.confirmInCheck)) {
+      $.getJSON('/api/reports/toggle-check?id=' + id, function(updated) {
+        ractive.set('data.' + reportIndex + '.inCheck', updated.inCheck);
+      })
+      .fail(function(error) {
+        console.log(error);
+      });
+    }
+  });
+
   // Fetch
   function fetch() {
     ractive.set('isLoading', true);
@@ -103,7 +119,7 @@ function reporting() {
 // Update data
 function updateData(set, done) {
   set = set || 'all';
-  $.getJSON('/api?set=' + set, function(data) {
+  $.getJSON('/api/reports?set=' + set, function(data) {
     // Some parsing
     data = data.map(function(d) {
       d.updatedM = d.updated ? moment.unix(d.updated) : undefined;

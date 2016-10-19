@@ -82,3 +82,11 @@ body.mobile .mobile-only-inline {
     line-height: 2.5em;
   }
 }
+
+.report-list tbody td.report-data {
+  width: 30%;
+}
+
+.clickable {
+  cursor: pointer;
+}

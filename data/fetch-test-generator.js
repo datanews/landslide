@@ -50,7 +50,7 @@ if (process.env.TEST) {
     t.updated = moment.utc(faker.date.recent()).unix();
     t.fetched = fetched;
 
-    if (Math.random() < 0.75) {
+    if (Math.random() < 0.25) {
       t.inCheck = true;
     }
 

@@ -124,12 +124,14 @@ app.get('/',
   });
 
 // "API"
-app.get('/api',
+app.get('/api/reports',
   slack.isLoggedIn('/api-unauthorized'),
   cache('29 seconds'),
   function(req, res) {
+    // TODO: do something with ?set=
     db.models.Report.find({}).sort({ updated: -1 }).exec(function(error, results) {
       if (error) {
+        console.error(error);
         res.status(500);
         return res.json({
           status: 'error',
@@ -139,6 +141,38 @@ app.get('/api',
       }
 
       res.json(results);
+    });
+  });
+
+// Toggle inCheck flag
+app.get('/api/reports/toggle-check',
+  slack.isLoggedIn('/api-unauthorized'),
+  function(req, res) {
+    db.models.Report.findOne({ id: req.query.id }).exec(function(error, report) {
+      if (error || !report) {
+        console.error(error);
+        res.status(500);
+        return res.json({
+          status: 'error',
+          statusCode: 500,
+          message: 'Database error.'
+        });
+      }
+
+      report.inCheck = !report.inCheck;
+      report.save(function(error, report) {
+        if (error || !report) {
+          console.error(error);
+          res.status(500);
+          return res.json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Database error.'
+          });
+        }
+
+        res.json(report);
+      });
     });
   });
 
