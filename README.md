@@ -18,12 +18,11 @@ Small server for collecting and reporting on MobileCommons data/texting.
 ### Commands
 
 * Run application with: `node index.js`
-* Run scheduling task with: `node ...`
-
+* Run scheduling task with: `node data/fetch.js`
 
 ### Heroku
 
-...
+* See configuration below.  Set configuration for the application like `heroku config:set SLACK_CLIENT_ID=XXXX`
 
 #### Scheduling
 
@@ -39,5 +38,9 @@ To actually run the application, you will need to configure certain things, spec
 * `MOBILE_COMMONS_USER`
 * `MOBILE_COMMONS_PASS`
 * `MOBILE_COMMONS_CAMPAIGN`
+* `SCREENDOOR_PROJECT`
+* `SCREENDOOR_KEY`
+* `GOOGLE_API_KEY`
 * `SESSION_SECRET`
 * `DB_URI`: Should be something like `mongodb://localhost:27017/electionland` (see install)
+* `TEST`: Set to 1 and fake data will be put into the database, and the database name will be appended with `-test`.

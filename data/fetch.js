@@ -15,40 +15,41 @@ const ep = require('./fetch-election-protection.js');
 const test = require('./fetch-test-generator.js');
 
 // Fetch all
-const q = queue();
-//q.defer(mc);
-//q.defer(sd);
-//q.defer(ep);
-q.defer(test);
+function fetchAll(done) {
+  const q = queue();
+  q.defer(mc);
+  q.defer(sd);
+  //q.defer(ep);
+  q.defer(test);
 
-// Done
-q.awaitAll(function(error, fetched) {
-  if (error) {
-    throw _.isError(error) ? error : new Error(error);
-  }
-
-  const combined = [].concat(
-    fetched[0] ? fetched[0] : [],
-    fetched[1] ? fetched[1] : [],
-    fetched[2] ? fetched[2] : [],
-    fetched[3] ? fetched[3] : []
-  );
-
-  geocodeAll(combined, function(error, geocoded) {
+  // Done
+  q.awaitAll(function(error, fetched) {
     if (error) {
-      throw _.isError(error) ? error : new Error(error);
+      return done(error);
     }
 
-    saveAll(geocoded, function(error, saved) {
+    const combined = [].concat(
+      fetched[0] ? fetched[0] : [],
+      fetched[1] ? fetched[1] : [],
+      fetched[2] ? fetched[2] : [],
+      fetched[3] ? fetched[3] : []
+    );
+
+    geocodeAll(combined, function(error, geocoded) {
       if (error) {
-        throw _.isError(error) ? error : new Error(error);
+        return done(error);
       }
 
-      console.log("Saved: " + saved.length);
-      db.connection.close();
+      saveAll(geocoded, function(error, saved) {
+        if (error) {
+          return done(error);
+        }
+
+        done(null, saved);
+      });
     });
   });
-});
+}
 
 // Save data to the Database
 function saveAll(data, done) {
@@ -76,3 +77,6 @@ function geocodeAll(data, done) {
 
   q.awaitAll(done);
 }
+
+// Export
+module.exports = fetchAll;
