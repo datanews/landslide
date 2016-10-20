@@ -36,8 +36,6 @@ if (process.env.TEST) {
     t.city = faker.address.city();
     t.state = faker.address.stateAbbr();
     t.zip = faker.address.zipCode();
-    t.lat = faker.address.latitude();
-    t.lon = faker.address.longitude();
     t.contactable = faker.random.boolean();
 
     if (Math.random() < 0.75) {
@@ -45,6 +43,11 @@ if (process.env.TEST) {
     }
     if (Math.random() < 0.75) {
       t.report = faker.lorem.words();
+    }
+
+    if (Math.random() < 0.5) {
+      t.lat = faker.address.latitude();
+      t.lon = faker.address.longitude();
     }
 
     t.updated = moment.utc(faker.date.recent()).unix();
