@@ -14,6 +14,7 @@ const _ = require('lodash');
 const db = require('./lib/db.js')();
 const utils = require('./lib/utils.js');
 const slack = require('./lib/slack.js');
+const api = require('./lib/api.js');
 require('dotenv').config({ silent: true });
 
 // Use Slack for auth
@@ -123,58 +124,21 @@ app.get('/',
     });
   });
 
-// "API"
+// API endpoints
 app.get('/api/reports',
   slack.isLoggedIn('/api-unauthorized'),
-  cache('29 seconds'),
-  function(req, res) {
-    // TODO: do something with ?set=
-    db.models.Report.find({}).sort({ updated: -1 }).exec(function(error, results) {
-      if (error) {
-        console.error(error);
-        res.status(500);
-        return res.json({
-          status: 'error',
-          statusCode: 500,
-          message: 'Database error.'
-        });
-      }
+  cache('30 seconds'),
+  api.endpointReports);
 
-      res.json(results);
-    });
-  });
+app.get('/api/reports/options',
+  slack.isLoggedIn('/api-unauthorized'),
+  cache('30 seconds'),
+  api.endpointReportsOptions);
 
 // Toggle inCheck flag
 app.get('/api/reports/toggle-check',
   slack.isLoggedIn('/api-unauthorized'),
-  function(req, res) {
-    db.models.Report.findOne({ id: req.query.id }).exec(function(error, report) {
-      if (error || !report) {
-        console.error(error);
-        res.status(500);
-        return res.json({
-          status: 'error',
-          statusCode: 500,
-          message: 'Database error.'
-        });
-      }
-
-      report.inCheck = !report.inCheck;
-      report.save(function(error, report) {
-        if (error || !report) {
-          console.error(error);
-          res.status(500);
-          return res.json({
-            status: 'error',
-            statusCode: 500,
-            message: 'Database error.'
-          });
-        }
-
-        res.json(report);
-      });
-    });
-  });
+  api.endpointReportsToggleCheck);
 
 app.get('/api-unauthorized', function(req, res) {
   res.status(401);
