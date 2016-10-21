@@ -18,15 +18,19 @@ Small server for collecting and reporting on MobileCommons data/texting.
 ### Commands
 
 * Run application with: `node index.js`
-* Run scheduling task with: `node data/fetch.js`
+* Run scheduling task with: `node scheduler.js`
 
 ### Heroku
 
-* See configuration below.  Set configuration for the application like `heroku config:set SLACK_CLIENT_ID=XXXX`
+The following steps were taken to deploy on Heroku
 
-#### Scheduling
-
-...
+1. Install Heroku command line tools.
+1. Create app: `heroku apps:create electionland-reporting`
+1. MongoLab DB: `heroku addons:create mongolab:shared-cluster-2`
+1. Set configuration for the application like `heroku config:set SLACK_CLIENT_ID=XXXX`, See configuration below for all options.
+1. Push code: `git push heroku master`
+1. Scale web (as needed): `heroku ps:scale web=1:performance-m`
+1. Scale clock/scheduler (as needed): `heroku ps:scale clock=1:standard-1x`
 
 ### Configuration
 

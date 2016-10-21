@@ -73,14 +73,22 @@ function parseResults(data) {
     parsed.phone = d.responses['40758'];
     parsed.city = d.responses['40763']
     parsed.state = utils.statesNames[d.responses['40764']] ? utils.statesNames[d.responses['40764']] : d.responses['40764'];
-    parsed.lat = d.responses['40760'] ? parseFloat(d.responses['40760'].lat) : undefined;
-    parsed.lon = d.responses['40760'] ? parseFloat(d.responses['40760'].lng) : undefined;
     parsed.contactable = !!d.responses['40758'];
     parsed.wait = d.responses['40759'];
-    parsed.waitMinutes = utils.parseMinutes(d.responses['40759']);
     parsed.report = d.responses['40761'];
     parsed.updated = moment.utc(d.updated_at).unix();
     parsed.fetched = fetched;
+
+    // Numbers cannot be undefined when updating
+    if (d.responses['40760'] && !_.isNaN(parseFloat(d.responses['40760'].lat))) {
+      parsed.lat = parseFloat(d.responses['40760'].lat);
+    }
+    if (d.responses['40760'] && !_.isNaN(parseFloat(d.responses['40760'].lng))) {
+      parsed.lon = parseFloat(d.responses['40760'].lng);
+    }
+    if (utils.parseMinutes(d.responses['40759'])) {
+      parsed.waitMinutes = utils.parseMinutes(d.responses['40759']);
+    }
 
     return parsed;
   });
