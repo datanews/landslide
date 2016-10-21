@@ -130,7 +130,7 @@ function parseData(error, messages, done) {
     }
 
     // Mark when we last got this
-    p.lastFetch = lastFetch;
+    p.fetched = lastFetch;
 
     parsed.push(p);
   });
