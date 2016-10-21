@@ -42,5 +42,5 @@ To actually run the application, you will need to configure certain things, spec
 * `SCREENDOOR_KEY`
 * `GOOGLE_API_KEY`
 * `SESSION_SECRET`
-* `DB_URI`: Should be something like `mongodb://localhost:27017/electionland` (see install)
-* `TEST`: Set to 1 and fake data will be put into the database, and the database name will be appended with `-test`.
+* `MONGODB_URI`: Should be something like `mongodb://localhost:27017/electionland` or what is provided by the [MonogoLab Heroku addon](https://elements.heroku.com/addons/mongolab).
+* `NODE_ENV`: Set to `test` and fake data will be put into the database, and the database name will be appended with `-test`.  Otherwise, use `development` or `production`.

@@ -19,7 +19,7 @@ function generate(done) {
   var generated = [];
   var fetched = moment().unix();
 
-  if (process.env.TEST) {
+  if (process.env.NODE_ENV === 'test') {
     // Generate
     _.range(faker.random.number({ min: 500, max: 1000 })).forEach(function() {
       var t = {};
