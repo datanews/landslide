@@ -17,8 +17,8 @@ const test = require('./fetch-test-generator.js');
 // Fetch all
 function fetchAll(done) {
   const q = queue();
-  //q.defer(mc);
-  //q.defer(sd);
+  q.defer(mc);
+  q.defer(sd);
   //q.defer(ep);
   q.defer(test);
 

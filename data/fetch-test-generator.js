@@ -5,7 +5,6 @@
 // Dependencies
 const path = require('path');
 const fs = require('fs');
-const faker = require('faker');
 const _ = require('lodash');
 const moment = require('moment-timezone');
 const utils = require('../lib/utils.js');
@@ -20,6 +19,8 @@ function generate(done) {
   var fetched = moment().unix();
 
   if (process.env.NODE_ENV === 'test') {
+    const faker = require('faker');
+
     // Generate
     _.range(faker.random.number({ min: 500, max: 1000 })).forEach(function() {
       var t = {};
