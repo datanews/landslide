@@ -8,6 +8,7 @@ const path = require('path');
 const cache = require('apicache').middleware;
 const express = require('express');
 const passport = require('passport');
+const favicon = require('serve-favicon');
 const i18n = require('i18n');
 const _ = require('lodash');
 
@@ -31,6 +32,7 @@ app.set('view engine', 'ejs');
 // Setup static files
 const cacheAge = process.env.NODE_ENV === 'production' ? 1000 * 60 * 60 * 24 : undefined;
 app.use(express.static(path.join(__dirname, 'static'), { maxAge: cacheAge }));
+app.use(favicon(path.join(__dirname, 'static/media/favicon.ico')));
 
 // i18n
 i18n.configure({
