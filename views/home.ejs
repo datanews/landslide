@@ -64,7 +64,13 @@
               {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === sourceID))}}
                 <tr>
                   <td class="report-data">{{ report }}</td>
-                  <td class="wait-data">{{ wait }}</td>
+                  <td class="wait-data">
+                    {{#waitMinutes}}
+                      {{ waitMinutes > 60 ? (waitMinutes / 60) + ' hours' : waitMinutes + ' minutes' }}
+                    {{else}}
+                      <span class="text-muted">{{ wait }}</span>
+                    {{/waitMinutes}}
+                  </td>
                   <td>
                     {{ city }}, {{ state }} {{ zip }}<br>
                     {{#(zip && !(lat && lon))}}

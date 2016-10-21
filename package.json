@@ -4,7 +4,7 @@
   "description": "Reporting for Mobile Commons data for Electionland",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape tests/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "faker": "^3.1.0"
+    "faker": "^3.1.0",
+    "tape": "^4.6.2"
   }
 }

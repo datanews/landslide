@@ -77,6 +77,7 @@ function parseResults(data) {
     parsed.lon = d.responses['40760'] ? parseFloat(d.responses['40760'].lng) : undefined;
     parsed.contactable = !!d.responses['40758'];
     parsed.wait = d.responses['40759'];
+    parsed.waitMinutes = utils.parseMinutes(d.responses['40759']);
     parsed.report = d.responses['40761'];
     parsed.updated = moment.utc(d.updated_at).unix();
     parsed.fetched = fetched;

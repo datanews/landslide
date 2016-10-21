@@ -39,7 +39,8 @@ function generate(done) {
       t.contactable = faker.random.boolean();
 
       if (Math.random() < 0.75) {
-        t.wait = faker.random.arrayElement(['30 min', '2minutes', 'an hour']);
+        t.wait = faker.random.arrayElement(['30 min', '2minutes', 'an hour', '20min', '5 hours!']);
+        t.waitMinutes = utils.parseMinutes(t.wait);
       }
       if (Math.random() < 0.75) {
         t.report = faker.lorem.words();

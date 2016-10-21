@@ -116,6 +116,7 @@ function parseData(error, messages, done) {
     }
     if (custom.ElectionWait) {
       p.wait = custom.ElectionWait.value;
+      p.waitMinutes = utils.parseMinutes(custom.ElectionWait.value);
     }
 
     // Determine last update from custom fields
