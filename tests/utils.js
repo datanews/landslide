@@ -12,6 +12,8 @@ test('utils, parseMinutes', function(t) {
     [null, undefined],
     [undefined, undefined],
     [[ 1 ], undefined],
+    [0, undefined],
+    ['0', undefined],
     ['this doesnt say anything about time', undefined],
 
     [2, 2],
