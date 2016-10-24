@@ -12,10 +12,14 @@ test('data | parse-hello-vote | parse', function(t) {
 
   const incoming = {
     phone_number: '+1234567890',
-    polling_location_address: '123 Way St',
-    polling_location_city: 'Minneapolis',
-    polling_location_state: 'MN',
-    polling_location_zip: '55401',
+    address: {
+      locationName: 'AC TRANSIT DISTRICT LOBBY',
+      line1: '1600 FRANKLIN ST OAK  SIDE B',
+      line2: '1600 FRANKLIN ST',
+      city: 'Oakland',
+      state: 'CA',
+      zip: '94612'
+    },
     polling_location_lat: 12.345678,
     polling_location_lon: 98.765432,
     reporting_wait_time: 60,
@@ -28,10 +32,10 @@ test('data | parse-hello-vote | parse', function(t) {
     id: 'hv-1234567890',
     phone: '+1234567890',
     source: 'hellovote',
-    address: '123 Way St',
-    city: 'Minneapolis',
-    state: 'MN',
-    zip: '55401',
+    address: '1600 FRANKLIN ST OAK  SIDE B',
+    city: 'Oakland',
+    state: 'CA',
+    zip: '94612',
     lat: 12.345678,
     lon: 98.765432,
     report: 'This is what happened at the poll site',
