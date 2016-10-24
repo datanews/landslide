@@ -43,7 +43,15 @@ test('data | parse-hello-vote | parse', function(t) {
     waitMinutes: 60,
     contactable: true,
     //fetched: 1477321934,
-    updated: 1478632830
+    updated: 1478632830,
+    pollSite: {
+      locationName: 'AC TRANSIT DISTRICT LOBBY',
+      line1: '1600 FRANKLIN ST OAK  SIDE B',
+      line2: '1600 FRANKLIN ST',
+      city: 'Oakland',
+      state: 'CA',
+      zip: '94612'
+    }
   };
 
   // Not sure best way to have fetched be something specific

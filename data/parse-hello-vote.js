@@ -59,6 +59,9 @@ function parse(incoming) {
       parsed.city = d.address.city;
       parsed.state = d.address.state;
       parsed.zip = d.address.zip;
+
+      // Save object for reference
+      parsed.pollSite = d.address;
     }
 
     if (d.polling_location_lat && !_.isNaN(parseFloat(d.polling_location_lat))) {
