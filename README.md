@@ -18,6 +18,7 @@ Small server for collecting and reporting on MobileCommons data/texting.
 ### Commands
 
 * Run application with: `node index.js`
+    * For development, turn on all debugging: `DEBUG=* node index.js`
 * Run scheduling task with: `node scheduler.js`
 
 ### Heroku
@@ -46,5 +47,7 @@ To actually run the application, you will need to configure certain things, spec
 * `SCREENDOOR_KEY`
 * `GOOGLE_API_KEY`
 * `SESSION_SECRET`
+* `HELLO_VOTE_KEY`: API key for incoming HelloVote data.
 * `MONGODB_URI`: Should be something like `mongodb://localhost:27017/electionland` or what is provided by the [MonogoLab Heroku addon](https://elements.heroku.com/addons/mongolab).
 * `NODE_ENV`: Set to `test` and fake data will be put into the database, and the database name will be appended with `-test`.  Otherwise, use `development` or `production`.
+* `DEBUG`: Debug level via [debug](https://www.npmjs.com/package/debug).  For development, `*` will debug all.  For production, some level might be helpful such as: `db,api,server,data:*`

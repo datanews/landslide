@@ -2,13 +2,16 @@
  * Test generator
  */
 
+// Configure
+require('dotenv').config({ silent: true });
+
 // Dependencies
 const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
+const debug = require('debug')('data:fetch:test');
 const moment = require('moment-timezone');
 const utils = require('../lib/utils.js');
-require('dotenv').config({ silent: true });
 
 // Default timezone
 moment.tz.setDefault('America/New_York');

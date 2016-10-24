@@ -2,6 +2,9 @@
  * Collect data from mobile commons.
  */
 
+// Configure
+require('dotenv').config({ silent: true });
+
 // Dependencies
 const path = require('path');
 const fs = require('fs');
@@ -11,11 +14,8 @@ const mkdirp = require('mkdirp');
 const moment = require('moment-timezone');
 const querystring = require('querystring');
 const xmlParse = require('xml2js').parseString;
+const debug = require('debug')('data:fetch:mobile-commons');
 const utils = require('../lib/utils.js');
-require('dotenv').config({ silent: true });
-
-// Mobile commons API sucks
-var TEST = false;
 
 // Default timezone
 moment.tz.setDefault('America/New_York');
@@ -33,11 +33,6 @@ function getData(page, done) {
   });
   const url = urlTemplate(params);
   const auth = 'Basic ' + new Buffer(process.env.MOBILE_COMMONS_USER + ':' + process.env.MOBILE_COMMONS_PASS).toString('base64');
-
-  // Just send test back
-  if (TEST) {
-    return xmlParse(fs.readFileSync(path.join(__dirname, "../tests/mobile-commons-example.xml"), "utf-8"), done);
-  }
 
   // Make call
   request.get({

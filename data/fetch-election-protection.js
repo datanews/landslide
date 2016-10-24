@@ -2,6 +2,9 @@
  * Collect data from election protection API.
  */
 
+// Configure
+require('dotenv').config({ silent: true });
+
 // Dependencies
 const path = require('path');
 const fs = require('fs');
@@ -10,8 +13,8 @@ const _ = require('lodash');
 const mkdirp = require('mkdirp');
 const moment = require('moment-timezone');
 const querystring = require('querystring');
+const debug = require('debug')('data:fetch:election-protection');
 const utils = require('../lib/utils.js');
-require('dotenv').config({ silent: true });
 
 // Default timezone
 moment.tz.setDefault('America/New_York');

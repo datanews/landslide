@@ -2,6 +2,9 @@
  * Geocode a report (and cache)
  */
 
+// Configure
+require('dotenv').config({ silent: true });
+
 // Dependencies
 const path = require('path');
 const fs = require('fs');
@@ -12,7 +15,7 @@ const querystring = require('querystring');
 const queue = require('d3-queue').queue;
 const utils = require('../lib/utils.js');
 const db = require('../lib/db.js')();
-require('dotenv').config({ silent: true });
+const debug = require('debug')('data:geocode');
 
 // API call
 const urlTemplate = (a) => `https://maps.googleapis.com/maps/api/geocode/json?key=${ a.GOOGLE_API_KEY }&address=${ a.address }`;
@@ -46,7 +49,7 @@ function geocode(report, done) {
 
       // Not OK means its probably rate limited
       if (body.status !== 'OK' && body.status !== 'ZERO_RESULTS') {
-        console.error(body);
+        debug('error: ' + body);
         return waitWrapper(null, done)(null, report);
       }
 

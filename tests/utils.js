@@ -2,11 +2,11 @@
  * Test utils
  */
 
-var test = require('tape');
-var utils = require('../lib/utils.js');
+const test = require('tape');
+const utils = require('../lib/utils.js');
 
-
-test('utils, parseMinutes', function(t) {
+// Tests for parseMinutes function
+test('utils | parseMinutes', function(t) {
   var parseTests = [
     ['', undefined],
     [null, undefined],

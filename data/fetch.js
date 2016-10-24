@@ -2,13 +2,15 @@
  * Fetch data
  */
 
+// Configure
+require('dotenv').config({ silent: true });
 
 // Dependencies
 const queue = require('d3-queue').queue;
 const _ = require('lodash');
+const debug = require('debug')('data:fetch');
 const db = require('../lib/db.js')();
 const geocode = require('./geocode.js');
-
 const mc = require('./fetch-mobile-commons.js');
 const sd = require('./fetch-screendoor.js');
 const ep = require('./fetch-election-protection.js');
