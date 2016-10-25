@@ -88,8 +88,8 @@ function reporting() {
     updateData('all', function(error, data) {
       originalData = _.cloneDeep(data);
 
-      if (!error) {
-        ractive.set('lastFetch', moment.unix(_.max(data, 'fetched').fetched));
+      if (!error && data && data.length) {
+        ractive.set('lastFetch', moment.unix(_.maxBy(data, 'fetched').fetched));
         ractive.set('isLoading', false);
         ractive.set('states', _.sortBy(_.filter(_.uniq(_.map(data, 'state')))));
         ractive.set('sources', _.sortBy(_.filter(_.uniqBy(_.map(data, function(d) {
