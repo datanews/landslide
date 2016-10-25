@@ -23,13 +23,17 @@ moment.tz.setDefault('America/New_York');
 // Mobile Commons API template
 const urlTemplate = (a) => `https://secure.mcommons.com/api/messages?campaign_id=${ a.MOBILE_COMMONS_CAMPAIGN }&include_profile=true&limit=100&start_time=${ a.start }&page=${ a.page }`;
 
+// The first time we get the data, we'll get all of it, but subsequent requests
+// should be only the past hour.
+var dataStart = moment.utc('2016-10-01T00:00:00Z');
+
 // Make a data call
 function getData(page, done) {
   page = _.isUndefined(page) ? 1 : page;
   done = _.isFunction(done) ? done : function() { return; };
   const params = _.extend(_.clone(process.env), {
     page: page,
-    start: querystring.escape('2016-10-01T00:00:00Z')
+    start: querystring.escape(dataStart.format())
   });
   const url = urlTemplate(params);
   const auth = 'Basic ' + new Buffer(process.env.MOBILE_COMMONS_USER + ':' + process.env.MOBILE_COMMONS_PASS).toString('base64');
@@ -175,6 +179,7 @@ function collectData(done) {
         getPage(++page);
       }
       else {
+        dataStart = moment.utc().subtract(1, 'hour');
         parseData(null, messages, done);
       }
     });
