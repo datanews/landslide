@@ -4,7 +4,7 @@
   "description": "Reporting for Mobile Commons data for Electionland",
   "main": "index.js",
   "scripts": {
-    "test": "DEBUG=0 tape tests/**/*.js tests/*.js | tap-spec"
+    "test": "NODE_ENV=test DEBUG=0 tape tests/**/*.js tests/*.js | tap-spec"
   },
   "repository": {
     "type": "git",

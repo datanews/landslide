@@ -11,21 +11,24 @@ test('data | parse-hello-vote | parse', function(t) {
   t.plan(2);
 
   const incoming = {
+    first_name: null,
     phone_number: '+1234567890',
-    address: {
-      locationName: 'AC TRANSIT DISTRICT LOBBY',
-      line1: '1600 FRANKLIN ST OAK  SIDE B',
-      line2: '1600 FRANKLIN ST',
-      city: 'Oakland',
-      state: 'CA',
-      zip: '94612'
-    },
-    polling_location_lat: 12.345678,
-    polling_location_lon: 98.765432,
-    reporting_wait_time: 60,
-    reporting_story: 'This is what happened at the poll site',
+    reporting_wait_time: '15',
+    reporting_story: 'this is a test story with location data',
     reporting_contact_ok: true,
-    received: '2016-11-08T19:20:30.45Z'
+    received: '2016-10-24T22:39:13Z',
+    polling_location: {
+      address: {
+        locationName: 'AC TRANSIT DISTRICT LOBBY',
+        line1: '1600 FRANKLIN ST OAK  SIDE B',
+        line2: '1600 FRANKLIN ST ',
+        city: 'Oakland',
+        state: 'CA',
+        zip: '94612'
+      },
+      lat: 37.80544,
+      lon: -122.26886
+    }
   };
 
   const expected = {
@@ -36,18 +39,18 @@ test('data | parse-hello-vote | parse', function(t) {
     city: 'Oakland',
     state: 'CA',
     zip: '94612',
-    lat: 12.345678,
-    lon: 98.765432,
-    report: 'This is what happened at the poll site',
-    wait: 60,
-    waitMinutes: 60,
+    lat: 37.80544,
+    lon: -122.26886,
+    report: 'this is a test story with location data',
+    wait: '15',
+    waitMinutes: 15,
     contactable: true,
     //fetched: 1477321934,
-    updated: 1478632830,
+    updated: 1477348753,
     pollSite: {
       locationName: 'AC TRANSIT DISTRICT LOBBY',
       line1: '1600 FRANKLIN ST OAK  SIDE B',
-      line2: '1600 FRANKLIN ST',
+      line2: '1600 FRANKLIN ST ',
       city: 'Oakland',
       state: 'CA',
       zip: '94612'

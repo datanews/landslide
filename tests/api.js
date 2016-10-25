@@ -72,21 +72,24 @@ test('api | api/incoming/hello-vote | bad object should not save', function(t) {
 // API should save
 test('api | api/incoming/hello-vote | object should not save', function(t) {
   var incoming = {
-    phone_number: '+1234567891',
-    address: {
-      locationName: 'AC TRANSIT DISTRICT LOBBY',
-      line1: '1600 FRANKLIN ST OAK  SIDE B',
-      line2: '1600 FRANKLIN ST',
-      city: 'Oakland',
-      state: 'CA',
-      zip: '94612'
-    },
-    polling_location_lat: 12.345678,
-    polling_location_lon: 98.765432,
-    reporting_wait_time: 60,
-    reporting_story: 'This is what happened at the poll site',
+    first_name: null,
+    phone_number: '+1234567890',
+    reporting_wait_time: '15',
+    reporting_story: 'this is a test story with location data',
     reporting_contact_ok: true,
-    received: '2016-11-08T19:20:30.45Z'
+    received: '2016-10-24T22:39:13Z',
+    polling_location: {
+      address: {
+        locationName: 'AC TRANSIT DISTRICT LOBBY',
+        line1: '1600 FRANKLIN ST OAK  SIDE B',
+        line2: '1600 FRANKLIN ST ',
+        city: 'Oakland',
+        state: 'CA',
+        zip: '94612'
+      },
+      lat: 37.80544,
+      lon: -122.26886
+    }
   };
 
   supertest(server)
