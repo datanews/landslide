@@ -21,7 +21,7 @@ const utils = require('../lib/utils.js');
 moment.tz.setDefault('America/New_York');
 
 // Mobile Commons API template
-const urlTemplate = (a) => `https://secure.mcommons.com/api/messages?campaign_id=${ a.MOBILE_COMMONS_CAMPAIGN }&include_profile=true&limit=100&page=${ a.page }`;
+const urlTemplate = (a) => `https://secure.mcommons.com/api/messages?campaign_id=${ a.MOBILE_COMMONS_CAMPAIGN }&include_profile=true&limit=100&start_time=${ a.start }&page=${ a.page }`;
 
 // Make a data call
 function getData(page, done) {
@@ -29,10 +29,11 @@ function getData(page, done) {
   done = _.isFunction(done) ? done : function() { return; };
   const params = _.extend(_.clone(process.env), {
     page: page,
-    q: querystring
+    start: querystring.escape('2016-10-01T00:00:00Z')
   });
   const url = urlTemplate(params);
   const auth = 'Basic ' + new Buffer(process.env.MOBILE_COMMONS_USER + ':' + process.env.MOBILE_COMMONS_PASS).toString('base64');
+  debug(url);
 
   // Make call
   request.get({
@@ -166,11 +167,11 @@ function collectData(done) {
       messages = messages.concat(data.response.messages[0].message);
 
       // Page info
-      p = data.response.messages[0].$.page;
-      pLimit = data.response.messages[0].$.page_count;
+      p = parseInt(data.response.messages[0].$.page, 10);
+      pLimit = parseInt(data.response.messages[0].$.page_count, 10);
 
       // If not last page, keep going
-      if (p < pLimit) {
+      if (_.isNumber(p) && _.isNumber(pLimit) && p < pLimit) {
         getPage(++page);
       }
       else {
