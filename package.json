@@ -19,6 +19,7 @@
     "apicache": "^0.2.3",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
+    "d3-dsv": "^1.0.3",
     "d3-queue": "^3.0.3",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
@@ -36,6 +37,7 @@
     "passport-slack": "0.0.6",
     "request": "^2.75.0",
     "serve-favicon": "^2.3.0",
+    "shorthash": "0.0.2",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {

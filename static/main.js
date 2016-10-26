@@ -81,6 +81,22 @@ function reporting() {
     }
   });
 
+  ractive.on('exportCSV', function(e, useFilters) {
+    // TODO: Handle filters
+    var uri = '/api/reports/?format=csv';
+    var name = moment().format() + '-electionland-reporting.csv';
+
+    // Hacky way to get a specific file name
+    var link = document.createElement('a');
+    link.className = 'hidden';
+    link.href = uri;
+    link.download = name;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+
   // Fetch
   function fetch() {
     ractive.set('isLoading', true);

@@ -10,7 +10,7 @@
     <div id="home-template-container" class="container"></div>
 
     <script id="home-template" type="text/ractive">
-      <form class="filter-form form-inline">
+      <form class="filter-form form-inline control-group">
         <div class="form-group">
           <label for="filter-state"><%= __('filterByState') %></label>
 
@@ -105,6 +105,10 @@
             {{/data}}
           </tbody>
         </table>
+      </div>
+
+      <div class="exports control-group">
+        <strong>Exports:</strong> &nbsp; <button class="btn btn-primary" on-tap="exportCSV"><i class="fa fa-download"></i> CSV of all reports</button>
       </div>
     </script>
 
