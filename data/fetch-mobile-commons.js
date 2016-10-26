@@ -71,68 +71,80 @@ function parseData(error, messages, done) {
     var custom = {};
     var max;
 
-    // Collect raw messages
-    messagesByPhone[m.phone_number[0]] = messagesByPhone[m.phone_number[0]] || [];
-    messagesByPhone[m.phone_number[0]].push({
-      id: m.$.id,
-      body: m.body[0],
-      timestamp: moment.utc(m.received_at[0]).unix()
-    });
-
-    // Make sure active
-    if (m.profile[1].status[0] !== 'Active Subscriber') {
+    // If there are no records, this is undefined
+    if (!m || !m.phone_number) {
       return;
     }
 
-    // Source and ID
-    p.id = 'mc-' + m.profile[1].$.id;
-    p.source = 'mobile-commons';
+    // Have run into intermittent errors here
+    try {
+      // Collect raw messages
+      messagesByPhone[m.phone_number[0]] = messagesByPhone[m.phone_number[0]] || [];
+      messagesByPhone[m.phone_number[0]].push({
+        id: m.$.id,
+        body: m.body[0],
+        timestamp: moment.utc(m.received_at[0]).unix()
+      });
 
-    // We look at profile data, as this holds the custom columns, which there
-    // are one per profile, though we can know when they last updated it
-    p.phone = m.profile[1].phone_number[0];
-    p.city = m.profile[1].location[0].city[0];
-    p.state = m.profile[1].location[0].state[0];
-    p.zip = m.profile[1].location[0].postal_code[0];
+      // Make sure active
+      if (m.profile[1].status[0] !== 'Active Subscriber') {
+        return;
+      }
 
-    // Opt-in TODO:
-    p.subSource = m.profile[1].source[0].$.name;
+      // Source and ID
+      p.id = 'mc-' + m.profile[1].$.id;
+      p.source = 'mobile-commons';
 
-    // Custom columns
-    m.profile[1].custom_columns[0].custom_column.forEach(function(c) {
-      if (c._ && c.$.updated_at) {
-        custom[c.$.name] = {
-          name: c.$.name,
-          value: c._.trim(),
-          updated: moment.utc(c.$.updated_at)
+      // We look at profile data, as this holds the custom columns, which there
+      // are one per profile, though we can know when they last updated it
+      p.phone = m.profile[1].phone_number[0];
+      p.city = m.profile[1].location[0].city[0];
+      p.state = m.profile[1].location[0].state[0];
+      p.zip = m.profile[1].location[0].postal_code[0];
+
+      // Opt-in TODO:
+      p.subSource = m.profile[1].source[0].$.name;
+
+      // Custom columns
+      m.profile[1].custom_columns[0].custom_column.forEach(function(c) {
+        if (c._ && c.$.updated_at) {
+          custom[c.$.name] = {
+            name: c.$.name,
+            value: c._.trim(),
+            updated: moment.utc(c.$.updated_at)
+          }
+        }
+      });
+      if (custom.OKtoContact && utils.parseBooleanFromString(custom.OKtoContact.value)) {
+        p.contactable = true;
+      }
+      if (custom.ElectionReport) {
+        p.report = custom.ElectionReport.value;
+      }
+      if (custom.ElectionWait) {
+        p.wait = custom.ElectionWait.value;
+        if (utils.parseMinutes(custom.ElectionWait.value)) {
+          p.waitMinutes = utils.parseMinutes(custom.ElectionWait.value);
         }
       }
-    });
-    if (custom.OKtoContact && utils.parseBooleanFromString(custom.OKtoContact.value)) {
-      p.contactable = true;
-    }
-    if (custom.ElectionReport) {
-      p.report = custom.ElectionReport.value;
-    }
-    if (custom.ElectionWait) {
-      p.wait = custom.ElectionWait.value;
-      if (utils.parseMinutes(custom.ElectionWait.value)) {
-        p.waitMinutes = utils.parseMinutes(custom.ElectionWait.value);
+
+      // Determine last update from custom fields
+      max = _.max(_.filter(custom, function(c) {
+        return ['ElectionReport', 'ElectionWait'].indexOf(c.name) !== -1;
+      }), 'updated');
+      if (max) {
+        p.updated = max.updated.unix();
       }
+
+      // Mark when we last got this
+      p.fetched = lastFetch;
+
+      parsed.push(p);
     }
-
-    // Determine last update from custom fields
-    max = _.max(_.filter(custom, function(c) {
-      return ['ElectionReport', 'ElectionWait'].indexOf(c.name) !== -1;
-    }), 'updated');
-    if (max) {
-      p.updated = max.updated.unix();
+    catch (e) {
+      debug(JSON.stringify(m, null, '  '));
+      debug('error parsing mobile commons record: ' + e);
     }
-
-    // Mark when we last got this
-    p.fetched = lastFetch;
-
-    parsed.push(p);
   });
 
   // Only one per phone number
