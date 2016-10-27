@@ -65,10 +65,12 @@ function parseData(error, messages, done) {
   var parsed = [];
   var lastFetch = moment().unix();
   var messagesByPhone = {};
+  var messagesByPhoneTime = {};
 
   messages.forEach(function(m) {
     var p = {};
     var custom = {};
+    var message;
     var max;
 
     // If there are no records, this is undefined
@@ -78,13 +80,18 @@ function parseData(error, messages, done) {
 
     // Have run into intermittent errors here
     try {
-      // Collect raw messages
-      messagesByPhone[m.phone_number[0]] = messagesByPhone[m.phone_number[0]] || [];
-      messagesByPhone[m.phone_number[0]].push({
+      message = {
         id: m.$.id,
         body: m.body[0],
-        timestamp: moment.utc(m.received_at[0]).unix()
-      });
+        timestamp: moment.utc(m.received_at[0]).unix(),
+        type: m.$.type
+      };
+
+      // Collect raw messages.  Mobile commons doesn't handle multiple part
+      // messages, so custom fields are just random part of a multipart
+      // message, so this is needed for manual review.
+      messagesByPhone[m.phone_number[0]] = messagesByPhone[m.phone_number[0]] || [];
+      messagesByPhone[m.phone_number[0]].push(message);
 
       // Make sure active
       if (m.profile[1].status[0] !== 'Active Subscriber') {

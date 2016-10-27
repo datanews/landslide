@@ -27,7 +27,9 @@ function reporting() {
       isLoading: true,
       filteredState: "",
       filteredSource: "",
-      data: []
+      data: [],
+      _: _,
+      moment: moment
     }
   });
 
@@ -81,6 +83,14 @@ function reporting() {
     }
   });
 
+  ractive.on('toggle', function(e, prop) {
+    this.toggle(e.keypath);
+  });
+
+  ractive.on('toggleAbsolute', function(e, prop) {
+    this.toggle(prop);
+  });
+
   ractive.on('exportCSV', function(e, useFilters) {
     // TODO: Handle filters
     var uri = '/api/reports/?format=csv';
@@ -101,7 +111,7 @@ function reporting() {
   function fetch() {
     ractive.set('isLoading', true);
 
-    updateData('all', function(error, data) {
+    updateData(function(error, data) {
       originalData = _.cloneDeep(data);
 
       if (!error && data && data.length) {
@@ -133,9 +143,8 @@ function reporting() {
 }
 
 // Update data
-function updateData(set, done) {
-  set = set || 'all';
-  $.getJSON('/api/reports?set=' + set, function(data) {
+function updateData(done) {
+  $.getJSON('/api/reports', function(data) {
     // Some parsing
     data = data.map(function(d) {
       d.updatedM = d.updated ? moment.unix(d.updated) : undefined;

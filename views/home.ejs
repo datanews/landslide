@@ -44,13 +44,13 @@
       </form>
 
       <div class="table-responsive">
-        <table class="table table-striped report-list">
+        <table class="table report-list">
           <thead>
             <tr>
+              <th></th>
               <th><%= __('report') %></th>
               <th><%= __('wait') %></th>
               <th><%= __('location') %></th>
-              <th><%= __('phone') %></th>
               <th><%= __('updated') %></th>
               {{^filteredSource}}
                 <th><%= __('source') %></th>
@@ -62,32 +62,22 @@
           <tbody>
             {{#data}}
               {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === sourceID))}}
-                <tr>
+                <tr class="overview-row {{#details[id]}}with-details{{/details[id]}}">
+                  <td class="details-toggle">
+                    <span on-tap="toggleAbsolute:{{ 'details.' + id }}" class="clickable">
+                      {{#details[id]}}<i class="fa fa-angle-double-down"></i>{{else}}<i class="fa fa-angle-double-right"></i>{{/details[id]}}
+                    </span>
+                  </td>
                   <td class="report-data">{{ report }}</td>
                   <td class="wait-data">
                     {{#waitMinutes}}
-                      {{ waitMinutes > 60 ? (waitMinutes / 60) + ' hours' : waitMinutes + ' minutes' }}
+                      {{ waitMinutes > 60 ? (waitMinutes / 60).toFixed(2) + ' hr' : waitMinutes + ' min' }}
                     {{else}}
                       <span class="text-muted">{{ wait }}</span>
                     {{/waitMinutes}}
                   </td>
                   <td>
-                    {{ city }}, {{ state }} {{ zip }}<br>
-                    {{#(zip && !(lat && lon))}}
-                      <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ city }}, {{ state }} {{ zip }}"><%= __('map') %></a>
-                    {{/()}}
-                    {{#(lat && lon)}}
-                      <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ lat }},{{ lon }}"><%= __('map') %></a>
-                    {{/()}}
-                  </td>
-                  <td class="phone-data">
-                    {{#contactable}}
-                      {{#phone}}
-                        {{ phone }}
-                        &nbsp;<a class="mobile-only-inline" href="tel:{{ phone.replace(/[^0-9]/g, '') }}" title="<%= __('callNumber') %>"><i class="fa fa-phone fa-lg"></i></a>
-                        &nbsp;<a class="mobile-only-inline" href="sms:{{ phone.replace(/[^0-9]/g, '') }}?body=<%= __('textBody') %>" title="<%= __('textNumber') %>"><i class="fa fa-mobile fa-lg"></i></a>
-                      {{/phone}}
-                    {{/contactable}}
+                    {{ city }}, {{ state }} {{ zip }}
                   </td>
                   <td class="updated-data small text-muted">
                     {{#updatedM}}
@@ -101,6 +91,59 @@
                     <span class="clickable" on-tap="toggleCheck:{{ id }}">{{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}</span>
                   </td>
                 </tr>
+
+                {{#details[id]}}
+                  <tr class="details-row">
+                    <td></td>
+                    <td colspan="20">
+                      <div class="details" intro-outro="slide">
+                        <h5>Details</h5>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <ul class="list-unstyled">
+                              <li><strong>Updated</strong> {{ updatedM.format('YYYY-MM-DD hh:mm a') }}</li>
+                              <li><strong>Contactable</strong> {{ contactable ? 'yes' : 'no' }}</li>
+                              {{#contactable}}
+                                {{#phone}}
+                                  <li><strong>Phone</strong>
+                                    {{ phone }}
+                                    &nbsp;<a class="mobile-only-inline" href="tel:{{ phone.replace(/[^0-9]/g, '') }}" title="<%= __('callNumber') %>"><i class="fa fa-phone fa-lg"></i></a>
+                                    &nbsp;<a class="mobile-only-inline" href="sms:{{ phone.replace(/[^0-9]/g, '') }}?body=<%= __('textBody') %>" title="<%= __('textNumber') %>"><i class="fa fa-mobile fa-lg"></i></a>
+                                  </li>
+                                {{/phone}}
+                              {{/contactable}}
+
+                              {{#(messages && messages.length)}}
+                                <li><strong>All messages</strong>
+                                  {{#messages}}
+                                    <code title="{{ moment.unix(timestamp).format() }}">{{ body }}</code>&nbsp;&nbsp;&nbsp;
+                                  {{/messages}}
+                                </li>
+                              {{/()}}
+                            </ul>
+                          </div>
+
+                          <div class="col-md-6">
+                            <ul class="list-unstyled">
+                              {{#geocoded}}
+                                <li><strong>Geocoded accuracy</strong> {{ geocodedAccuracy }}</li>
+                                <li><strong>Geocoded formatted</strong> {{ geocodedFormatted }}</li>
+                              {{/geocoded}}
+                              <li><strong>Map link</strong>
+                                {{#(zip && !(lat && lon))}}
+                                  <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ city }}, {{ state }} {{ zip }}"><%= __('googleMaps') %></a>
+                                {{/()}}
+                                {{#(lat && lon)}}
+                                  <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ lat }},{{ lon }}"><%= __('googleMaps') %></a>
+                                {{/()}}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  <tr>
+                {{/details[id]}}
               {{/()}}
             {{/data}}
           </tbody>
