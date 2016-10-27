@@ -99,7 +99,7 @@ function parseData(error, messages, done) {
       }
 
       // Source and ID
-      p.id = 'mc-' + m.profile[1].$.id;
+      p.id = 'mc-' + utils.id(m.profile[1].$.id);
       p.source = 'mobile-commons';
 
       // We look at profile data, as this holds the custom columns, which there

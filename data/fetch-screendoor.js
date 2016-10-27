@@ -71,7 +71,7 @@ function parseResults(data) {
 
   data = data.map(function(d) {
     var parsed = {};
-    parsed.id = 'sd-' + d.id;
+    parsed.id = 'sd-' + utils.id(d.id);
     parsed.source = 'screendoor';
     parsed.phone = d.responses['40758'];
     parsed.city = d.responses['40763']
