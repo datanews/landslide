@@ -116,7 +116,7 @@
                               {{#(messages && messages.length)}}
                                 <li><strong>All messages</strong>
                                   {{#messages}}
-                                    <code title="{{ moment.unix(timestamp).format() }}">{{ body }}</code>&nbsp;&nbsp;&nbsp;
+                                    <br>- <code title="{{ moment.unix(timestamp).format() }}">{{ body }}</code>
                                   {{/messages}}
                                 </li>
                               {{/()}}
