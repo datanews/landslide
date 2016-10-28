@@ -51,7 +51,13 @@ function geocode(report, done) {
         return done(error);
       }
 
-      body = JSON.parse(body);
+      try {
+        body = JSON.parse(body);
+      }
+      catch(e) {
+        debug(e);
+        return done(null);
+      }
 
       // Not OK means its probably rate limited
       if (body.status !== 'OK' && body.status !== 'ZERO_RESULTS') {

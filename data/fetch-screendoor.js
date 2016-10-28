@@ -31,7 +31,13 @@ function screendoorCall(url, done) {
       return done(error || response.statusCode);
     }
 
-    body = JSON.parse(body);
+    try {
+      body = JSON.parse(body);
+    }
+    catch(e) {
+      return done(e);
+    }
+
     var links = parseLinkHeader(response.headers.link);
     if (_.isArray(body)) {
       done(null, body, links);
