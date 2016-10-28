@@ -18,7 +18,7 @@ const db = require('../lib/db.js')();
 const debug = require('debug')('data:geocode');
 
 // API call
-const urlTemplate = (a) => `https://maps.googleapis.com/maps/api/geocode/json?key=${ a.GOOGLE_API_KEY }&address=${ a.address }`;
+const urlTemplate = (a) => `https://maps.googleapis.com/maps/api/geocode/json?region=us&key=${ a.GOOGLE_API_KEY }&address=${ a.address }`;
 
 // Geocode report
 function geocode(report, done) {
@@ -29,6 +29,12 @@ function geocode(report, done) {
 
   // Check if there is already a lat/lon
   if (report.lat && report.lon) {
+    return done(null, report);
+  }
+
+  // Check there is an address
+  if (!address) {
+    debug('No adderss for report: ' + report.id);
     return done(null, report);
   }
 
@@ -49,7 +55,7 @@ function geocode(report, done) {
 
       // Not OK means its probably rate limited
       if (body.status !== 'OK' && body.status !== 'ZERO_RESULTS') {
-        debug('error: ' + body);
+        debug('error with "' + address + '": ' + JSON.stringify(body, null, '  '));
         return waitWrapper(null, done)(null, report);
       }
 
@@ -95,14 +101,44 @@ function saveCache(address, results, done) {
 
 // Make address from report object
 function makeAddress(report) {
-  var output;
+  var output = '';
+  var hasCountyName = false;
+  var countyNames = ['county', 'parish', 'canton', 'borough'];
+  var countyName;
 
-  if (report.city && report.state) {
+  // Cast to strings
+  _.each(['address', 'city', 'state', 'county', 'zip'], function(p) {
+    report[p] = report[p] ? report[p] : '';
+  });
+
+  // Zip can be optional for the most part
+  if (report.address && report.city && report.state) {
+    output = (report.address + ', ' + report.city + ', ' + report.state + ' ' + report.zip).trim();
+  }
+  else if (report.city && report.state) {
     output = (report.city + ', ' + report.state + ' ' + report.zip).trim();
   }
-  else {
-    output = report.zip;
+  else if (report.county) {
+    _.each(countyNames, function(n) {
+      hasCountyName = report.county.toLowerCase().indexOf(n) > 2 ? true : hasCountyName;
+    });
+    countyName = hasCountyName ? report.county: report.county + ' County';
+
+    if (report.state) {
+      output = (countyName + ', ' + report.state + ' ' + report.zip).trim();
+    }
+    else if (report.zip) {
+      output = (countyName + ', ' + report.zip).trim();
+    }
   }
+  else if (report.state) {
+    output = (report.state + ' ' + report.zip).trim()
+  }
+  else if (report.zip) {
+    output = report.zip.trim();
+  }
+
+  debug(output);
 
   return output.replace(/\s+/g, ' ');
 }

@@ -61,3 +61,55 @@ test('utils | parseMinutes', function(t) {
     t.equal(utils.parseMinutes(p[0]), p[1]);
   });
 });
+
+// Falsey test
+test('utils | falsey', function(t) {
+  var parseTests = [
+    ['', true],
+    [null, true],
+    [undefined, true],
+    ['  undefined', true],
+    ['0', true],
+    ['null', true],
+    ['     ', true],
+    [-0, true],
+    [0, true],
+    [123, false],
+    ['Not false', false],
+    [true, false],
+    [{ thing: true }, false],
+    [[1, 2], false]
+  ];
+
+  t.plan(parseTests.length);
+  parseTests.forEach(function(p) {
+    t.equal(utils.falsey(p[0]), p[1]);
+  });
+});
+
+// filterFalsey test
+test('utils | filterFalsey', function(t) {
+  var parseTests = [
+    ['', undefined],
+    [null, undefined],
+    [undefined, undefined],
+    ['  undefined', undefined],
+    ['(no subject)', undefined],
+    ['no', undefined],
+    ['0', undefined],
+    ['null', undefined],
+    ['     ', undefined],
+    [-0, undefined],
+    [0, undefined],
+    [123, 123],
+    ['Not false', 'Not false'],
+    [true, true],
+    [{ thing: true }, { thing: true }],
+    [[1, 2], [1, 2]]
+  ];
+
+  t.plan(parseTests.length);
+  parseTests.forEach(function(p) {
+    t.deepEqual(utils.filterFalsey(p[0]), p[1]);
+  });
+});

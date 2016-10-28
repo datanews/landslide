@@ -11,7 +11,8 @@ const debug = require('debug')('scheduler');
 
 // Are we still fetching
 var fetching = true;
-const interval = 1000 * 60 * 1;
+const interval = process.env.FETCH_INTERVAL_SECONDS ?
+  process.env.FETCH_INTERVAL_SECONDS * 1000 : 1000 * 60 * 2;
 
 // Recursive function
 function doFetch() {

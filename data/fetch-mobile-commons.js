@@ -109,7 +109,7 @@ function parseData(error, messages, done) {
       p.state = m.profile[1].location[0].state[0];
       p.zip = m.profile[1].location[0].postal_code[0];
 
-      // Opt-in TODO:
+      // Opt-in
       p.subSource = m.profile[1].source[0].$.name;
 
       // Custom columns
@@ -198,7 +198,7 @@ function collectData(done) {
         getPage(++page);
       }
       else {
-        dataStart = moment.utc().subtract(1, 'hour');
+        dataStart = moment.utc().subtract(process.env.FETCH_SINCE_MINUTES, 'minutes');
         parseData(null, messages, done);
       }
     });
