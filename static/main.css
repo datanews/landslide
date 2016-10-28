@@ -90,7 +90,7 @@ body.mobile .mobile-only-inline {
   margin-bottom: 1em;
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .data-info {
     float: right;
     line-height: 2.5em;
@@ -118,6 +118,11 @@ td.report-data p {
 }
 .with-details td.report-data p {
   max-height: 999em;
+}
+@media screen and (max-width: 767px) {
+  .table-responsive > .table > tbody > tr > td.report-data {
+    white-space: normal;
+  }
 }
 
 .report-list > tbody > tr.details-row td {
