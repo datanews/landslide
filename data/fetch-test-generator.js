@@ -35,7 +35,7 @@ function generate(done) {
 
       t.id = 'test-' + faker.random.number(1000);
       t.source = 'test';
-      //t.subSource = 'test';
+      t.sourceName = 'Test';
       t.phone = faker.phone.phoneNumber();
       t.city = faker.address.city();
       t.state = faker.address.stateAbbr();

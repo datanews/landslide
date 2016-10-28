@@ -111,6 +111,7 @@ function parseData(error, messages, done) {
 
       // Opt-in
       p.subSource = m.profile[1].source[0].$.name;
+      p.sourceName = 'Mobile Commons (' + p.subSource +')';
 
       // Custom columns
       m.profile[1].custom_columns[0].custom_column.forEach(function(c) {

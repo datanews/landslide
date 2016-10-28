@@ -28,7 +28,7 @@
           <select class="form-control" value="{{ filteredSource }}" id="filter-source">
             <option value="" selected><%= __('all') %></option>
             {{#sources:s}}
-              <option value="{{ id }}">{{ name }}</option>
+              <option value="{{ this }}">{{ this }}</option>
             {{/sources}}
           </select>
         </div>
@@ -61,7 +61,7 @@
 
           <tbody>
             {{#data}}
-              {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === sourceID))}}
+              {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === sourceName))}}
                 <tr class="overview-row {{#details[id]}}with-details{{/details[id]}}">
                   <td class="details-toggle">
                     <span on-tap="toggleAbsolute:{{ 'details.' + id }}" class="clickable">

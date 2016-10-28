@@ -35,6 +35,7 @@ test('data | parse-hello-vote | parse', function(t) {
     id: 'hv-1234567890',
     phone: '+1234567890',
     source: 'hellovote',
+    sourceName: 'HelloVote',
     address: '1600 FRANKLIN ST OAK  SIDE B',
     city: 'Oakland',
     state: 'CA',

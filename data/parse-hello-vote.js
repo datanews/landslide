@@ -55,6 +55,7 @@ function parse(incoming) {
 
     parsed.id = 'hv-' + utils.id(d.phone_number);
     parsed.source = 'hellovote';
+    parsed.sourceName = 'HelloVote';
     parsed.phone = d.phone_number;
 
     if (d.polling_location) {

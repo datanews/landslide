@@ -107,6 +107,17 @@ function reporting() {
     document.body.removeChild(link);
   });
 
+  // Get options
+  getOptions(function(error, options) {
+    if (error) {
+      return console.log(error);
+    }
+
+    _.each(options, function(set, o) {
+      ractive.set(o, _.sortBy(_.filter(_.uniq(set))));
+    });
+  });
+
   // Fetch
   function fetch() {
     ractive.set('isLoading', true);
@@ -117,14 +128,6 @@ function reporting() {
       if (!error && data && data.length) {
         ractive.set('lastFetch', moment.unix(_.maxBy(data, 'fetched').fetched));
         ractive.set('isLoading', false);
-        ractive.set('states', _.sortBy(_.filter(_.uniq(_.map(data, 'state')))));
-        ractive.set('sources', _.sortBy(_.filter(_.uniqBy(_.map(data, function(d) {
-          return { id: d.sourceID, name: d.sourceName };
-        }), function(d) {
-          return d.id + '' + d.name;
-        }), function(d) {
-          return d.id;
-        }), 'id'));
         ractive.set('data', data);
       }
       else if (error && error.status === 401) {
@@ -148,8 +151,6 @@ function updateData(done) {
     // Some parsing
     data = data.map(function(d) {
       d.updatedM = d.updated ? moment.unix(d.updated) : undefined;
-      d.sourceName = d.subSource ? d.source + ' (' + d.subSource + ')' : d.source;
-      d.sourceID = d.sourceName.replace(/[^a-z0-9-\s]/gi, '').replace(/\s+/g, '-');
       return d;
     });
     data = _.sortBy(data, function(d) {
@@ -161,6 +162,18 @@ function updateData(done) {
   .fail(done);
 }
 
+// Get options (such as sources)
+function getOptions(done) {
+  $.getJSON('/api/reports/options?field=state', function(states) {
+    $.getJSON('/api/reports/options?field=sourceName', function(sources) {
+      done(null, {
+        states: states,
+        sources: sources
+      });
+    }).fail(done);
+  }).fail(done);
+
+}
 
 // Is mobile/phone
 // From

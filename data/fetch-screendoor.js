@@ -79,6 +79,7 @@ function parseResults(data) {
     var parsed = {};
     parsed.id = 'sd-' + utils.id(d.id);
     parsed.source = 'screendoor';
+    parsed.sourceName = 'Screendoor';
     parsed.phone = d.responses['40758'];
     parsed.city = d.responses['40763']
     parsed.state = utils.statesNames[d.responses['40764']] ? utils.statesNames[d.responses['40764']] : d.responses['40764'];

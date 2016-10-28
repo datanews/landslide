@@ -72,6 +72,7 @@ function parseResults(data) {
 
     parsed.id = 'ep-' + utils.id(d.id);
     parsed.source = 'election-protection';
+    parsed.sourceName = 'Election Protection';
     parsed.private = true;
 
     parsed.zip = utils.filterFalsey(d.zip);
