@@ -107,6 +107,18 @@ body.mobile .mobile-only-inline {
 .report-list tbody td.report-data {
   width: 30%;
 }
+td.report-data p {
+  display: block;
+  max-height: 5em;
+  overflow: hidden;
+
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+.with-details td.report-data p {
+  max-height: 999em;
+}
 
 .report-list > tbody > tr.details-row td {
   border-top: 1px solid #F1F1F1;
