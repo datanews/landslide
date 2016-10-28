@@ -138,8 +138,6 @@ function makeAddress(report) {
     output = report.zip.trim();
   }
 
-  debug(output);
-
   return output.replace(/\s+/g, ' ');
 }
 

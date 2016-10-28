@@ -59,6 +59,12 @@ body.mobile .mobile-only-inline {
   z-index: 100;
 }
 
+.user-image {
+  max-width: 100%;
+  max-height: 1.5em;
+  border-radius: 3px;
+}
+
 /* Login page */
 .login-box {
   width: 40em;

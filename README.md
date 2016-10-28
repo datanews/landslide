@@ -40,11 +40,14 @@ To actually run the application, you will need to configure certain things, spec
 * `SLACK_CLIENT_ID`
 * `SLACK_CLIENT_SECRET`
 * `SLACK_TEAM`
+* `SLACK_USERS_PRIVATE`: Comma-separated list of slack emails that can view private (Election Protection) data.  For some reason, the basic identity information with Slack Sign-in doesn't provide username, hence the use of emails.
 * `MOBILE_COMMONS_USER`
 * `MOBILE_COMMONS_PASS`
 * `MOBILE_COMMONS_CAMPAIGN`
 * `SCREENDOOR_PROJECT`
 * `SCREENDOOR_KEY`
+* `ELECTION_PROTECTION_USER`
+* `ELECTION_PROTECTION_PASS`
 * `GOOGLE_API_KEY`
 * `SESSION_SECRET`
 * `HELLO_VOTE_KEY`: API key for incoming HelloVote data.
