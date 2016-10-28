@@ -39,6 +39,7 @@ test('data | parse-hello-vote | parse', function(t) {
     city: 'Oakland',
     state: 'CA',
     zip: '94612',
+    fullAddress: '1600 FRANKLIN ST OAK SIDE B, Oakland, CA 94612',
     lat: 37.80544,
     lon: -122.26886,
     report: 'this is a test story with location data',

@@ -113,3 +113,19 @@ test('utils | filterFalsey', function(t) {
     t.deepEqual(utils.filterFalsey(p[0]), p[1]);
   });
 });
+
+// countyName test
+test('utils | countyName', function(t) {
+  var parseTests = [
+    ['', undefined],
+    [123, 123],
+    ['Example', 'Example County'],
+    ['example', 'example County'],
+    ['123 Parish', '123 Parish']
+  ];
+
+  t.plan(parseTests.length);
+  parseTests.forEach(function(p) {
+    t.equal(utils.countyName(p[0]), p[1]);
+  });
+});

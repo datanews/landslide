@@ -88,6 +88,9 @@ function parse(incoming) {
     parsed.updated = (d.received) ? moment.utc(d.received).unix() : fetched;
     parsed.fetched = fetched;
 
+    // Combine address parts
+    parsed.fullAddress = utils.makeAddress(parsed);
+
     return parsed;
   });
 

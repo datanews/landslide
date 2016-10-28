@@ -22,7 +22,7 @@ const urlTemplate = (a) => `https://maps.googleapis.com/maps/api/geocode/json?re
 
 // Geocode report
 function geocode(report, done) {
-  const address = makeAddress(report);
+  const address = report.fullAddress || utils.makeAddress(report);
   const url = urlTemplate(_.extend(_.clone(process.env), {
     address: querystring.escape(address)
   }));
@@ -97,48 +97,6 @@ function saveCache(address, results, done) {
   };
 
   db.models.Location.findOneAndUpdate({ input: address }, location, options, done);
-}
-
-// Make address from report object
-function makeAddress(report) {
-  var output = '';
-  var hasCountyName = false;
-  var countyNames = ['county', 'parish', 'canton', 'borough'];
-  var countyName;
-
-  // Cast to strings
-  _.each(['address', 'city', 'state', 'county', 'zip'], function(p) {
-    report[p] = report[p] ? report[p] : '';
-  });
-
-  // Zip can be optional for the most part
-  if (report.address && report.city && report.state) {
-    output = (report.address + ', ' + report.city + ', ' + report.state + ' ' + report.zip).trim();
-  }
-  else if (report.city && report.state) {
-    output = (report.city + ', ' + report.state + ' ' + report.zip).trim();
-  }
-  else if (report.county) {
-    _.each(countyNames, function(n) {
-      hasCountyName = report.county.toLowerCase().indexOf(n) > 2 ? true : hasCountyName;
-    });
-    countyName = hasCountyName ? report.county: report.county + ' County';
-
-    if (report.state) {
-      output = (countyName + ', ' + report.state + ' ' + report.zip).trim();
-    }
-    else if (report.zip) {
-      output = (countyName + ', ' + report.zip).trim();
-    }
-  }
-  else if (report.state) {
-    output = (report.state + ' ' + report.zip).trim()
-  }
-  else if (report.zip) {
-    output = report.zip.trim();
-  }
-
-  return output.replace(/\s+/g, ' ');
 }
 
 // Wait wrapper

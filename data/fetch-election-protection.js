@@ -20,7 +20,7 @@ const utils = require('../lib/utils.js');
 moment.tz.setDefault('America/New_York');
 
 // Mobile Commons API template
-const urlTemplate = (a) => `http://protection.election.land/?since=${ a.since }`;
+const urlTemplate = (a) => `http://protection.election.land/api?since=${ a.since }`;
 
 // The first time we get the data, we'll get all of it, but subsequent requests
 // should be only the past hour.
@@ -47,7 +47,13 @@ function dataCall(done) {
       return done(error || response.statusCode);
     }
 
-    body = JSON.parse(body);
+    try {
+      body = JSON.parse(body);
+    }
+    catch(e) {
+      return done(e);
+    }
+
     if (_.isArray(body)) {
       done(null, body);
     }
@@ -69,7 +75,7 @@ function parseResults(data) {
     parsed.private = true;
 
     parsed.zip = utils.filterFalsey(d.zip);
-    parsed.county = utils.filterFalsey(d.county);
+    parsed.county = utils.countyName(d.county);
     if (utils.filterFalsey(d.state.trim())) {
       parsed.state = utils.statesNames[d.state.trim()];
     }
@@ -106,6 +112,9 @@ function parseResults(data) {
       parsed.pollSite.locationName = utils.filterFalsey(d.polling_place_name);
       parsed.pollSite.address = utils.filterFalsey(d.polling_place_address);
     }
+
+    // Combine address parts
+    parsed.fullAddress = utils.makeAddress(parsed);
 
     return parsed;
   });

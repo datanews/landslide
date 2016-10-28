@@ -146,6 +146,9 @@ function parseData(error, messages, done) {
       // Mark when we last got this
       p.fetched = lastFetch;
 
+      // Combine address parts
+      p.fullAddress = utils.makeAddress(p);
+
       parsed.push(p);
     }
     catch (e) {

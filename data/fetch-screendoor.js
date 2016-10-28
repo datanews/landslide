@@ -93,6 +93,9 @@ function parseResults(data) {
       parsed.waitMinutes = utils.parseMinutes(d.responses['40759']);
     }
 
+    // Combine address parts
+    parsed.fullAddress = utils.makeAddress(parsed);
+
     return parsed;
   });
 
