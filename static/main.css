@@ -106,11 +106,14 @@ body.mobile .mobile-only-inline {
 
 .report-list tbody td.report-data {
   width: 30%;
+  max-width: 29em;
 }
 td.report-data p {
   display: block;
   max-height: 5em;
   overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
