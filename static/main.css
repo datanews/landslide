@@ -65,6 +65,10 @@ body.mobile .mobile-only-inline {
   border-radius: 3px;
 }
 
+.display-inline-block {
+  display: inline-block;
+}
+
 /* Login page */
 .login-box {
   width: 40em;
