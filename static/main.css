@@ -69,6 +69,10 @@ body.mobile .mobile-only-inline {
   display: inline-block;
 }
 
+.display-block {
+  display: block;
+}
+
 /* Login page */
 .login-box {
   width: 40em;
@@ -144,4 +148,12 @@ td.report-data p {
 .details ul strong {
   display: inline-block;
   min-width: 7.5em;
+}
+
+.report-list tbody td.actions {
+  min-width: 7.5em;
+}
+
+tbody tr.muted {
+  opacity: 0.25;
 }

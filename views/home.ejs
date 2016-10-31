@@ -62,7 +62,7 @@
           <tbody>
             {{#data}}
               {{#((!filteredState && !filteredSource) || (filteredState && filteredState === state) || (filteredSource && filteredSource === sourceName))}}
-                <tr class="overview-row {{#details[id]}}with-details{{/details[id]}}">
+                <tr class="overview-row {{#details[id]}}with-details{{/details[id]}} {{#muted[id]}}muted{{/muted[id]}}">
                   <td class="details-toggle">
                     <span on-tap="toggleAbsolute:{{ 'details.' + id }}" class="clickable">
                       {{#details[id]}}<i class="fa fa-angle-double-down"></i>{{else}}<i class="fa fa-angle-double-right"></i>{{/details[id]}}
@@ -87,18 +87,30 @@
                   {{^filteredSource}}
                     <td class="source-data small text-muted">{{ sourceName }}</td>
                   {{/filteredSource}}
-                  <td>
+                  <td class="actions">
                     <div class="display-inline-block">
                       <span class="clickable" on-tap="toggleCheck:{{ id }}">
                         {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
+                        <span class="small"><%= __('inCheck') %></span>
                       </span>
-                      <%= __('inCheck') %>
+                    </div>
+
+                    <div class="display-block">
+                      <span class="clickable" on-tap="toggleAbsolute:{{ 'muted.' + id }}">
+                        {{#muted[id]}}
+                          <i class="fa fa-volume-up"></i>
+                          <span class="small"><%= __('unmute') %></span>
+                        {{else}}
+                          <i class="fa fa-volume-off text-muted"></i>
+                          <span class="small"><%= __('mute') %></span>
+                        {{/muted[id]}}
+                      </span>
                     </div>
                   </td>
                 </tr>
 
                 {{#details[id]}}
-                  <tr class="details-row">
+                  <tr class="details-row {{#muted[id]}}muted{{/muted[id]}}">
                     <td></td>
                     <td colspan="20">
                       <div class="details" intro-outro="slide">
@@ -135,7 +147,7 @@
                                   <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ fullAddress || lat + ',' + lon }}"><%= __('googleMaps') %></a>
                                 </li>
                               {{/()}}
-                              
+
                               {{#geocoded}}
                                 <li><strong><%= __('accuracy') %></strong> {{ geocodedAccuracy }}</li>
                                 <li><strong><%= __('formatted') %></strong> {{ geocodedFormatted }}</li>

@@ -40,5 +40,7 @@
   "issueTags": "Issue tags",
   "link": "Link",
   "exports": "Exports",
-  "csvAllReports": "CSV of all reports"
+  "csvAllReports": "CSV of all reports",
+  "mute": "Mute",
+  "unmute": "Unmute"
 }

@@ -20,6 +20,7 @@ function reporting() {
   var template = $('#home-template').html();
   var el = '#home-template-container';
   var originalData = [];
+  var muted = localLoad('muted');
   var ractive = new Ractive({
     el: el,
     template: template,
@@ -28,6 +29,7 @@ function reporting() {
       filteredState: "",
       filteredSource: "",
       data: [],
+      muted: muted,
       _: _,
       moment: moment
     }
@@ -66,6 +68,13 @@ function reporting() {
   }
   ractive.observe('filteredState', observeFilter('filteredState'), { init: false });
   ractive.observe('filteredSource', observeFilter('filteredSource'), { init: false });
+
+  // Observer muting to save to browser
+  ractive.observe('muted.*', function(n, o, keypath) {
+    if (n !== undefined) {
+      localSave('muted', ractive.get('muted'));
+    }
+  }, { init: false });
 
   // Events
   ractive.on('toggleCheck', function(e, id) {
@@ -172,7 +181,31 @@ function getOptions(done) {
       });
     }).fail(done);
   }).fail(done);
+}
 
+// Local storage wrappers
+function localSave(key, value) {
+  if (window.localStorage) {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }
+}
+
+function localLoad(key) {
+  if (window.localStorage) {
+    try {
+      return JSON.parse(window.localStorage.getItem(key));
+    }
+    catch(e) {
+      return undefined;
+    }
+  }
+}
+
+function localDelete(key) {
+  if (window.localStorage) {
+    window.localStorage.removeItem(key);
+    return true;
+  }
 }
 
 // Is mobile/phone
