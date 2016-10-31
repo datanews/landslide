@@ -53,7 +53,10 @@ test('utils | parseMinutes', function(t) {
     ['par minutos', 2],
     ['pocas minutos', 3],
     ['an hora', 60],
-    ['dos horas', 120]
+    ['dos horas', 120],
+
+    ['15 hours', undefined],
+    ['123456', undefined]
   ];
 
   t.plan(parseTests.length);
