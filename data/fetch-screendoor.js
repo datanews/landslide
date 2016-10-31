@@ -35,6 +35,7 @@ function screendoorCall(url, done) {
 
     try {
       body = JSON.parse(body);
+      console.log(body);
     }
     catch(e) {
       return done(e);
@@ -82,12 +83,13 @@ function parseResults(data) {
     parsed.id = 'sd-' + utils.id(d.id);
     parsed.source = 'screendoor';
     parsed.sourceName = 'Screendoor';
-    parsed.phone = d.responses['40758'];
-    parsed.city = d.responses['40763']
-    parsed.state = utils.statesNames[d.responses['40764']] ? utils.statesNames[d.responses['40764']] : d.responses['40764'];
+    parsed.phone = utils.filterFalsey(d.responses['40758']);
+    parsed.city = utils.filterFalsey(d.responses['40764']);
+    parsed.state = utils.filterFalsey(utils.statesNames[d.responses['40763']] ? utils.statesNames[d.responses['40763']] : d.responses['40763']);
+    parsed.zip = utils.filterFalsey(d.responses['41017']);
     parsed.contactable = !!d.responses['40758'];
     parsed.wait = d.responses['40759'];
-    parsed.report = d.responses['40761'];
+    parsed.report = utils.filterFalsey(d.responses['40761']);
     parsed.updated = moment.utc(d.updated_at).unix();
     parsed.fetched = fetched;
 
