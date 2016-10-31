@@ -31,43 +31,77 @@ function reporting() {
       data: [],
       muted: muted,
       _: _,
-      moment: moment
+      moment: moment,
+      query: {},
+      sort: {
+        field: 'updated',
+        direction: -1
+      }
     }
   });
 
   // Set up routing
   var router = Router({
-    '/state/:filteredState': route,
-    '/source/:filteredSource': route,
+    '/search/:search': route,
     '*': route
   });
   router.init();
 
-  // Do route
-  function route(filter) {
+  // Do route.  Turn search into ractive.
+  function route(search) {
     var path = this.explode();
 
-    if (path[0] === 'state') {
-      ractive.set('filteredState', filter);
-    }
-    else if (path[0] === 'source') {
-      ractive.set('filteredSource', filter);
-    }
-  }
-
-  // Handle view updates
-  function observeFilter(name) {
-    var path = name === 'filteredState' ? '/state/' : '/source/';
-
-    return function(n, o) {
-      if (n !== o) {
-        ractive.set(name === 'filteredState' ? 'filteredSource' : 'filteredState', "");
-        router.setRoute(n ? path + n : '/');
+    if (path[0] === 'search') {
+      try {
+        search = decodeURIComponent(search);
+        ractive.set('search', JSON.parse(search));
+      }
+      catch(e) {
+        this.setRoute('/');
       }
     }
   }
-  ractive.observe('filteredState', observeFilter('filteredState'), { init: false });
-  ractive.observe('filteredSource', observeFilter('filteredSource'), { init: false });
+
+  // On search, update data
+  ractive.observe('search', function(n, o) {
+    if (throttledFetch) {
+      throttledFetch();
+    }
+  });
+
+  // Handle view updates.  Turn parts into URL.
+  function observeSearchParts(n, o) {
+    // Query
+    var query = ractive.get('query') || {};
+    var q = {};
+    _.each(query, function(value, field) {
+      if (_.isArray(value) && value.length) {
+        q[field] = { $in: value }
+      }
+      else if (!_.isArray(value) && value) {
+        q[field] = value;
+      }
+    });
+
+    // Sort
+    var sort = _.cloneDeep(ractive.get('sort'));
+    var s = {};
+    if (sort && sort.field) {
+      s[sort.field] = !_.isNaN(parseInt(sort.direction, 10)) && parseInt(sort.direction, 10) === -1 ? -1 : 1;
+    }
+    else {
+      s = { updated: -1 };
+    }
+
+    // TODO: limit
+
+    router.setRoute('search/' + encodeURIComponent(JSON.stringify({
+      q: q,
+      sort: s
+    })));
+  }
+  ractive.observe('query', observeSearchParts, { init: false });
+  ractive.observe('sort', observeSearchParts, { init: false });
 
   // Observer muting to save to browser
   ractive.observe('muted.*', function(n, o, keypath) {
@@ -101,8 +135,16 @@ function reporting() {
   });
 
   ractive.on('exportCSV', function(e, useFilters) {
-    // TODO: Handle filters
-    var uri = '/api/reports/?format=csv';
+    var params = ractive.get('search') || {};
+    params.format = 'csv';
+
+    if (!useFilters) {
+      params = {
+        limit: 0,
+        format: 'csv'
+      };
+    }
+    var uri = urlQuery('/api/reports/', params);
     var name = moment().format() + '-electionland-reporting.csv';
 
     // Hacky way to get a specific file name
@@ -123,7 +165,37 @@ function reporting() {
     }
 
     _.each(options, function(set, o) {
-      ractive.set(o, _.sortBy(_.filter(_.uniq(set))));
+      ractive.set('options.' + o, _.sortBy(_.filter(_.uniq(set))));
+    });
+
+    // Nice multiselect
+    _.each([
+      ['#query-state', 'query.state'],
+      ['#query-source-name', 'query.sourceName']
+    ], function(set) {
+      $(set[0]).multiselect({
+        disableIfEmpty: true,
+        onChange: function(option, checked) {
+          var selected = ractive.get(set[1]);
+          if (!selected) {
+            ractive.set(set[1], []);
+            selected = ractive.get(set[1]);
+          }
+
+          var value = $(option).val();
+          var index = selected.indexOf(value);
+
+          if (checked) {
+            selected.push(value);
+          }
+          else {
+            index = selected.indexOf(value);
+            if (~index) {
+              selected.splice(index, 1);
+            }
+          }
+        }
+      });
     });
   });
 
@@ -131,13 +203,19 @@ function reporting() {
   function fetch() {
     ractive.set('isLoading', true);
 
-    updateData(function(error, data) {
-      originalData = _.cloneDeep(data);
+    updateData(ractive.get('search'), function(error, data) {
+      var current = ractive.get('data');
 
       if (!error && data && data.length) {
         ractive.set('lastFetch', moment.unix(_.maxBy(data, 'fetched').fetched));
         ractive.set('isLoading', false);
-        ractive.set('data', data);
+
+        if (current) {
+          ractive.merge('data', data, 'id');
+        }
+        else {
+          ractive.set('data', data);
+        }
       }
       else if (error && error.status === 401) {
         // Reload page
@@ -149,22 +227,24 @@ function reporting() {
     });
   }
 
+  // Make sure it only happens once every X seconds.
+  var throttledFetch = _.throttle(fetch, 3 * 1000);
+
   // Poll
-  var repeat = window.setInterval(fetch, 30 * 1000);
-  fetch();
+  var repeat = window.setInterval(throttledFetch, 30 * 1000);
+  throttledFetch();
 }
 
 // Update data
-function updateData(done) {
-  $.getJSON('/api/reports', function(data) {
+function updateData(params, done) {
+  url = urlQuery('/api/reports', params);
+
+  $.getJSON(url, function(data) {
     // Some parsing
     data = data.map(function(d) {
       d.updatedM = d.updated ? moment.unix(d.updated) : undefined;
       return d;
     });
-    data = _.sortBy(data, function(d) {
-      return d.updated ? d.updated : 0;
-    }).reverse();
 
     done(null, data);
   })
@@ -177,10 +257,24 @@ function getOptions(done) {
     $.getJSON('/api/reports/options?field=sourceName', function(sources) {
       done(null, {
         states: states,
-        sources: sources
+        sourceNames: sources
       });
     }).fail(done);
   }).fail(done);
+}
+
+// Add query to URL
+function urlQuery(url, params) {
+  var char = '?';
+
+  if (params) {
+    _.each(params, function(p, n) {
+      url += char + n + '=' + encodeURIComponent(_.isArray(p) || _.isObject(p) ? JSON.stringify(p) : p);
+      char = '&';
+    });
+  }
+
+  return url;
 }
 
 // Local storage wrappers
