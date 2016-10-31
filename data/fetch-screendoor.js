@@ -26,6 +26,8 @@ const urlTemplate = (a) => `https://screendoor.dobt.co/api/projects/${ a.SCREEND
 // Make call
 function screendoorCall(url, done) {
   url = url || urlTemplate(process.env);
+  debug(url);
+
   request.get(url, function(error, response, body) {
     if (error || response.statusCode >= 300) {
       return done(error || response.statusCode);
