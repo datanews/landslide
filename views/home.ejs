@@ -10,7 +10,18 @@
     <div id="home-template-container" class="container"></div>
 
     <script id="home-template" type="text/ractive">
-      <form class="filter-form form-inline control-group">
+      {{^muted.welcome}}
+        <div class="welcome clearfix jumbotron" intro-outro="slide">
+          <button class="pull-right clickable btn btn-default btn-xs" on-tap="toggleAbsolute:{{ 'muted.welcome' }}"><i class="fa fa-close"></i></button>
+          <p>Welcome to <strong>Landslide</strong>, your source for reporting on polls across the country.  Landslide aggreagtes multiple sources into one single feed.</p>
+
+          <p class="small">Use the filters below to find specific reports.  If you are a "feeder" and have access to Check, use the <strong>in Check</strong> action to let others know that that report is being handled there.  As there are plenty of reports that may be more noise than signal, use the <strong>Mute</strong> action to visually mute it; this is just for you and will persist if you reload the page.</p>
+
+          <p class="small">Landslide depends on multiple data sources that vary in their structure.  Use the detail <strong>arrows</strong> on the left of each report to see more details, and in some case, to see the full information.</p>
+        </div>
+      {{/muted.welcome}}
+
+      <form class="filter-form form-inline well">
         <div class="form-group">
           <label for="filter-state"><%= __('filterByState') %></label>
 
@@ -88,14 +99,14 @@
                     <td class="source-data small text-muted">{{ sourceName }}</td>
                   {{/filteredSource}}
                   <td class="actions">
-                    <div class="display-inline-block">
+                    <button class="btn btn-default btn-xs">
                       <span class="clickable" on-tap="toggleCheck:{{ id }}">
                         {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
                         <span class="small"><%= __('inCheck') %></span>
                       </span>
-                    </div>
+                    </button>
 
-                    <div class="display-block">
+                    <button class="btn btn-default btn-xs toggle-mute">
                       <span class="clickable" on-tap="toggleAbsolute:{{ 'muted.' + id }}">
                         {{#muted[id]}}
                           <i class="fa fa-volume-up"></i>
@@ -105,7 +116,7 @@
                           <span class="small"><%= __('mute') %></span>
                         {{/muted[id]}}
                       </span>
-                    </div>
+                    </button>
                   </td>
                 </tr>
 
@@ -190,7 +201,7 @@
         </table>
       </div>
 
-      <div class="exports control-group">
+      <div class="exports well">
         <strong><%= __('exports') %>:</strong> &nbsp; <button class="btn btn-primary" on-tap="exportCSV"><i class="fa fa-download"></i> <%= __('csvAllReports') %></button>
       </div>
     </script>

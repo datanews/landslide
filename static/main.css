@@ -150,10 +150,11 @@ td.report-data p {
   min-width: 7.5em;
 }
 
-.report-list tbody td.actions {
-  min-width: 7.5em;
+.report-list tbody td.actions button {
+  margin-bottom: 0.25em;
 }
 
-tbody tr.muted {
+tbody tr.muted > td:not(.actions),
+tbody tr.muted > td.actions > button:not(.toggle-mute) {
   opacity: 0.25;
 }
