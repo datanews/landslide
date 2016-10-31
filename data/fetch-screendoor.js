@@ -35,7 +35,6 @@ function screendoorCall(url, done) {
 
     try {
       body = JSON.parse(body);
-      console.log(body);
     }
     catch(e) {
       return done(e);
