@@ -146,6 +146,8 @@ test('utils | parseBooleanFromString', function(t) {
     ['Yes', true],
     ['YES...', true],
     ['(si))...', true],
+    ['可以', true],
+    ['不可以', false],
     [[], false],
     [undefined, false],
     [null, false],
