@@ -140,6 +140,12 @@ function parseData(error, messages, done) {
         p.pollSite.locationName = utils.filterFalsey(custom.WhereVoted.value);
       }
 
+      // Hard ot tell if they actually sent in messages after parsing,
+      // specifically if no wait and nothing to report
+      if (custom.ElectionReport || custom.ElectionWait) {
+        p.likelyResponded = true;
+      }
+
       // Determine last update from custom fields
       max = _.max(_.filter(custom, function(c) {
         return ['ElectionReport', 'ElectionWait', 'WhereVoted'].indexOf(c.name) !== -1;
@@ -165,9 +171,9 @@ function parseData(error, messages, done) {
   // Only one per phone number
   parsed = _.uniqBy(parsed, 'id');
 
-  // Only pass data that has something in it
+  // Only pass data is likely a full response
   parsed = _.filter(parsed, function(p) {
-    return p.report || p.wait;
+    return p.likelyResponded;
   });
 
   // Add in raw messages for reference
