@@ -233,6 +233,10 @@
 
                           <div class="col-xs-6">
                             <ul class="list-unstyled">
+                              {{#pollSite.locationName}}
+                                <li><strong>Poll site</strong> {{ pollSite.locationName }}</li>
+                              {{/pollSite.locationName}}
+
                               {{#(fullAddress || (lat && lon))}}
                                 <li>
                                   <strong><%= __('mapLink') %></strong>

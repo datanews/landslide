@@ -135,10 +135,14 @@ function parseData(error, messages, done) {
           p.waitMinutes = utils.parseMinutes(custom.ElectionWait.value);
         }
       }
+      if (custom.WhereVoted && utils.filterFalsey(custom.WhereVoted.value)) {
+        p.pollSite = p.pollSite || {};
+        p.pollSite.locationName = utils.filterFalsey(custom.WhereVoted.value);
+      }
 
       // Determine last update from custom fields
       max = _.max(_.filter(custom, function(c) {
-        return ['ElectionReport', 'ElectionWait'].indexOf(c.name) !== -1;
+        return ['ElectionReport', 'ElectionWait', 'WhereVoted'].indexOf(c.name) !== -1;
       }), 'updated');
       if (max) {
         p.updated = max.updated.unix();

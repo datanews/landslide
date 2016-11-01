@@ -103,6 +103,12 @@ function parseResults(data) {
       parsed.waitMinutes = utils.parseMinutes(d.responses['40759']);
     }
 
+    // Polling place name
+    if (d.responses['41976'] && utils.filterFalsey(d.responses['41976'])) {
+      parsed.pollSite = p.pollSite || {};
+      parsed.pollSite.locationName = utils.filterFalsey(d.responses['41976']);
+    }
+
     // Combine address parts
     parsed.fullAddress = utils.makeAddress(parsed);
 
