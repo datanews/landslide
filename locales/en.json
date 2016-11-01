@@ -54,5 +54,7 @@
   "waitTime": "Wait time",
   "direction": "Direction",
   "ascending": "Ascending",
-  "descending": "Descending"
+  "descending": "Descending",
+  "results": "Results",
+  "limitResults": "Limit number of results"
 }
