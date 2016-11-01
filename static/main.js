@@ -258,11 +258,9 @@ function reporting() {
 
         if (current) {
           ractive.merge('data', data, 'id');
-          console.log(sort);
           data.sort(function(a, b) {
             a = a[sort.field];
             b = b[sort.field];
-            console.log(a, _.isString(a));
             return _.isString(a) ? a.localeCompare(b) : compareNumbers(a, b);
           });
           if (sort.direction === -1) {
