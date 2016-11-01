@@ -46,7 +46,12 @@ function reporting() {
   // Custom "router" because can't get router to work with unusal, but
   // standard characters
   function route(r) {
-    window.location.hash = r;
+    if (window.history) {
+      history.pushState(null, null, window.location.pathname + '#' + r);
+    }
+    else {
+      window.location.hash = r;
+    }
   }
   route.update = function(e) {
     var parts = window.location.hash.replace('#', '').split('/');
@@ -85,7 +90,12 @@ function reporting() {
       ractive.set('limit', parseInt(search.limit, 10));
     }
   }
-  $(window).on('hashchange', route.update);
+  if (window.history) {
+    $(window).on('popstate', route.update);
+  }
+  else {
+    $(window).on('hashchange', route.update);
+  }
   if (window.location.hash) {
     route.update();
     route.parse();
