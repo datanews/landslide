@@ -22,6 +22,7 @@ function reporting() {
   var originalData = [];
   var muted = localLoad('muted');
   var multiselects = {};
+  var mapInput;
   var ractive = new Ractive({
     el: el,
     template: template,
@@ -117,6 +118,9 @@ function reporting() {
       }
       else if (_.isBoolean(value) && value) {
         q[field] = { $exists: value, $nin: [ null, 0, '0' ] };
+      }
+      else if (!_.isArray(value) && _.isObject(value)) {
+        q[field] = value;
       }
       else if (!_.isArray(value) && value) {
         q[field] = value;
@@ -244,6 +248,79 @@ function reporting() {
     });
   });
 
+  // Draw and handle map input
+  function drawInputMap() {
+    var currentRectangle;
+    var query = ractive.get('query');
+    var styles = {
+      fillColor: '#FFFFFF',
+      fillOpacity: 0.25,
+      strokeColor: '#242424',
+      strokeWeight: 4,
+      editable: false
+    };
+
+    // Draw map
+    mapInput = new google.maps.Map(document.getElementById('input-map'), {
+      center: { lat: 39.5, lng: -98.35 },
+      zoom: 3,
+      disableDefaultUI: true,
+      zoomControl: true,
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+        position: google.maps.ControlPosition.TOP_LEFT
+      }
+    });
+
+    // Draw rectangle if needed
+    if (query.lat && query.lon) {
+      currentRectangle = new google.maps.Rectangle(_.extend({}, styles, {
+        map: mapInput,
+        bounds: {
+          north: parseFloat(query.lat.$lte),
+          south: parseFloat(query.lat.$gte),
+          east: parseFloat(query.lon.$lte),
+          west: parseFloat(query.lon.$gte)
+        }
+      }));
+    }
+
+    // Drawing manager
+    var drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT,
+        drawingModes: ['rectangle']
+      },
+      rectangleOptions: styles
+    });
+    drawingManager.setMap(mapInput);
+    mapInput._drawing = drawingManager;
+
+    // Handle event
+    google.maps.event.addListener(drawingManager, 'rectanglecomplete', function(rect) {
+      if (currentRectangle) {
+        currentRectangle.setMap(null);
+      }
+
+      // Tell ractive about the bounds
+      var b = rect.getBounds();
+      var ne = b.getNorthEast().toJSON();
+      var sw = b.getSouthWest().toJSON();
+      ractive.set({
+        'query.lat': { $gte: sw.lat.toFixed(6), $lte: ne.lat.toFixed(6) },
+        'query.lon': { $gte: sw.lng.toFixed(6), $lte: ne.lng.toFixed(6) }
+      });
+
+      // Keep track of rectangle
+      currentRectangle = rect;
+    });
+  }
+  if (window.google) {
+    drawInputMap();
+  }
+
   // Fetch
   function fetch() {
     ractive.set('isLoading', true);
@@ -252,7 +329,7 @@ function reporting() {
       var current = ractive.get('data');
       var sort = ractive.get('sort');
 
-      if (!error && data && data.length) {
+      if (!error && _.isArray(data)) {
         ractive.set('lastFetch', moment.unix(_.maxBy(data, 'fetched').fetched));
         ractive.set('isLoading', false);
 

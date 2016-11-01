@@ -39,14 +39,23 @@
               <legend><%= __('location') %></legend>
               <p><%= __('locationHelp') %></p>
 
-              <div class="form-group">
-                <label for="query-state"><%= __('filterByState') %></label>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="query-state"><%= __('filterByState') %></label>
 
-                <select class="form-control" id="query-state" multiple="multiple">
-                  {{#options.states:s}}
-                    <option value="{{ this }}">{{ this }}</option>
-                  {{/options.states}}
-                </select>
+                    <select class="form-control" id="query-state" multiple="multiple">
+                      {{#options.states:s}}
+                        <option value="{{ this }}">{{ this }}</option>
+                      {{/options.states}}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div id="input-map"></div>
+                  <p class="help-block">Use this map to select an area to filter on.</p>
+                </div>
               </div>
             </fieldset>
 

@@ -162,3 +162,9 @@ tbody tr.muted > td:not(.actions),
 tbody tr.muted > td.actions > button:not(.toggle-mute) {
   opacity: 0.25;
 }
+
+#input-map {
+  width: 100%;
+  height: 18em;
+  background-color: #DFDFDF;
+}
