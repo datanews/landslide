@@ -250,6 +250,7 @@ function reporting() {
 
     updateData(ractive.get('search'), function(error, data) {
       var current = ractive.get('data');
+      var sort = ractive.get('sort');
 
       if (!error && data && data.length) {
         ractive.set('lastFetch', moment.unix(_.maxBy(data, 'fetched').fetched));
@@ -257,6 +258,14 @@ function reporting() {
 
         if (current) {
           ractive.merge('data', data, 'id');
+          data.sort(function(a, b) {
+            a = a[sort.field];
+            b = b[sort.field];
+            return _.isString(a) ? a.localeCompare(b) : a - b;
+          });
+          if (sort.direction === -1) {
+            data.reverse();
+          }
         }
         else {
           ractive.set('data', data);
