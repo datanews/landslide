@@ -21,7 +21,8 @@ function fetchAll(done) {
   const q = queue();
   q.defer(mc);
   q.defer(sd);
-  q.defer(ep);
+  // TODO: update for new API
+  //q.defer(ep);
   //q.defer(test);
 
   // Done
@@ -63,7 +64,7 @@ function saveAll(data, done) {
   };
 
   _.each(data, function(d) {
-    q.defer(db.models.Report.findOneAndUpdate.bind(db.models.Report), { id: d.id }, d, options);
+    q.defer(db.updateReport, d);
   });
 
   q.awaitAll(done);
