@@ -21,6 +21,7 @@ function reporting() {
   var el = '#home-template-container';
   var originalData = [];
   var muted = localLoad('muted');
+  var multiselects = {};
   var ractive = new Ractive({
     el: el,
     template: template,
@@ -40,26 +41,48 @@ function reporting() {
     }
   });
 
-  // Set up routing
-  var router = Router({
-    '/search/:search': route,
-    '*': route
-  });
-  router.init();
+  // Custom "router" because can't get router to work with unusal, but
+  // standard characters
+  function route(r) {
+    window.location.hash = r;
+  }
+  route.update = function(e) {
+    var parts = window.location.hash.replace('#', '').split('/');
 
-  // Do route.  Turn search into ractive.
-  function route(search) {
-    var path = this.explode();
+    if (parts[0] === 'search') {
+      ractive.set('search', JSURL.parse(window.location.hash.split('/').pop()));
+    }
+  }
+  route.parse = function() {
+    var search = ractive.get('search');
+    if (!_.isObject(search)) {
+      return;
+    }
+    var q = {};
+    var s = {};
+    var l = {};
 
-    if (path[0] === 'search') {
-      try {
-        search = decodeURIComponent(search);
-        ractive.set('search', JSON.parse(search));
-      }
-      catch(e) {
-        this.setRoute('/');
+    if (search.q) {
+      _.each(search.q, function(value, field) {
+        q[field] = _.isObject(value) && value.$in ? value.$in : value;
+      });
+      ractive.set('query', q);
+    }
+
+    if (search.sort) {
+      _.each(search.sort, function(direction, field) {
+        s.field = field;
+        s.direction = direction;
+      });
+      if (s.field && s.direction) {
+        ractive.set('sort', s);
       }
     }
+  }
+  $(window).on('hashchange', route.update);
+  if (window.location.hash) {
+    route.update();
+    route.parse();
   }
 
   // On search, update data
@@ -69,10 +92,18 @@ function reporting() {
     }
   });
 
+  // Watch for query events for updating the multiselects
+  ractive.observe('query.*', function(n, o, keypath) {
+    var values = ractive.get(keypath);
+    if (multiselects[keypath]) {
+      $(multiselects[keypath]).multiselect('select', values);
+    }
+  });
+
   // Handle view updates.  Turn parts into URL.
   function observeSearchParts(n, o) {
     // Query
-    var query = ractive.get('query') || {};
+    var query = _.cloneDeep(ractive.get('query')) || {};
     var q = {};
     _.each(query, function(value, field) {
       if (_.isArray(value) && value.length) {
@@ -95,10 +126,10 @@ function reporting() {
 
     // TODO: limit
 
-    router.setRoute('search/' + encodeURIComponent(JSON.stringify({
+    route('search/' + JSURL.stringify({
       q: q,
       sort: s
-    })));
+    }));
   }
   ractive.observe('query', observeSearchParts, { init: false });
   ractive.observe('sort', observeSearchParts, { init: false });
@@ -173,6 +204,8 @@ function reporting() {
       ['#query-state', 'query.state'],
       ['#query-source-name', 'query.sourceName']
     ], function(set) {
+      var values = ractive.get(set[1]);
+
       $(set[0]).multiselect({
         disableIfEmpty: true,
         onChange: function(option, checked) {
@@ -195,7 +228,7 @@ function reporting() {
             }
           }
         }
-      });
+      }).multiselect('select', values);
     });
   });
 

@@ -78,11 +78,11 @@
               </div>
 
               <div class="form-group">
-                <label for="sort-field"><%= __('direction') %></label>
+                <label for="sort-direction"><%= __('direction') %></label>
 
-                <select class="form-control" id="sort-field" value="{{ sort.direction }}">
-                  <option value="{{ 1 }}"><%= __('ascending') %></option>
-                  <option value="{{ -1 }}"><%= __('descending') %></option>
+                <select class="form-control" id="sort-direction" value="{{ sort.direction }}">
+                  <option value="1"><%= __('ascending') %></option>
+                  <option value="-1"><%= __('descending') %></option>
                 </select>
               </div>
             </fieldset>
