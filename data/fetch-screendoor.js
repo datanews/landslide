@@ -105,7 +105,7 @@ function parseResults(data) {
 
     // Polling place name
     if (d.responses['41976'] && utils.filterFalsey(d.responses['41976'])) {
-      parsed.pollSite = p.pollSite || {};
+      parsed.pollSite = parsed.pollSite || {};
       parsed.pollSite.locationName = utils.filterFalsey(d.responses['41976']);
     }
 
