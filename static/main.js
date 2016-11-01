@@ -116,7 +116,7 @@ function reporting() {
         q[field] = { $in: value };
       }
       else if (_.isBoolean(value) && value) {
-        q[field] = { $exists: value, $nin: null };
+        q[field] = { $exists: value, $nin: [ null, 0, '0' ] };
       }
       else if (!_.isArray(value) && value) {
         q[field] = value;
