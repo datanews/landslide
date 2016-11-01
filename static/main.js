@@ -37,7 +37,8 @@ function reporting() {
       sort: {
         field: 'updated',
         direction: -1
-      }
+      },
+      limit: 250
     }
   });
 
@@ -60,11 +61,11 @@ function reporting() {
     }
     var q = {};
     var s = {};
-    var l = {};
 
     if (search.q) {
       _.each(search.q, function(value, field) {
-        q[field] = _.isObject(value) && value.$in ? value.$in : value;
+        q[field] = _.isObject(value) && value.$in ? value.$in :
+          _.isObject(value) && value.$exists ? true : value;
       });
       ractive.set('query', q);
     }
@@ -77,6 +78,10 @@ function reporting() {
       if (s.field && s.direction) {
         ractive.set('sort', s);
       }
+    }
+
+    if (search.limit && parseInt(search.limit, 10)) {
+      ractive.set('limit', parseInt(search.limit, 10));
     }
   }
   $(window).on('hashchange', route.update);
@@ -105,9 +110,13 @@ function reporting() {
     // Query
     var query = _.cloneDeep(ractive.get('query')) || {};
     var q = {};
+
     _.each(query, function(value, field) {
       if (_.isArray(value) && value.length) {
-        q[field] = { $in: value }
+        q[field] = { $in: value };
+      }
+      else if (_.isBoolean(value) && value) {
+        q[field] = { $exists: value, $nin: null };
       }
       else if (!_.isArray(value) && value) {
         q[field] = value;
@@ -124,15 +133,18 @@ function reporting() {
       s = { updated: -1 };
     }
 
-    // TODO: limit
+    // Limit
+    var limit = _.cloneDeep(ractive.get('limit'));
 
     route('search/' + JSURL.stringify({
       q: q,
-      sort: s
+      sort: s,
+      limit: limit
     }));
   }
   ractive.observe('query', observeSearchParts, { init: false });
   ractive.observe('sort', observeSearchParts, { init: false });
+  ractive.observe('limit', observeSearchParts, { init: false });
 
   // Observer muting to save to browser
   ractive.observe('muted.*', function(n, o, keypath) {

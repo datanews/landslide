@@ -54,36 +54,70 @@
               <legend><%= __('filtering') %></legend>
               <p><%= __('filteringHelp') %></p>
 
-              <div class="form-group">
-                <label for="query-source-name"><%= __('filterBySource') %></label>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="query-source-name"><%= __('filterBySource') %></label>
 
-                <select class="form-control" id="query-source-name" multiple="multiple">
-                  {{#options.sourceNames:s}}
-                    <option value="{{ this }}">{{ this }}</option>
-                  {{/options.sourceNames}}
-                </select>
+                    <select class="form-control" id="query-source-name" multiple="multiple">
+                      {{#options.sourceNames:s}}
+                        <option value="{{ this }}">{{ this }}</option>
+                      {{/options.sourceNames}}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" checked="{{ query.report }}"> Has report content
+                    </label>
+                    <p class="help-block">Do note that some messages from Mobile Commons may not save report information correctly but will be available in the details section.</p>
+                  </div>
+                </div>
               </div>
             </fieldset>
 
             <fieldset class="form-group">
               <legend><%= __('sortingAndMore') %></legend>
 
-              <div class="form-group">
-                <label for="sort-field"><%= __('sortField') %></label>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sort-field"><%= __('sortField') %></label>
 
-                <select class="form-control" id="sort-field" value="{{ sort.field }}">
-                  <option value="updated"><%= __('lastUpdated') %></option>
-                  <option value="waitMinutes"><%= __('waitTime') %></option>
-                </select>
-              </div>
+                    <select class="form-control" id="sort-field" value="{{ sort.field }}">
+                      <option value="updated"><%= __('lastUpdated') %></option>
+                      <option value="waitMinutes"><%= __('waitTime') %></option>
+                    </select>
+                  </div>
 
-              <div class="form-group">
-                <label for="sort-direction"><%= __('direction') %></label>
+                  <div class="form-group">
+                    <label for="sort-direction"><%= __('direction') %></label>
 
-                <select class="form-control" id="sort-direction" value="{{ sort.direction }}">
-                  <option value="1"><%= __('ascending') %></option>
-                  <option value="-1"><%= __('descending') %></option>
-                </select>
+                    <select class="form-control" id="sort-direction" value="{{ sort.direction }}">
+                      <option value="1"><%= __('ascending') %></option>
+                      <option value="-1"><%= __('descending') %></option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="limit"><%= __('limitResults') %></label>
+
+                    <select class="form-control" id="limit" value="{{ limit }}">
+                      <option value="100">100</option>
+                      <option value="250">250</option>
+                      <option value="500">500</option>
+                      <option value="1000">1000</option>
+                      <option value="2000">2000</option>
+                      <option value="0">All</option>
+                    </select>
+
+                    <p class="help-block">Note that the more results, the longer the time it will take to get them.  Consider filtering and ordering if first.</p>
+                  </div>
+                </div>
               </div>
             </fieldset>
           </form>

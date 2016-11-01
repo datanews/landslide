@@ -82,7 +82,7 @@ function parseData(error, messages, done) {
     try {
       message = {
         id: m.$.id,
-        body: m.body[0],
+        body: utils.filterFalsey(m.body[0]),
         timestamp: moment.utc(m.received_at[0]).unix(),
         type: m.$.type
       };
@@ -105,9 +105,9 @@ function parseData(error, messages, done) {
       // We look at profile data, as this holds the custom columns, which there
       // are one per profile, though we can know when they last updated it
       p.phone = m.profile[1].phone_number[0];
-      p.city = m.profile[1].location[0].city[0];
-      p.state = m.profile[1].location[0].state[0];
-      p.zip = m.profile[1].location[0].postal_code[0];
+      p.city = utils.filterFalsey(m.profile[1].location[0].city[0]);
+      p.state = utils.filterFalsey(m.profile[1].location[0].state[0]);
+      p.zip = utils.filterFalsey(m.profile[1].location[0].postal_code[0]);
 
       // Opt-in
       p.subSource = m.profile[1].source[0].$.name;
@@ -127,10 +127,10 @@ function parseData(error, messages, done) {
         p.contactable = true;
       }
       if (custom.ElectionReport) {
-        p.report = custom.ElectionReport.value;
+        p.report = utils.filterFalsey(custom.ElectionReport.value);
       }
       if (custom.ElectionWait) {
-        p.wait = custom.ElectionWait.value;
+        p.wait = utils.filterFalsey(custom.ElectionWait.value);
         if (utils.parseMinutes(custom.ElectionWait.value)) {
           p.waitMinutes = utils.parseMinutes(custom.ElectionWait.value);
         }
