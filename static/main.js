@@ -258,10 +258,12 @@ function reporting() {
 
         if (current) {
           ractive.merge('data', data, 'id');
+          console.log(sort);
           data.sort(function(a, b) {
             a = a[sort.field];
             b = b[sort.field];
-            return _.isString(a) ? a.localeCompare(b) : a - b;
+            console.log(a, _.isString(a));
+            return _.isString(a) ? a.localeCompare(b) : compareNumbers(a, b);
           });
           if (sort.direction === -1) {
             data.reverse();
@@ -354,6 +356,15 @@ function localDelete(key) {
     window.localStorage.removeItem(key);
     return true;
   }
+}
+
+// Compare numbers
+function compareNumbers(a, b) {
+  a = !_.isNumber(a) ? -99999999 : a;
+  b = !_.isNumber(b) ? -99999999 : b;
+
+  return (a > b) ? 1 :
+    (a < b) ? -1 : 0;
 }
 
 // Is mobile/phone
