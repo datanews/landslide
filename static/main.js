@@ -48,6 +48,7 @@ function reporting() {
   function route(r) {
     if (window.history) {
       history.pushState(null, null, window.location.pathname + '#' + r);
+      route.update();
     }
     else {
       window.location.hash = r;
