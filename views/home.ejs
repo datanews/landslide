@@ -124,149 +124,162 @@
         </div>
       </div>
 
-      <div class="table-responsive">
-        <table class="table report-list">
-          <thead>
-            <tr>
-              <th></th>
-              <th><%= __('report') %></th>
-              <th><%= __('wait') %></th>
-              <th><%= __('location') %></th>
-              <th><%= __('updated') %></th>
-              {{^filteredSource}}
-                <th><%= __('source') %></th>
-              {{/filteredSource}}
-              <th><%= __('actions') %></th>
-            </tr>
-          </thead>
+      <div class="exports panel panel-default">
+        <div class="panel-heading">
+          <p class="pull-right">
+            {{#lastFetch}}
+              <small class="text-muted"><%= __('dataAsOf') %> {{ lastFetch.fromNow() }}.</small>
+            {{/lastFetch}}
+            <span class="loading {{#isLoading}}is-loading{{/isLoading}}"><i class="fa fa-spinner fa-pulse"></i></span>
+          </p>
 
-          <tbody>
-            {{#data}}
-              <tr class="overview-row {{#details[id]}}with-details{{/details[id]}} {{#muted[id]}}muted{{/muted[id]}}">
-                <td class="details-toggle">
-                  <span on-tap="toggleAbsolute:{{ 'details.' + id }}" class="clickable">
-                    {{#details[id]}}<i class="fa fa-angle-double-down"></i>{{else}}<i class="fa fa-angle-double-right"></i>{{/details[id]}}
-                  </span>
-                </td>
-                <td class="report-data"><p>{{ report }}</p></td>
-                <td class="wait-data">
-                  {{#waitMinutes}}
-                    {{ waitMinutes > 60 ? (waitMinutes / 60).toFixed(2) + ' hr' : waitMinutes + ' min' }}
-                  {{else}}
-                    <span class="text-muted">{{ wait }}</span>
-                  {{/waitMinutes}}
-                </td>
-                <td>
-                  {{ fullAddress }}
-                </td>
-                <td class="updated-data small text-muted">
-                  {{#updatedM}}
-                    <span>{{ updatedM.fromNow() }}</span>
-                  {{/updatedM}}
-                </td>
+          <h3 class="panel-title"><%= __('results') %></h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table report-list">
+            <thead>
+              <tr>
+                <th></th>
+                <th><%= __('report') %></th>
+                <th><%= __('wait') %></th>
+                <th><%= __('location') %></th>
+                <th><%= __('updated') %></th>
                 {{^filteredSource}}
-                  <td class="source-data small text-muted">{{ sourceName }}</td>
+                  <th><%= __('source') %></th>
                 {{/filteredSource}}
-                <td class="actions">
-                  <button class="btn btn-default btn-xs">
-                    <span class="clickable" on-tap="toggleCheck:{{ id }}">
-                      {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
-                      <span class="small"><%= __('inCheck') %></span>
-                    </span>
-                  </button>
-
-                  <button class="btn btn-default btn-xs toggle-mute">
-                    <span class="clickable" on-tap="toggleAbsolute:{{ 'muted.' + id }}">
-                      {{#muted[id]}}
-                        <i class="fa fa-volume-up"></i>
-                        <span class="small"><%= __('unmute') %></span>
-                      {{else}}
-                        <i class="fa fa-volume-off text-muted"></i>
-                        <span class="small"><%= __('mute') %></span>
-                      {{/muted[id]}}
-                    </span>
-                  </button>
-                </td>
+                <th><%= __('actions') %></th>
               </tr>
+            </thead>
 
-              {{#details[id]}}
-                <tr class="details-row {{#muted[id]}}muted{{/muted[id]}}">
-                  <td></td>
-                  <td colspan="20">
-                    <div class="details" intro-outro="slide">
-                      <div class="row">
-                        <div class="col-xs-6">
-                          <ul class="list-unstyled">
-                            <li><strong><%= __('updated') %></strong> {{ updatedM.format('YYYY-MM-DD hh:mm a') }}</li>
-                            <li><strong><%= __('contactable') %></strong> {{ contactable ? 'yes' : 'no' }}</li>
-                            {{#contactable}}
-                              {{#phone}}
-                                <li><strong><%= __('phone') %></strong>
-                                  {{ phone }}
-                                  &nbsp;<a class="mobile-only-inline" href="tel:{{ phone.replace(/[^0-9]/g, '') }}" title="<%= __('callNumber') %>"><i class="fa fa-phone fa-lg"></i></a>
-                                  &nbsp;<a class="mobile-only-inline" href="sms:{{ phone.replace(/[^0-9]/g, '') }}?body=<%= __('textBody') %>" title="<%= __('textNumber') %>"><i class="fa fa-mobile fa-lg"></i></a>
+            <tbody>
+              {{#data}}
+                <tr class="overview-row {{#details[id]}}with-details{{/details[id]}} {{#muted[id]}}muted{{/muted[id]}}">
+                  <td class="details-toggle">
+                    <span on-tap="toggleAbsolute:{{ 'details.' + id }}" class="clickable">
+                      {{#details[id]}}<i class="fa fa-angle-double-down"></i>{{else}}<i class="fa fa-angle-double-right"></i>{{/details[id]}}
+                    </span>
+                  </td>
+                  <td class="report-data"><p>{{ report }}</p></td>
+                  <td class="wait-data">
+                    {{#waitMinutes}}
+                      {{ waitMinutes > 60 ? (waitMinutes / 60).toFixed(2) + ' hr' : waitMinutes + ' min' }}
+                    {{else}}
+                      <span class="text-muted">{{ wait }}</span>
+                    {{/waitMinutes}}
+                  </td>
+                  <td>
+                    {{ fullAddress }}
+                  </td>
+                  <td class="updated-data small text-muted">
+                    {{#updatedM}}
+                      <span>{{ updatedM.fromNow() }}</span>
+                    {{/updatedM}}
+                  </td>
+                  {{^filteredSource}}
+                    <td class="source-data small text-muted">{{ sourceName }}</td>
+                  {{/filteredSource}}
+                  <td class="actions">
+                    <button class="btn btn-default btn-xs">
+                      <span class="clickable" on-tap="toggleCheck:{{ id }}">
+                        {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
+                        <span class="small"><%= __('inCheck') %></span>
+                      </span>
+                    </button>
+
+                    <button class="btn btn-default btn-xs toggle-mute">
+                      <span class="clickable" on-tap="toggleAbsolute:{{ 'muted.' + id }}">
+                        {{#muted[id]}}
+                          <i class="fa fa-volume-up"></i>
+                          <span class="small"><%= __('unmute') %></span>
+                        {{else}}
+                          <i class="fa fa-volume-off text-muted"></i>
+                          <span class="small"><%= __('mute') %></span>
+                        {{/muted[id]}}
+                      </span>
+                    </button>
+                  </td>
+                </tr>
+
+                {{#details[id]}}
+                  <tr class="details-row {{#muted[id]}}muted{{/muted[id]}}">
+                    <td></td>
+                    <td colspan="20">
+                      <div class="details" intro-outro="slide">
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <ul class="list-unstyled">
+                              <li><strong><%= __('updated') %></strong> {{ updatedM.format('YYYY-MM-DD hh:mm a') }}</li>
+                              <li><strong><%= __('contactable') %></strong> {{ contactable ? 'yes' : 'no' }}</li>
+                              {{#contactable}}
+                                {{#phone}}
+                                  <li><strong><%= __('phone') %></strong>
+                                    {{ phone }}
+                                    &nbsp;<a class="mobile-only-inline" href="tel:{{ phone.replace(/[^0-9]/g, '') }}" title="<%= __('callNumber') %>"><i class="fa fa-phone fa-lg"></i></a>
+                                    &nbsp;<a class="mobile-only-inline" href="sms:{{ phone.replace(/[^0-9]/g, '') }}?body=<%= __('textBody') %>" title="<%= __('textNumber') %>"><i class="fa fa-mobile fa-lg"></i></a>
+                                  </li>
+                                {{/phone}}
+                              {{/contactable}}
+
+                              {{#(messages && messages.length)}}
+                                <li><strong><%= __('allMessages') %></strong>
+                                  {{#messages}}
+                                    <br>- <code title="{{ moment.unix(timestamp).format() }}">{{ body }}</code>
+                                  {{/messages}}
                                 </li>
-                              {{/phone}}
-                            {{/contactable}}
+                              {{/()}}
+                            </ul>
+                          </div>
 
-                            {{#(messages && messages.length)}}
-                              <li><strong><%= __('allMessages') %></strong>
-                                {{#messages}}
-                                  <br>- <code title="{{ moment.unix(timestamp).format() }}">{{ body }}</code>
-                                {{/messages}}
-                              </li>
-                            {{/()}}
-                          </ul>
-                        </div>
+                          <div class="col-xs-6">
+                            <ul class="list-unstyled">
+                              {{#(fullAddress || (lat && lon))}}
+                                <li>
+                                  <strong><%= __('mapLink') %></strong>
+                                  <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ fullAddress || lat + ',' + lon }}"><%= __('googleMaps') %></a>
+                                </li>
+                              {{/()}}
 
-                        <div class="col-xs-6">
-                          <ul class="list-unstyled">
-                            {{#(fullAddress || (lat && lon))}}
-                              <li>
-                                <strong><%= __('mapLink') %></strong>
-                                <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ fullAddress || lat + ',' + lon }}"><%= __('googleMaps') %></a>
-                              </li>
-                            {{/()}}
-
-                            {{#geocoded}}
-                              <li><strong><%= __('accuracy') %></strong> {{ geocodedAccuracy }}</li>
-                              <li><strong><%= __('formatted') %></strong> {{ geocodedFormatted }}</li>
-                            {{/geocoded}}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {{#electionProtection}}
-                        <div class="election-protection">
-                          <h5>Election Protection</h5>
-
-                          <div class="row">
-                            <div class="col-xs-6">
-                              <ul class="list-unstyled">
-                                <li><strong><%= __('status') %></strong> {{ status }}</li>
-                                <li><strong><%= __('callLength') %></strong> {{ callLength }}</li>
-                                <li><strong><%= __('owner') %></strong> {{ owner }}</li>
-                                <li><strong><%= __('actionCount') %></strong> {{ actionCount }}</li>
-                              </ul>
-                            </div>
-
-                            <div class="col-xs-6">
-                              <ul class="list-unstyled">
-                                <li><strong><%= __('created') %></strong> {{ moment.utc(created).local().format('YYYY-MM-DD hh:mm a') }}</li>
-                                <li><strong><%= __('issueTags') %></strong> {{ issueType.join(', ') }}</li>
-                                <li><strong><%= __('link') %></strong> <a href="{{ url }}">Link to system</a></li>
-                              </ul>
-                            </div>
+                              {{#geocoded}}
+                                <li><strong><%= __('accuracy') %></strong> {{ geocodedAccuracy }}</li>
+                                <li><strong><%= __('formatted') %></strong> {{ geocodedFormatted }}</li>
+                              {{/geocoded}}
+                            </ul>
                           </div>
                         </div>
-                      {{/electionProtection}}
-                    </div>
-                  </td>
-                <tr>
-              {{/details[id]}}
-            {{/data}}
-          </tbody>
-        </table>
+
+                        {{#electionProtection}}
+                          <div class="election-protection">
+                            <h5>Election Protection</h5>
+
+                            <div class="row">
+                              <div class="col-xs-6">
+                                <ul class="list-unstyled">
+                                  <li><strong><%= __('status') %></strong> {{ status }}</li>
+                                  <li><strong><%= __('callLength') %></strong> {{ callLength }}</li>
+                                  <li><strong><%= __('owner') %></strong> {{ owner }}</li>
+                                  <li><strong><%= __('actionCount') %></strong> {{ actionCount }}</li>
+                                </ul>
+                              </div>
+
+                              <div class="col-xs-6">
+                                <ul class="list-unstyled">
+                                  <li><strong><%= __('created') %></strong> {{ moment.utc(created).local().format('YYYY-MM-DD hh:mm a') }}</li>
+                                  <li><strong><%= __('issueTags') %></strong> {{ issueType.join(', ') }}</li>
+                                  <li><strong><%= __('link') %></strong> <a href="{{ url }}">Link to system</a></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        {{/electionProtection}}
+                      </div>
+                    </td>
+                  <tr>
+                {{/details[id]}}
+              {{/data}}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="exports panel panel-default">
