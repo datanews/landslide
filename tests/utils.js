@@ -137,3 +137,26 @@ test('utils | countyName', function(t) {
     t.equal(utils.countyName(p[0]), p[1]);
   });
 });
+
+// parseBooleanFromString
+test('utils | parseBooleanFromString', function(t) {
+  var parseTests = [
+    [true, true],
+    [false, false],
+    ['Yes', true],
+    ['YES...', true],
+    ['(si))...', true],
+    [[], false],
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    ['{}', false],
+    ['sí', true],
+    ['non', false]
+  ];
+
+  t.plan(parseTests.length);
+  parseTests.forEach(function(p) {
+    t.equal(utils.parseBooleanFromString(p[0]), p[1]);
+  });
+});
