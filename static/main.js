@@ -23,6 +23,14 @@ function reporting() {
   var muted = localLoad('muted');
   var multiselects = {};
   var mapInput;
+  var defaultSearch = {
+    q: {},
+    sort: {
+      field: 'updated',
+      direction: -1
+    },
+    limit: 250
+  };
   var ractive = new Ractive({
     el: el,
     template: template,
@@ -34,31 +42,26 @@ function reporting() {
       muted: muted,
       _: _,
       moment: moment,
-      query: {},
-      sort: {
-        field: 'updated',
-        direction: -1
-      },
-      limit: 250
+      query: defaultSearch.q,
+      sort: defaultSearch.sort,
+      limit: defaultSearch.limit
     }
   });
 
-  // Custom "router" because can't get router to work with unusal, but
-  // standard characters
+  // Could not get any router to work with the JSURL syntax, and couldn't
+  // get pushstate to work correctly either, so, we update hash and read on
+  // load, allowing for linking
   function route(r) {
-    if (window.history) {
-      history.pushState(null, null, window.location.pathname + '#' + r);
-      route.update();
-    }
-    else {
-      window.location.hash = r;
-    }
+    window.location.hash = r ? '/' + r : '';
   }
   route.update = function(e) {
     var parts = window.location.hash.replace('#', '').split('/');
 
-    if (parts[0] === 'search') {
+    if (parts[0] === 'search' || parts[1] === 'search') {
       ractive.set('search', JSURL.parse(window.location.hash.split('/').pop()));
+    }
+    else {
+      ractive.set('search', defaultSearch);
     }
   }
   route.parse = function() {
@@ -91,12 +94,7 @@ function reporting() {
       ractive.set('limit', parseInt(search.limit, 10));
     }
   }
-  if (window.history) {
-    $(window).on('popstate', route.update);
-  }
-  else {
-    $(window).on('hashchange', route.update);
-  }
+  $(window).on('hashchange', route.update);
   if (window.location.hash) {
     route.update();
     route.parse();
@@ -190,6 +188,12 @@ function reporting() {
 
   ractive.on('toggleAbsolute', function(e, prop) {
     this.toggle(prop);
+  });
+
+  ractive.on('resetSearch', function(e) {
+    e.original.preventDefault();
+    // This is the easiest
+    window.location.href = window.location.pathname;
   });
 
   ractive.on('exportCSV', function(e, useFilters) {
@@ -341,7 +345,7 @@ function reporting() {
       var sort = ractive.get('sort');
 
       if (!error && _.isArray(data)) {
-        ractive.set('lastFetch', moment.unix(_.maxBy(data, 'fetched').fetched));
+        ractive.set('lastFetch', (data && data.length) ? moment.unix(_.maxBy(data, 'fetched').fetched) : null);
         ractive.set('isLoading', false);
 
         if (current) {
