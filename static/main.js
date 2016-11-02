@@ -202,6 +202,19 @@ function reporting() {
     window.location.href = window.location.pathname;
   });
 
+  ractive.on('resetMapInput', function(e) {
+    e.original.preventDefault();
+    // Remove rectangle
+    if (mapInput._currentRectangle) {
+      mapInput._currentRectangle.setMap(null);
+    }
+    // Update view values
+    ractive.set({
+      'query.lat': undefined,
+      'query.lon': undefined
+    });
+  });
+
   ractive.on('exportCSV', function(e, useFilters) {
     var params = ractive.get('search') || {};
     params.format = 'csv';
@@ -290,7 +303,8 @@ function reporting() {
       fullscreenControl: true,
       fullscreenControlOptions: {
         position: google.maps.ControlPosition.TOP_LEFT
-      }
+      },
+      scrollwheel: false
     });
 
     // Draw rectangle if needed
@@ -318,6 +332,7 @@ function reporting() {
     });
     drawingManager.setMap(mapInput);
     mapInput._drawing = drawingManager;
+    mapInput._currentRectangle = currentRectangle;
 
     // Handle event
     google.maps.event.addListener(drawingManager, 'rectanglecomplete', function(rect) {
@@ -336,6 +351,7 @@ function reporting() {
 
       // Keep track of rectangle
       currentRectangle = rect;
+      mapInput._currentRectangle = currentRectangle;
     });
   }
   if (window.google) {
