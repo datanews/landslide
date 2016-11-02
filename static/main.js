@@ -75,12 +75,14 @@ function reporting() {
     if (!_.isObject(search)) {
       return;
     }
+
     var q = {};
     var s = {};
 
     if (search.q) {
       _.each(search.q, function(value, field) {
-        q[field] = _.isObject(value) && value.$in ? value.$in :
+        q[field] = field === 'inCheck' && value.$ne ? true :
+          _.isObject(value) && value.$in ? value.$in :
           _.isObject(value) && value.$exists ? true : value;
       });
       ractive.set('query', q);
@@ -128,7 +130,10 @@ function reporting() {
     var q = {};
 
     _.each(query, function(value, field) {
-      if (_.isArray(value) && value.length) {
+      if (field === 'inCheck' && value) {
+        q[field] = { $ne: true };
+      }
+      else if (_.isArray(value) && value.length) {
         q[field] = { $in: value };
       }
       else if (_.isBoolean(value) && value) {
