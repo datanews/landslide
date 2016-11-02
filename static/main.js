@@ -9,6 +9,12 @@ $(document).ready(function() {
   // Detect mobile
   $('body').toggleClass('mobile', isMobile());
 
+  // Send hash to server on login page
+  if (window.location.pathname === '/login') {
+    storeHash();
+    $(window).on('hashchange', storeHash);
+  }
+
   // Reporting
   if ($('#home-template').length > 0) {
     reporting();
@@ -455,6 +461,17 @@ function compareNumbers(a, b) {
 
   return (a > b) ? 1 :
     (a < b) ? -1 : 0;
+}
+
+// Store hash
+function storeHash() {
+  if (window.location.hash) {
+    $.getJSON('/api/hash?hash=' + window.location.hash.replace('#', ''), function() {
+      // Saved
+    }).fail(function(error) {
+      console.log(error);
+    });
+  }
 }
 
 // Is mobile/phone
