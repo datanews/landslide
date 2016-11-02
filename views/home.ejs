@@ -257,16 +257,9 @@
                               {{/pollSite.locationName}}
 
                               {{#(fullAddress || (lat && lon))}}
-                                <li>
-                                  <strong><%= __('mapLink') %></strong>
-                                  <a target="_blank" rel="noopener" href="https://maps.google.com/maps?q={{ fullAddress || lat + ',' + lon }}"><%= __('googleMaps') %></a>
-                                </li>
-                              {{/()}}
-
-                              {{#geocoded}}
-                                <li><strong><%= __('accuracy') %></strong> {{ geocodedAccuracy }}</li>
-                                <li><strong><%= __('formatted') %></strong> {{ geocodedFormatted }}</li>
-                              {{/geocoded}}
+                                <li><strong>Google map</strong><br>
+                                <iframe width="100%" frameborder="0" style="border:0" height="300" src="https://www.google.com/maps/embed/v1/{{#fullAddress}}search{{else}}place{{/fullAddress}}?key=<%= config.GOOGLE_API_KEY %>&q={{ encodeURIComponent(fullAddress || lat + ',' + lon) }}"></iframe></li>
+                              {{/())}}
                             </ul>
                           </div>
                         </div>

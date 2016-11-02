@@ -370,8 +370,9 @@ function reporting() {
         ractive.set('lastFetch', (data && data.length) ? moment.unix(_.maxBy(data, 'fetched').fetched) : null);
         ractive.set('isLoading', false);
 
-        if (current) {
-          ractive.merge('data', data, 'id');
+        /*
+        if (current && current.length) {
+          ractive.merge('data', data, { compare: 'id' });
           data.sort(function(a, b) {
             a = a[sort.field];
             b = b[sort.field];
@@ -384,6 +385,10 @@ function reporting() {
         else {
           ractive.set('data', data);
         }
+        */
+
+        // This seems to actually not redraw as much for some reason.
+        ractive.set('data', data);
       }
       else if (error && error.status === 401) {
         // Reload page
