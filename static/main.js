@@ -362,30 +362,26 @@ function reporting() {
   function fetch() {
     ractive.set('isLoading', true);
 
+    // Get stats
+    getStats(function(error, data) {
+      if (!error) {
+        ractive.set('totalStats', data);
+      }
+      else {
+        console.log(error);
+      }
+    });
+
+    // Update data
     updateData(ractive.get('search'), function(error, data) {
       var current = ractive.get('data');
       var sort = ractive.get('sort');
 
       if (!error && _.isArray(data)) {
-        ractive.set('lastFetch', (data && data.length) ? moment.unix(_.maxBy(data, 'fetched').fetched) : null);
         ractive.set('isLoading', false);
 
-        /*
-        if (current && current.length) {
-          ractive.merge('data', data, { compare: 'id' });
-          data.sort(function(a, b) {
-            a = a[sort.field];
-            b = b[sort.field];
-            return _.isString(a) ? a.localeCompare(b) : compareNumbers(a, b);
-          });
-          if (sort.direction === -1) {
-            data.reverse();
-          }
-        }
-        else {
-          ractive.set('data', data);
-        }
-        */
+        // Get stats
+        ractive.set('stats', resultsStats(data));
 
         // This seems to actually not redraw as much for some reason.
         ractive.set('data', data);
@@ -434,6 +430,43 @@ function getOptions(done) {
       });
     }).fail(done);
   }).fail(done);
+}
+
+// Get stats (report-wide)
+function getStats(done) {
+  $.getJSON('/api/reports/stats', function(stats) {
+    return done(null, {
+      totalReports: stats.all[0].totalCount,
+      totalWaitTime: stats.all[0].waitSum,
+      minWaitTime: stats.all[0].waitMin,
+      maxWaitTime: stats.all[0].waitMax,
+      lastFetch: stats.all[0].lastFetch ? moment.unix(stats.all[0].lastFetch) : undefined,
+
+      nonZeroWaitTotalReports: stats.wait[0].totalCount,
+      nonZeroWaitWaitAverage: _.isNumber(stats.wait[0].waitAvg) ? stats.wait[0].waitAvg.toFixed(1) : undefined,
+
+      withReportTotalReports: stats.reports[0].totalCount
+    });
+  }).fail(done);
+}
+
+// Make stats for results
+function resultsStats(data) {
+  var nonZeroWait = _.filter(data, 'waitMinutes');
+  var withReport = _.filter(data, 'report');
+  var sumMinutes = _.sumBy(data, 'waitMinutes');
+
+  return {
+    totalReports: data.length,
+    totalWaitTime: sumMinutes,
+    minWaitTime: _.minBy(nonZeroWait, 'waitMinutes'),
+    maxWaitTime: _.maxBy(nonZeroWait, 'waitMinutes'),
+
+    nonZeroWaitTotalReports: nonZeroWait.length,
+    nonZeroWaitWaitAverage: nonZeroWait.length ? (sumMinutes / nonZeroWait.length).toFixed(1) : undefined,
+
+    withReportTotalReports: withReport.length
+  }
 }
 
 // Add query to URL

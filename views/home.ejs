@@ -24,9 +24,10 @@
       <div class="exports panel panel-default">
         <div class="panel-heading">
           <p class="pull-right">
-            {{#lastFetch}}
-              <small class="text-muted"><%= __('dataAsOf') %> {{ lastFetch.fromNow() }}.</small>
-            {{/lastFetch}}
+            {{#totalStats.lastFetch}}
+              <small class="text-muted"><%= __('dataAsOf') %> {{ totalStats.lastFetch.fromNow() }}.</small>
+            {{/totalStats.lastFetch}}
+
             <span class="loading {{#isLoading}}is-loading{{/isLoading}}"><i class="fa fa-spinner fa-pulse"></i></span>
           </p>
 
@@ -145,10 +146,39 @@
 
       <div class="exports panel panel-default">
         <div class="panel-heading">
+          <h3 class="panel-title">Stats</h3>
+        </div>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6 text-center">
+              Average wait time<br>
+              <span class="text-large">
+                {{#stats.nonZeroWaitWaitAverage}}
+                  <strong>{{ stats.nonZeroWaitWaitAverage }} min</strong>
+                {{else}}
+                  n/a
+                {{/stats.nonZeroWaitWaitAverage}}
+              </span> <br>
+              <span class="text-muted">{{ totalStats.nonZeroWaitWaitAverage }} min for all reports</span>
+            </div>
+
+            <div class="col-md-6 text-center">
+              With reports<br>
+              <span class="text-large"><strong>{{ stats.withReportTotalReports }}</strong> of {{ stats.totalReports }}</span> <br>
+              <span class="text-muted">{{ totalStats.withReportTotalReports }} (of {{ totalStats.totalReports }}) for all reports</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exports panel panel-default">
+        <div class="panel-heading">
           <p class="pull-right">
-            {{#lastFetch}}
-              <small class="text-muted"><%= __('dataAsOf') %> {{ lastFetch.fromNow() }}.</small>
-            {{/lastFetch}}
+            {{#totalStats.lastFetch}}
+              <small class="text-muted"><%= __('dataAsOf') %> {{ totalStats.lastFetch.fromNow() }}.</small>
+            {{/totalStats.lastFetch}}
+
             <span class="loading {{#isLoading}}is-loading{{/isLoading}}"><i class="fa fa-spinner fa-pulse"></i></span>
           </p>
 

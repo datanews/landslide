@@ -23,6 +23,10 @@ code {
   width: 100%;
 }
 
+.text-large {
+  font-size: 2em;
+}
+
 /* Mobile only */
 .mobile-only,
 .mobile-only-inline {
