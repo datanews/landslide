@@ -21,8 +21,7 @@ function fetchAll(done) {
   const q = queue();
   q.defer(mc);
   q.defer(sd);
-  // TODO: update for new API
-  //q.defer(ep);
+  q.defer(ep);
   //q.defer(test);
 
   // Done

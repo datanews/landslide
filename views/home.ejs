@@ -157,7 +157,7 @@
 
         <div class="panel-body">
           <div class="row">
-            <div class="col-md-6 text-center">
+            <div class="col-sm-6 text-center">
               Average wait time<br>
               <span class="text-large">
                 {{#stats.nonZeroWaitWaitAverage}}
@@ -169,7 +169,7 @@
               <span class="text-muted">{{ totalStats.nonZeroWaitWaitAverage }} min for all reports</span>
             </div>
 
-            <div class="col-md-6 text-center">
+            <div class="col-sm-6 text-center">
               With reports<br>
               <span class="text-large"><strong>{{ stats.withReportTotalReports }}</strong> of {{ stats.totalReports }}</span> <br>
               <span class="text-muted">{{ totalStats.withReportTotalReports }} (of {{ totalStats.totalReports }}) for all reports</span>
@@ -200,9 +200,7 @@
                 <th><%= __('wait') %></th>
                 <th><%= __('location') %></th>
                 <th><%= __('updated') %></th>
-                {{^filteredSource}}
-                  <th><%= __('source') %></th>
-                {{/filteredSource}}
+                <th><%= __('source') %></th>
                 <th><%= __('actions') %></th>
               </tr>
             </thead>
@@ -215,7 +213,9 @@
                       {{#details[id]}}<i class="fa fa-angle-double-down"></i>{{else}}<i class="fa fa-angle-double-right"></i>{{/details[id]}}
                     </span>
                   </td>
+
                   <td class="report-data"><p>{{ report }}</p></td>
+
                   <td class="wait-data">
                     {{#waitMinutes}}
                       {{ waitMinutes > 60 ? (waitMinutes / 60).toFixed(2) + ' hr' : waitMinutes + ' min' }}
@@ -223,17 +223,22 @@
                       <span class="text-muted">{{ wait }}</span>
                     {{/waitMinutes}}
                   </td>
+
                   <td>
+                    {{#pollSite.locationName}}
+                      {{ pollSite.locationName }}<br>
+                    {{/pollSite.locationName}}
                     {{ fullAddress }}
                   </td>
+
                   <td class="updated-data small text-muted">
                     {{#updatedM}}
                       <span>{{ updatedM.fromNow() }}</span>
                     {{/updatedM}}
                   </td>
-                  {{^filteredSource}}
-                    <td class="source-data small text-muted">{{ sourceName }}</td>
-                  {{/filteredSource}}
+
+                  <td class="source-data small text-muted">{{ sourceName }}</td>
+
                   <td class="actions">
                     <button class="btn btn-default btn-xs">
                       <span class="clickable" on-tap="toggleCheck:{{ id }}">
@@ -276,6 +281,10 @@
                                 {{/phone}}
                               {{/contactable}}
 
+                              {{#electionProtection.status}}
+                                <li><strong>EP status</strong> {{ electionProtection.status }}</li>
+                              {{/electionProtection.status}}
+
                               {{#(messages && messages.length)}}
                                 <li><strong><%= __('allMessages') %></strong>
                                   {{#messages}}
@@ -288,10 +297,6 @@
 
                           <div class="col-xs-6">
                             <ul class="list-unstyled">
-                              {{#pollSite.locationName}}
-                                <li><strong>Poll site</strong> {{ pollSite.locationName }}</li>
-                              {{/pollSite.locationName}}
-
                               {{#(fullAddress || (lat && lon))}}
                                 <li><strong>Google map</strong><br>
                                 <iframe width="100%" frameborder="0" style="border:0" height="300" src="https://www.google.com/maps/embed/v1/{{#fullAddress}}search{{else}}place{{/fullAddress}}?key=<%= config.GOOGLE_API_KEY %>&q={{ encodeURIComponent(fullAddress || lat + ',' + lon) }}"></iframe></li>
@@ -299,31 +304,6 @@
                             </ul>
                           </div>
                         </div>
-
-                        {{#electionProtection}}
-                          <div class="election-protection">
-                            <h5>Election Protection</h5>
-
-                            <div class="row">
-                              <div class="col-xs-6">
-                                <ul class="list-unstyled">
-                                  <li><strong><%= __('status') %></strong> {{ status }}</li>
-                                  <li><strong><%= __('callLength') %></strong> {{ callLength }}</li>
-                                  <li><strong><%= __('owner') %></strong> {{ owner }}</li>
-                                  <li><strong><%= __('actionCount') %></strong> {{ actionCount }}</li>
-                                </ul>
-                              </div>
-
-                              <div class="col-xs-6">
-                                <ul class="list-unstyled">
-                                  <li><strong><%= __('created') %></strong> {{ moment.utc(created).local().format('YYYY-MM-DD hh:mm a') }}</li>
-                                  <li><strong><%= __('issueTags') %></strong> {{ issueType.join(', ') }}</li>
-                                  <li><strong><%= __('link') %></strong> <a href="{{ url }}">Link to system</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        {{/electionProtection}}
                       </div>
                     </td>
                   <tr>

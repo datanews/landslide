@@ -20,7 +20,7 @@ const utils = require('../lib/utils.js');
 moment.tz.setDefault('America/New_York');
 
 // Mobile Commons API template
-const urlTemplate = (a) => `http://protection.election.land/api?since=${ a.since }`;
+const urlTemplate = (a) => `http://protection.election.land/api/?since=${ a.since }`;
 
 // The first time we get the data, we'll get all of it, but subsequent requests
 // should be only the past hour.
@@ -70,10 +70,14 @@ function parseResults(data) {
   data = data.map(function(d, di) {
     var parsed = {};
 
+    if (!d.id) {
+      return;
+    }
+
     parsed.id = 'ep-' + utils.id(d.id);
     parsed.source = 'election-protection';
     parsed.sourceName = 'Election Protection';
-    parsed.private = true;
+    //parsed.private = true;
 
     parsed.zip = utils.filterFalsey(d.zip);
     parsed.county = utils.countyName(d.county);
@@ -88,23 +92,24 @@ function parseResults(data) {
       parsed.lon = parseFloat(d.polling_place_longitude);
     }
 
-    parsed.report = utils.filterFalsey(d.subject);
+    parsed.report = utils.filterFalsey(d.clean_subject);
 
-    if (utils.filterFalsey(d.lastupdated)) {
-      parsed.updated = moment.utc(d.lastupdated).unix();
+    if (utils.filterFalsey(d.pp_last_update)) {
+      parsed.updated = moment.utc(d.pp_last_update).unix();
     }
     parsed.fetched = fetched;
 
     // Election protection specific data
     parsed.electionProtection = {};
     parsed.electionProtection.status = utils.filterFalsey(d.status);
-    parsed.electionProtection.callLength = utils.filterFalsey(d.call_length);
-    parsed.electionProtection.owner = utils.filterFalsey(d.owner);
-    parsed.electionProtection.actionCount = utils.filterFalsey(d.action_count);
+    //parsed.electionProtection.callLength = utils.filterFalsey(d.call_length);
+    //parsed.electionProtection.owner = utils.filterFalsey(d.owner);
+    //parsed.electionProtection.actionCount = utils.filterFalsey(d.action_count);
     parsed.electionProtection.created = utils.filterFalsey(d.created);
-    parsed.electionProtection.url = 'https://rt.ourvotelive.org/Ticket/Display.html?id=' + d.id;
-    if (utils.filterFalsey(d.voting_issue_type) && _.isArray(d.voting_issue_type)) {
-      parsed.electionProtection.issueType = _.uniq(_.filter(d.voting_issue_type));
+    //parsed.electionProtection.url = 'https://rt.ourvotelive.org/Ticket/Display.html?id=' + d.id;
+    if (utils.filterFalsey(d.voting_issue_type)) {
+      parsed.electionProtection.issueType = _.isArray(d.voting_issue_type) ?
+        _.uniq(_.filter(d.voting_issue_type)) : [ utils.filterFalsey(d.voting_issue_type) ];
     }
 
     // Poll site data that we put into similar form as HelloVote
@@ -119,6 +124,8 @@ function parseResults(data) {
 
     return parsed;
   });
+
+  data = _.filter(data);
 
   return data;
 }
