@@ -33,6 +33,7 @@
     "moment-timezone": "^0.5.5",
     "mongoose": "^4.6.3",
     "morgan": "^1.7.0",
+    "newrelic": "^1.33.0",
     "parse-link-header": "^0.4.1",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",

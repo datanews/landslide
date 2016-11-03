@@ -2,6 +2,7 @@
 data/collected/*
 
 # General git ignores
+newrelic_agent.log
 node_modules/
 components/
 bower_components/

@@ -5,6 +5,11 @@
 // Configure
 require('dotenv').config({ silent: true });
 
+// New relic monitoring, useing environment variables
+if (process.env.NEW_RELIC_NO_CONFIG_FILE) {
+  require('newrelic');
+}
+
 // Dependencies
 const server = require('./lib/server.js');
 const debug = require('debug')('index');

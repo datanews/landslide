@@ -33,6 +33,16 @@ The following steps were taken to deploy on Heroku
 1. Scale web (as needed): `heroku ps:scale web=1:performance-m`
 1. Scale clock/scheduler (as needed): `heroku ps:scale clock=1:standard-1x`
 
+#### Services
+
+These are optional but helpful for election day.
+
+* [New Relic](https://elements.heroku.com/addons/newrelic) for monitoring.
+    * Heroku add-on: `heroku addons:create newrelic:hawke`
+    * Will need to set `NEW_RELIC_NO_CONFIG_FILE` to `true` and `NEW_RELIC_APP_NAME` to whatever.  Without these, the application will not load New Relic.  See [config instructions](https://docs.newrelic.com/docs/agents/nodejs-agent/hosting-services/nodejs-agent-heroku) for more details.
+* [Papertrail](https://elements.heroku.com/addons/papertrail) for easier log viewing.
+    * Heroku add-on: `heroku addons:create papertrail:ludvig`
+
 ### Configuration
 
 To actually run the application, you will need to configure certain things, specifically with application keys and secrets and the what not.  These should be stored in environment variables, or in an `.env` file.
