@@ -56,7 +56,17 @@ test('utils | parseMinutes', function(t) {
     ['dos horas', 120],
 
     ['15 hours', undefined],
-    ['123456', undefined]
+    ['123456', undefined],
+
+    ['Test: 1 hora', 60],
+    ['one hour and 33 minutes', 93],
+    ['One hour and 53 minutes.', 113],
+    ['3 hours 4 minutes', 184],
+
+    ['1 小時', 60],
+    ['2 鐘頭', 120],
+
+    ['I talk a lot and don\'t want to just write minutes but I was there for 45 minutes', 45]
   ];
 
   t.plan(parseTests.length);
