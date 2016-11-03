@@ -61,6 +61,9 @@ function reporting() {
     window.location.hash = r ? '/' + r : '';
   }
   route.update = function(e) {
+    if (window.location.hash.indexOf('search%2F') > 0) {
+      window.location.hash = decodeURIComponent(window.location.hash);
+    }
     var parts = window.location.hash.replace('#', '').split('/');
 
     if (parts[0] === 'search' || parts[1] === 'search') {
