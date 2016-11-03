@@ -6,7 +6,7 @@
 require('dotenv').config({ silent: true });
 
 // New relic monitoring, useing environment variables
-if (process.env.NEW_RELIC_NO_CONFIG_FILE) {
+if (process.env.NEW_RELIC_NO_CONFIG_FILE && process.env.NEW_RELIC_APP_NAME) {
   require('newrelic');
 }
 
