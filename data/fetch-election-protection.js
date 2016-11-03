@@ -84,6 +84,7 @@ function parseResults(data) {
     if (utils.filterFalsey(d.state.trim())) {
       parsed.state = utils.statesNames[d.state.trim()];
     }
+    parsed.city = utils.filterFalsey(d.city);
 
     if (utils.filterFalsey(d.polling_place_latitude) && !_.isNaN(parseFloat(d.polling_place_latitude))) {
       parsed.lat = parseFloat(d.polling_place_latitude);
@@ -119,8 +120,9 @@ function parseResults(data) {
       parsed.pollSite.address = utils.filterFalsey(d.polling_place_address);
     }
 
-    // Combine address parts
-    parsed.fullAddress = utils.makeAddress(parsed);
+    // The polling_place_address field is probably a full address
+    parsed.fullAddress = utils.filterFalsey(d.polling_place_address) ?
+      utils.filterFalsey(d.polling_place_address) : utils.makeAddress(parsed);
 
     return parsed;
   });
