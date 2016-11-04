@@ -81,6 +81,11 @@ body.mobile .mobile-only-inline {
   display: block;
 }
 
+body nav.navbar-inverse .landslide-title {
+  text-transform: uppercase;;
+  color: #FBFBFB;
+}
+
 /* Login page */
 .login-box {
   width: 40em;

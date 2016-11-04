@@ -13,11 +13,17 @@
         <img alt="ElectionLand logo" src="/media/Electionland-logo-edit.svg">
       </a>
 
-      <p class="navbar-text"><%= __('siteTitle') %></p>
+      <p class="navbar-text landslide-title"><%= __('siteTitle') %></p>
     </div>
 
     <div class="collapse navbar-collapse" id="nav-bar-collapsable">
-      <ul class="navbar-nav navbar-right">
+      <% if (user) { %>
+        <p class="navbar-text navbar-right">
+          <%= user.displayName %> &nbsp;
+          <img class="user-image" src="<%= user.imageURL %>">
+        </p>
+      <% } %>
+
         <!--
         <% if (getLocale() === 'en') { %>
           <li><p class="navbar-text">
@@ -30,14 +36,22 @@
         <% } %>
         -->
 
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Links <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" rel="noopener" href="https://electionland.slack.com/">ElectionLand Slack <i class="fa fa-external-link"></i></a></li>
+            <li><a target="_blank" rel="noopener" href="https://electionland.checkmedia.org">ElectionLand Check <i class="fa fa-external-link"></i></a></li>
+            <li><a target="_blank" rel="noopener" href="https://electionlandtrends.appspot.com/">ElectionLand Google Trends <i class="fa fa-external-link"></i></a></li>
+            <li><a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/0B1OvkRPW6AvFRnZMRFpaVmNOam8">ElectionLand Google Drive <i class="fa fa-external-link"></i></a></li>
+              <li><a target="_blank" rel="noopener" href="https://protection.election.land/">ElectionLand Protection <i class="fa fa-external-link"></i></a></li>
+          </ul>
+        </li>
+
         <% if (user) { %>
-          <li><p class="navbar-text">
-            <%= user.displayName %> &nbsp;
-            <img class="user-image" src="<%= user.imageURL %>"> &nbsp;
-            <a href="/logout" title="<%= __('logout') %>"><%= __('logout') %> <i class="fa fa-sign-out"></i></a>
-          </p></li>
+          <li><a href="/logout" title="<%= __('logout') %>"><%= __('logout') %> <i class="fa fa-sign-out"></i></a></li>
         <% } else { %>
-          <li><p class="navbar-text"><a href="/login" title="<%= __('login') %>"><%= __('login') %> <i class="fa fa-sign-in"></i></a></p></li>
+          <li><a href="/login" title="<%= __('login') %>"><%= __('login') %> <i class="fa fa-sign-in"></i></a></li>
         <% } %>
       </ul>
     </div>
