@@ -86,9 +86,14 @@ function reporting() {
 
     if (search.q) {
       _.each(search.q, function(value, field) {
-        q[field] = field === 'inCheck' && value.$ne ? true :
-          _.isObject(value) && value.$in ? value.$in :
-          _.isObject(value) && value.$exists ? true : value;
+        if (field === '$or' && value[0].lat) {
+          q.noLocation = true;
+        }
+        else {
+          q[field] = field === 'inCheck' && value.$ne ? true :
+            _.isObject(value) && value.$in ? value.$in :
+            _.isObject(value) && value.$exists ? true : value;
+        }
       });
       ractive.set('query', q);
     }
@@ -129,7 +134,7 @@ function reporting() {
   });
 
   // Handle view updates.  Turn parts into URL.
-  function observeSearchParts(n, o) {
+  function observeSearchParts(n, o, keypath) {
     // Query
     var query = _.cloneDeep(ractive.get('query')) || {};
     var q = {};
@@ -152,6 +157,32 @@ function reporting() {
       }
     });
 
+    // No location means remove other location fields
+    console.log()
+    if (keypath === 'query.noLocation' && query.noLocation) {
+      q = _.extend(q, {
+        $or: [
+          { lat: { $exists: false }},
+          { lat: null }
+        ]
+      });
+      delete q.state;
+      delete q.lat;
+      delete q.lon;
+      delete q.address;
+      delete q.noLocation;
+    }
+    else if (~['query.state', 'query.lat', 'query.lon', 'query.address'].indexOf(keypath) && query.noLocation) {
+      ractive.set('query.noLocation', false);
+      delete q.noLocation;
+    }
+
+    // If there is an ID, it should be coming from a link, so we
+    // remove it now
+    if (q.id) {
+      delete q.id;
+    }
+
     // Sort
     var sort = _.cloneDeep(ractive.get('sort'));
     var s = {};
@@ -171,8 +202,8 @@ function reporting() {
       limit: limit
     }));
   }
-  ractive.observe('query', observeSearchParts, { init: false });
-  ractive.observe('sort', observeSearchParts, { init: false });
+  ractive.observe('query.*', observeSearchParts, { init: false });
+  ractive.observe('sort.*', observeSearchParts, { init: false });
   ractive.observe('limit', observeSearchParts, { init: false });
 
   // Observer muting to save to browser
