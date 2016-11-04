@@ -163,7 +163,8 @@ td.report-data p {
 }
 
 tbody tr.muted > td:not(.actions),
-tbody tr.muted > td.actions > button:not(.toggle-mute) {
+tbody tr.muted > td.actions > button:not(.toggle-mute),
+tbody tr.muted > td.actions > a:not(.toggle-mute) {
   opacity: 0.25;
 }
 
