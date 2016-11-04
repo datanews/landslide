@@ -46,11 +46,13 @@ function reporting() {
       filteredSource: "",
       data: [],
       muted: muted,
-      _: _,
-      moment: moment,
       query: defaultSearch.q,
       sort: defaultSearch.sort,
-      limit: defaultSearch.limit
+      limit: defaultSearch.limit,
+      path: window.location.pathname,
+      _: _,
+      moment: moment,
+      JSURL: JSURL
     }
   });
 

@@ -240,24 +240,25 @@
                   <td class="source-data small text-muted">{{ sourceName }}</td>
 
                   <td class="actions">
-                    <button class="btn btn-default btn-xs">
-                      <span class="clickable" on-tap="toggleCheck:{{ id }}">
-                        {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
-                        <span class="small"><%= __('inCheck') %></span>
-                      </span>
+                    <button class="btn btn-default btn-xs" on-tap="toggleCheck:{{ id }}">
+                      {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
+                      <span class="small"><%= __('inCheck') %></span>
                     </button>
 
-                    <button class="btn btn-default btn-xs toggle-mute">
-                      <span class="clickable" on-tap="toggleAbsolute:{{ 'muted.' + id }}">
-                        {{#muted[id]}}
-                          <i class="fa fa-volume-up"></i>
-                          <span class="small"><%= __('unmute') %></span>
-                        {{else}}
-                          <i class="fa fa-volume-off text-muted"></i>
-                          <span class="small"><%= __('mute') %></span>
-                        {{/muted[id]}}
-                      </span>
+                    <button class="btn btn-default btn-xs toggle-mute" on-tap="toggleAbsolute:{{ 'muted.' + id }}">
+                      {{#muted[id]}}
+                        <i class="fa fa-volume-up"></i>
+                        <span class="small"><%= __('unmute') %></span>
+                      {{else}}
+                        <i class="fa fa-volume-off text-muted"></i>
+                        <span class="small"><%= __('mute') %></span>
+                      {{/muted[id]}}
                     </button>
+
+                    <a class="btn btn-default btn-xs" href="{{ path + '#/search/' + JSURL.stringify({ q: { id: id }}) }}">
+                      <i class="fa fa-link"></i>
+                      <span class="small">Link</span>
+                    </a>
                   </td>
                 </tr>
 
