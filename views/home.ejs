@@ -35,7 +35,7 @@
         </div>
 
         <div class="panel-body">
-          <form class="filter-form" on-submit="filterSubmit">
+          <form class="filter-form" on-submit="submitSearch">
             <fieldset class="form-group">
               <legend><%= __('location') %></legend>
               <p><%= __('locationHelp') %></p>
@@ -159,8 +159,11 @@
               </div>
             </fieldset>
 
+            <hr>
+
             <div>
-              <button class="btn btn-primary" on-tap="resetSearch">Reset all</button>
+              <button class="btn btn-default" on-tap="submitSearch">Update</button>
+              <button class="btn btn-danger" on-tap="resetSearch">Reset all</button>
             </div>
           </form>
         </div>

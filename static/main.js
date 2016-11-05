@@ -89,6 +89,9 @@ function reporting() {
         if (field === '$or' && value[0].lat) {
           q.noLocation = true;
         }
+        else if (field === '$text' && value && value.$search) {
+          q.search = value.$search;
+        }
         else {
           q[field] = field === 'inCheck' && value.$ne ? true :
             _.isObject(value) && value.$in ? value.$in :
@@ -255,7 +258,7 @@ function reporting() {
     window.location.href = window.location.pathname;
   });
 
-  ractive.on('filterSubmit', function(e) {
+  ractive.on('submitSearch', function(e) {
     // This just makes sure the form doesn't actually reload the
     // page without our consent
     e.original.preventDefault();
