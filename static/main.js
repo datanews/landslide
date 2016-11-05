@@ -138,9 +138,15 @@ function reporting() {
     // Query
     var query = _.cloneDeep(ractive.get('query')) || {};
     var q = {};
+    var fields = {};
 
     _.each(query, function(value, field) {
-      if (field === 'inCheck' && value) {
+      if (field === 'search' && value) {
+        q.$text = { $search: value };
+        fields.searchScore = { $meta: 'textScore' };
+        // sort: { score : { $meta : 'textScore' } }
+      }
+      else if (field === 'inCheck' && value) {
         q[field] = { $ne: true };
       }
       else if (_.isArray(value) && value.length) {
@@ -157,8 +163,13 @@ function reporting() {
       }
     });
 
+    // Remove search
+    if (keypath === 'search' && !query.search) {
+      delete q.$text;
+      delete fields.searchScore;
+    }
+
     // No location means remove other location fields
-    console.log()
     if (keypath === 'query.noLocation' && query.noLocation) {
       q = _.extend(q, {
         $or: [
@@ -198,6 +209,7 @@ function reporting() {
 
     route('search/' + JSURL.stringify({
       q: q,
+      fields: fields,
       sort: s,
       limit: limit
     }));
@@ -241,6 +253,12 @@ function reporting() {
     e.original.preventDefault();
     // This is the easiest
     window.location.href = window.location.pathname;
+  });
+
+  ractive.on('filterSubmit', function(e) {
+    // This just makes sure the form doesn't actually reload the
+    // page without our consent
+    e.original.preventDefault();
   });
 
   ractive.on('resetMapInput', function(e) {

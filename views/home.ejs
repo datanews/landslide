@@ -35,7 +35,7 @@
         </div>
 
         <div class="panel-body">
-          <form class="filter-form">
+          <form class="filter-form" on-submit="filterSubmit">
             <fieldset class="form-group">
               <legend><%= __('location') %></legend>
               <p><%= __('locationHelp') %></p>
@@ -83,6 +83,13 @@
                         <option value="{{ this }}">{{ this }}</option>
                       {{/options.sourceNames}}
                     </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="all-search">Search all</label>
+                    <input id="all-search" placeholder="" class="form-control" value="{{ query.search }}" lazy="1500">
+
+                    <p class="help-block">This will search all text fields.  For exact pharses, "use double quotes".</p>
                   </div>
                 </div>
 
