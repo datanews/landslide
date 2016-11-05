@@ -42,6 +42,9 @@ These are optional but helpful for election day.
     * Will need to set `NEW_RELIC_NO_CONFIG_FILE` to `true` and `NEW_RELIC_APP_NAME` to whatever.  Without these, the application will not load New Relic.  See [config instructions](https://docs.newrelic.com/docs/agents/nodejs-agent/hosting-services/nodejs-agent-heroku) for more details.
 * [Papertrail](https://elements.heroku.com/addons/papertrail) for easier log viewing.
     * Heroku add-on: `heroku addons:create papertrail:ludvig`
+* Load testing with [Loader.io]()
+    * Heroku add-on: `heroku addons:create loaderio:basic`
+    * Set `LOADERIO_VERIFY_TOKEN` to the host's verify token.
 
 ### Configuration
 
