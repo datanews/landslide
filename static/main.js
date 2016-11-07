@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 // Render reporting
 function reporting() {
+  var dataPollingInterval = dataPollingInterval;
   var template = $('#home-template').html();
   var el = '#home-template-container';
   var originalData = [];
