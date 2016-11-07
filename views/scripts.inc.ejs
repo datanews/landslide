@@ -34,6 +34,10 @@
 
   window.template.strings = window.template.strings || {};
   window.template.strings.confirmInCheck = '<%= __('confirmInCheck') %>';
+
+  // Other info
+  window.landslide = window.landslide || {};
+  window.landslide.statesAbbr = JSON.parse('<%- JSON.stringify(statesAbbr) %>');
 </script>
 
 <script src="/main.js"></script>

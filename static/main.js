@@ -488,8 +488,18 @@ function getOptions(done) {
   $.getJSON('/api/reports/options?field=state', function(states) {
     $.getJSON('/api/reports/options?field=sourceName', function(sources) {
       done(null, {
-        states: states,
-        sourceNames: sources
+        states: _.map(_.filter(states), function(s) {
+          return {
+            value: s,
+            name: window.landslide.statesAbbr[s] ? window.landslide.statesAbbr[s] : s
+          };
+        }),
+        sourceNames: _.map(sources, function(s) {
+          return {
+            value: s,
+            name: s
+          };
+        })
       });
     }).fail(done);
   }).fail(done);

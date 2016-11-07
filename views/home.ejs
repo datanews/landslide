@@ -47,7 +47,7 @@
 
                     <select class="form-control" id="query-state" multiple="multiple">
                       {{#options.states:s}}
-                        <option value="{{ this }}">{{ this }}</option>
+                        <option value="{{ value }}">{{ name }}</option>
                       {{/options.states}}
                     </select>
                   </div>
@@ -80,7 +80,7 @@
 
                     <select class="form-control" id="query-source-name" multiple="multiple">
                       {{#options.sourceNames:s}}
-                        <option value="{{ this }}">{{ this }}</option>
+                        <option value="{{ value }}">{{ name }}</option>
                       {{/options.sourceNames}}
                     </select>
                   </div>
