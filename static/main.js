@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 // Render reporting
 function reporting() {
-  var dataPollingInterval = dataPollingInterval;
+  var dataPollingInterval = 30 * 1000;
   var template = $('#home-template').html();
   var el = '#home-template-container';
   var originalData = [];
@@ -302,49 +302,6 @@ function reporting() {
     document.body.removeChild(link);
   });
 
-  // Get options
-  getOptions(function(error, options) {
-    if (error) {
-      return console.log(error);
-    }
-
-    _.each(options, function(set, o) {
-      ractive.set('options.' + o, _.sortBy(_.filter(_.uniq(set))));
-    });
-
-    // Nice multiselect
-    _.each([
-      ['#query-state', 'query.state'],
-      ['#query-source-name', 'query.sourceName']
-    ], function(set) {
-      var values = ractive.get(set[1]);
-
-      $(set[0]).multiselect({
-        disableIfEmpty: true,
-        onChange: function(option, checked) {
-          var selected = ractive.get(set[1]);
-          if (!selected) {
-            ractive.set(set[1], []);
-            selected = ractive.get(set[1]);
-          }
-
-          var value = $(option).val();
-          var index = selected.indexOf(value);
-
-          if (checked) {
-            selected.push(value);
-          }
-          else {
-            index = selected.indexOf(value);
-            if (~index) {
-              selected.splice(index, 1);
-            }
-          }
-        }
-      }).multiselect('select', values);
-    });
-  });
-
   // Draw and handle map input
   function drawInputMap() {
     var currentRectangle;
@@ -421,6 +378,60 @@ function reporting() {
     drawInputMap();
   }
 
+  // Get options
+  function fetchOptions() {
+    getOptions(function(error, options) {
+      if (error) {
+        return console.log(error);
+      }
+
+      _.each(options, function(set, o) {
+        ractive.set('options.' + o, _.sortBy(_.filter(_.uniq(set))));
+      });
+
+      // Nice multiselect
+      _.each([
+        ['#query-state', 'query.state'],
+        ['#query-source-name', 'query.sourceName']
+      ], function(set) {
+        var values = ractive.get(set[1]);
+
+        // Rebuild if already there
+        if ($(set[0]).hasClass('multiselected')) {
+          $(set[0]).multiselect('rebuild');
+        }
+        else {
+          $(set[0]).addClass('multiselected');
+          $(set[0]).multiselect({
+            disableIfEmpty: true,
+            onChange: function(option, checked) {
+              var selected = ractive.get(set[1]);
+              if (!selected) {
+                ractive.set(set[1], []);
+                selected = ractive.get(set[1]);
+              }
+
+              var value = $(option).val();
+              var index = selected.indexOf(value);
+
+              if (checked) {
+                selected.push(value);
+              }
+              else {
+                index = selected.indexOf(value);
+                if (~index) {
+                  selected.splice(index, 1);
+                }
+              }
+            }
+          }).multiselect('select', values);
+        }
+      });
+    });
+  }
+  var repeatOptions = window.setInterval(fetchOptions, dataPollingInterval * 10);
+  fetchOptions();
+
   // Fetch
   function fetch() {
     ractive.set('isLoading', true);
@@ -463,7 +474,7 @@ function reporting() {
   var throttledFetch = _.throttle(fetch, 3 * 1000);
 
   // Poll
-  var repeat = window.setInterval(throttledFetch, 30 * 1000);
+  var repeat = window.setInterval(throttledFetch, dataPollingInterval);
   throttledFetch();
 }
 
