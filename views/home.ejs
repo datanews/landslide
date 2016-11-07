@@ -15,9 +15,9 @@
           <button class="pull-right clickable btn btn-default btn-xs" on-tap="toggleAbsolute:{{ 'muted.welcome' }}"><i class="fa fa-close"></i></button>
           <p>Welcome to <strong>Landslide</strong>, your source for reporting on polls across the country.  Landslide aggregates <strong>unconfirmed tips</strong> from multiple sources into one single feed.</p>
 
-          <p class="small">Use the filters below to find specific reports.  If you have access to Check, use the <strong>in Check</strong> action to let others know that that report is being handled there.  As there are plenty of reports that may be more noise than signal, use the <strong>Mute</strong> action to visually mute it; this is just for you and will persist if you reload the page.</p>
+          <p class="small">Use the filters below to find specific entries.  If you have access to Check, use the <strong>in Check</strong> action to let others know that that information is being handled there.  As there are plenty of entries that may be more noise than signal, use the <strong>Mute</strong> action to visually mute it; this is just for you and will persist if you reload the page.</p>
 
-          <p class="small">Landslide depends on multiple data sources that vary in their structure.  Use the <strong>detail arrows</strong> on the left of each report to see more details, and in some case, to see the full information.</p>
+          <p class="small">Landslide depends on multiple data sources that vary in their structure.  Use the <strong>detail arrows</strong> on the left of each entry to see more details, and in some case, to see the full information.</p>
         </div>
       {{/muted.welcome}}
 
@@ -56,7 +56,7 @@
 
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked="{{ query.noLocation }}"> Show only reports that do not have location.
+                      <input type="checkbox" checked="{{ query.noLocation }}"> Only show entries that do not have a location.
                     </label>
                     <p class="help-block">This options will negate other location options.</p>
                   </div>
@@ -109,7 +109,7 @@
 
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked="{{ query.inCheck }}"> Exclude reports in Check
+                      <input type="checkbox" checked="{{ query.inCheck }}"> Exclude entries in Check
                     </label>
                   </div>
                 </div>
@@ -185,13 +185,13 @@
                   n/a
                 {{/stats.nonZeroWaitWaitAverage}}
               </span> <br>
-              <span class="text-muted">{{ totalStats.nonZeroWaitWaitAverage }} min for all reports</span>
+              <span class="text-muted">{{ totalStats.nonZeroWaitWaitAverage }} min for all entries</span>
             </div>
 
             <div class="col-sm-6 text-center">
-              With reports<br>
+              With report information<br>
               <span class="text-large"><strong>{{ stats.withReportTotalReports }}</strong> of {{ stats.totalReports }}</span> <br>
-              <span class="text-muted">{{ totalStats.withReportTotalReports }} (of {{ totalStats.totalReports }}) for all reports</span>
+              <span class="text-muted">{{ totalStats.withReportTotalReports }} (of {{ totalStats.totalReports }}) for all entries</span>
             </div>
           </div>
         </div>
@@ -259,12 +259,12 @@
                   <td class="source-data small text-muted">{{ sourceName }}</td>
 
                   <td class="actions">
-                    <button class="btn btn-default btn-xs" on-tap="toggleCheck:{{ id }}" title="Mark whether this report is in the Check system.">
+                    <button class="btn btn-default btn-xs" on-tap="toggleCheck:{{ id }}" title="Mark whether this entry is in the Check system.">
                       {{#inCheck}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-circle-o text-muted"></i>{{/inCheck}}
                       <span class="small"><%= __('inCheck') %></span>
                     </button>
 
-                    <button class="btn btn-default btn-xs toggle-mute" on-tap="toggleAbsolute:{{ 'muted.' + id }}" title="Visually mute this report.">
+                    <button class="btn btn-default btn-xs toggle-mute" on-tap="toggleAbsolute:{{ 'muted.' + id }}" title="Visually mute this entry.">
                       {{#muted[id]}}
                         <i class="fa fa-volume-up"></i>
                         <span class="small"><%= __('unmute') %></span>
@@ -274,7 +274,7 @@
                       {{/muted[id]}}
                     </button>
 
-                    <a class="btn btn-default btn-xs" href="{{ path + '#/search/' + JSURL.stringify({ q: { id: id }}) }}" title="Go to just this report and update the URL to share with others.">
+                    <a class="btn btn-default btn-xs" href="{{ path + '#/search/' + JSURL.stringify({ q: { id: id }}) }}" title="Go to just this entry and update the URL to share with others.">
                       <i class="fa fa-link"></i>
                       <span class="small">Link</span>
                     </a>
