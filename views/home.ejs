@@ -236,11 +236,13 @@
                   <td class="report-data"><p>{{ report }}</p></td>
 
                   <td class="wait-data">
-                    {{#waitMinutes}}
-                      {{ waitMinutes > 60 ? (waitMinutes / 60).toFixed(2) + ' hr' : waitMinutes + ' min' }}
-                    {{else}}
-                      <span class="text-muted">{{ wait }}</span>
-                    {{/waitMinutes}}
+                    <p>
+                      {{#waitMinutes}}
+                        {{ waitMinutes > 60 ? (waitMinutes / 60).toFixed(2) + ' hr' : waitMinutes + ' min' }}
+                      {{else}}
+                        <span class="text-muted">{{ wait }}</span>
+                      {{/waitMinutes}}
+                    </p>
                   </td>
 
                   <td>

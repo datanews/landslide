@@ -1,0 +1,27 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <%- include('head.inc.ejs') %>
+  </head>
+
+  <body class="map-page">
+    <%- include('nav.inc.ejs') %>
+
+    <div class="map-info">
+      <div class="map-info-inner">
+        <span class="small">Data for the past two hours; updated every minute. Labels on red markers are the average wait time.  Note that location and wait time data is not always accurate, and this should be a tool to <strong>help find trends</strong> and not define them.
+        <i class="fa fa-spinner fa-pulse loader"></i></span>
+      </div>
+    </div>
+
+    <div class="full-container">
+      <div class="map-full-wrapper" id="full-map">
+      </div>
+    </div>
+
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+
+    <%- include('scripts.inc.ejs') %>
+  </body>
+</html>
