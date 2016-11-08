@@ -7,10 +7,27 @@
   <body class="map-page">
     <%- include('nav.inc.ejs') %>
 
-    <div class="map-info">
-      <div class="map-info-inner">
-        <span class="small">Data for the past two hours; updated every minute. Labels on red markers are the average wait time.  Note that location and wait time data is not always accurate, and this should be a tool to <strong>help find trends</strong> and not define them.
-        <i class="fa fa-spinner fa-pulse loader"></i></span>
+    <div class="map-controls">
+      <div class="container">
+        <form class="form-inline">
+          <div class="form-group">
+            <p class="small map-info">
+              Labels on grey markers are the average wait time.  Note that location and wait data are not always accurate.  Use this to <strong>help find trends</strong>.  Updated every minute.
+              <i class="fa fa-spinner fa-pulse loader"></i>
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for"since-amount">Past</label>
+            <select id="since-amount" class="form-control">
+              <option value="0.5">30 minutes</option>
+              <option value="1">1 hour</option>
+              <option value="2" selected>2 hours</option>
+              <option value="5">5 hours</option>
+            </select>
+          </div>
+        </form>
+
       </div>
     </div>
 

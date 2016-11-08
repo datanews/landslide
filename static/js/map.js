@@ -16,12 +16,13 @@ function drawMap() {
   });
   var markers = [];
   var markerCluster;
+  var since = 2;
 
   // Get data and update map
   function getDataUpdateMap() {
     $('.map-info').addClass('is-loading');
 
-    getData(function(error, data) {
+    getData(since, function(error, data) {
       $('.map-info').removeClass('is-loading');
 
       if (markerCluster) {
@@ -55,13 +56,19 @@ function drawMap() {
     });
   }
 
+  var throttledGetDataUpdateMap = _.throttle(getDataUpdateMap, 2 * 1000);
   setInterval(getDataUpdateMap, 60 * 1000);
   getDataUpdateMap();
+
+  $('#since-amount').on('change', function(e) {
+    since = $('#since-amount').val() ? parseFloat($('#since-amount').val()) : 2;
+    throttledGetDataUpdateMap();
+  });
 }
 
 // Get data
-function getData(done) {
-  var since = moment().subtract(2, 'hours').startOf('minute').unix();
+function getData(since, done) {
+  var since = moment().subtract(since, 'hours').startOf('minute').unix();
 
   $.getJSON('/api/reports/geo?since=' + since, function(data) {
     done(null, data);
