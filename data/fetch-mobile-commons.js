@@ -25,7 +25,7 @@ const urlTemplate = (a) => `https://secure.mcommons.com/api/messages?campaign_id
 
 // The first time we get the data, we'll get all of it, but subsequent requests
 // should be only the past hour.
-var dataStart = moment.utc('2016-10-01T00:00:00Z');
+var dataStart = moment.utc('2016-11-08T00:00:00Z');
 
 // Make a data call
 function getData(page, done) {
