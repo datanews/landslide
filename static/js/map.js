@@ -41,18 +41,18 @@ function drawMap() {
           icon: image,
           position: { lat: d.lat, lng: d.lon },
           title: 'Wait time reports: ' + d.waitTimes.length
-          //label: d.waitTimes && d.waitTimes.length ? Math.round(_.mean(d.waitTimes)).toString() + 'm' : '',
-          //labelClass: 'map-labels',
-          //'Avg wait: ' +
-          //  (d.wait && d.wait.length ? _.mean(d.wait) : '-')
-          //' | Descriptive reports: ' + d.reports
         }));
       });
 
-      markerCluster = new MarkerClusterer(map, markers, {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-      });
-      markerCluster.redraw();
+      if (!markerCluster) {
+        markerCluster = new MarkerClusterer(map, markers, {
+          imagePath: '/media/markers/m'
+        });
+      }
+      else {
+        markerCluster.addMarkers(markers);
+        markerCluster.redraw();
+      }
     });
   }
 
