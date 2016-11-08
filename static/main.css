@@ -129,7 +129,11 @@ body nav.navbar-inverse .landslide-title {
   width: 30%;
   max-width: 29em;
 }
-td.report-data p {
+.report-list tbody td.wait-data {
+  max-width: 10em;
+}
+td.report-data p,
+td.wait-data p {
   display: block;
   max-height: 5em;
   overflow: hidden;
@@ -140,11 +144,13 @@ td.report-data p {
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
 }
-.with-details td.report-data p {
+.with-details td.report-data p,
+.with-details td.wait-data p {
   max-height: 999em;
 }
 @media screen and (max-width: 767px) {
-  .table-responsive > .table > tbody > tr > td.report-data {
+  .table-responsive > .table > tbody > tr > td.report-data,
+  .table-responsive > .table > tbody > tr > td.wait-data {
     white-space: normal;
   }
 }
@@ -177,4 +183,12 @@ tbody tr.muted > td.actions > a:not(.toggle-mute) {
   width: 100%;
   height: 18em;
   background-color: #DFDFDF;
+}
+
+.map-full-wrapper {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
