@@ -1,4 +1,6 @@
-Small server for collecting and reporting on MobileCommons data/texting.
+Landslide is a small service used for the [ElectionLand](http://election.land) project that aggregated multiple reporting sources into a single feed for ElectionLand reporters to review.
+
+Overall, Landslide is not useful outside of the Electionland project; it is provided for transparency sake.
 
 ## Install
 
@@ -11,7 +13,7 @@ Small server for collecting and reporting on MobileCommons data/texting.
 1. Run Mongo: `mongod --config /usr/local/etc/mongod.conf`
     * On Mac: `brew services start mongodb`
 1. Create database; use `mongo` to open mongo shell. `use electionland`
-1. Get code: `git clone ... && cd electionland-reporting`
+1. Get code: `git clone ... && cd landslide`
 1. Install dependencies: `npm install`
 1. See *Configuration*
 
@@ -26,9 +28,9 @@ Small server for collecting and reporting on MobileCommons data/texting.
 The following steps were taken to deploy on Heroku
 
 1. Install Heroku command line tools.
-1. Create app: `heroku apps:create electionland-reporting`
-1. MongoLab DB: `heroku addons:create mongolab:shared-cluster-2`
-1. Set configuration for the application like `heroku config:set SLACK_CLIENT_ID=XXXX`, See configuration below for all options.
+1. Create app: `heroku apps:create landslide`
+1. MongoLab DB (set type as needed): `heroku addons:create mongolab:shared-cluster-2`
+1. Set configuration for the application like `heroku config:set SLACK_CLIENT_ID=XXXX`. See configuration below for all options.
 1. Push code: `git push heroku master`
 1. Scale web (as needed): `heroku ps:scale web=1:performance-m`
 1. Scale clock/scheduler (as needed): `heroku ps:scale clock=1:standard-1x`
